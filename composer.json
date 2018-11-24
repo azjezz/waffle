@@ -1,0 +1,27 @@
+{
+    "name": "azjezz/waffle",
+    "type": "framework",
+    "description": "Hack micro-framework for building web applications with expressive, elegant syntax.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "azjezz",
+            "email": "azjezz@protonmail.com"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+      "facebook/fbexpect": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Waffle\\": "src/Waffle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Waffle\\Tests\\": "tests/Waffle"
+        }
+    }
+}
