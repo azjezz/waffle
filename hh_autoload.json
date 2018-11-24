@@ -1,6 +1,6 @@
 {
   "roots": [
-    "src"
+    "src/Waffle"
   ],
   "devRoots": [],
   "devFailureHandler": "Facebook\\AutoloadMap\\HHClientFallbackHandler"
