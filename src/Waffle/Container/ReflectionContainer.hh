@@ -2,7 +2,8 @@
 
 namespace Waffle\Container;
 
-use Waffle\Container\Argument\{ArgumentResolverInterface, ArgumentResolverTrait};
+use Waffle\Container\Argument\ArgumentResolverInterface;
+use Waffle\Container\Argument\ArgumentResolverTrait;
 use Waffle\Container\Exception\NotFoundException;
 use Waffle\Contract\Container\ContainerInterface;
 use ReflectionClass;
