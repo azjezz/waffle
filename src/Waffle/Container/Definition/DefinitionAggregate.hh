@@ -87,17 +87,17 @@ class DefinitionAggregate implements DefinitionAggregateInterface
      */
     public function resolveTagged(string $tag, bool $new = false): Vector<mixed>
     {
-        $set = new Vector<mixed>([]);
+        $vec = Vector {};
 
         foreach ($this->getIterator() as $definition) {
             if ($definition->hasTag($tag)) {
-                $set->add(
+                $vec->add(
                     $definition->setContainer($this->getContainer())->resolve($new)
                 );
             }
         }
 
-        return $set;
+        return $vec;
     }
 
     public function getIterator(): Iterator<DefinitionInterface>

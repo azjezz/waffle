@@ -22,7 +22,7 @@ class Container implements ContainerInterface
         protected DefinitionAggregateInterface      $definitions = new DefinitionAggregate(),
         protected ServiceProviderAggregateInterface $providers = new ServiceProviderAggregate(),
         protected InflectorAggregateInterface       $inflectors = new InflectorAggregate(),
-        protected Vector<ContainerInterface>        $delegates = new Vector<ContainerInterface>([])
+        protected Vector<ContainerInterface>        $delegates = Vector {}
     ) {
         if ($this->definitions instanceof ContainerAwareInterface) {
             $this->definitions->setContainer($this);

@@ -11,7 +11,7 @@ use ReflectionFunction;
 use ReflectionMethod;
 use function sprintf;
 use function strpos;
-use function is_null;
+use function is_object;
 use function is_string;
 use function class_exists;
 use function explode;
@@ -29,13 +29,13 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
 
     public function __construct(protected bool $cacheResolutions = false) 
     {
-        $this->cache = new Map<string, mixed>([]);
+        $this->cache = Map {};
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $id, Map<string, mixed> $args = new Map<string, mixed>([])): mixed
+    public function get(string $id, Map<string, mixed> $args = Map {}): mixed
     {
         if ($this->cacheResolutions === true && $this->cache->contains($id)) {
             return $this->cache->get($id);
@@ -80,7 +80,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      *
      * @return mixed
      */
-    public function call(mixed $callable, Map<string, mixed> $args = new Map<string, mixed>([])): mixed
+    public function call(mixed $callable, Map<string, mixed> $args = Map {}): mixed
     {
         if (is_string($callable) && strpos($callable, '::') !== false) {
             $callable = explode('::', $callable);

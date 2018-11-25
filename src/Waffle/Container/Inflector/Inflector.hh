@@ -27,8 +27,8 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     {
         $this->type     = $type;
         $this->callback = $callback;
-        $this->properties = new Map<string, mixed>([]);
-        $this->methods = new Map<string, Vector<mixed>>([]);
+        $this->properties = Map {};
+        $this->methods = Map {};
     }
 
     /**
@@ -69,7 +69,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
         $this->properties->set(
             $property,
             $this->resolveArguments(
-                new Vector<mixed>([$value])
+                Vector { $value }
             )->firstValue()
         );
 

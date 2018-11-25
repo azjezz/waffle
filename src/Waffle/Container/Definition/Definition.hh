@@ -43,9 +43,9 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         $concrete = $concrete ?? $id;
         $this->alias    = $id;
         $this->concrete = $concrete;
-        $this->tags = new Set<string>([]);
-        $this->arguments = new Vector<mixed>([]);
-        $this->methods = new Vector<MethodDefinition>([]);
+        $this->tags = Set {};
+        $this->arguments = Vector {};
+        $this->methods = Vector {};
     }
 
     public function addTag(string $tag): DefinitionInterface

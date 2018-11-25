@@ -13,7 +13,7 @@ class InflectorAggregate implements InflectorAggregateInterface
     use ContainerAwareTrait;
 
     public function __construct(
-        protected Vector<Inflector> $inflectors = new Vector<Inflector>([])
+        protected Vector<Inflector> $inflectors = Vector {}
     ) {}
 
     /**

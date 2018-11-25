@@ -21,8 +21,8 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
 
     public function __construct()
     {
-        $this->providers = new Vector<ServiceProviderInterface>([]);
-        $this->registered = new Set<string>([]);
+        $this->providers = Vector {};
+        $this->registered = Set {};
     }
 
     /**

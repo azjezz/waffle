@@ -15,7 +15,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
 
     public function __construct()
     {
-        $this->provides = new Set<string>([]);
+        $this->provides = Set {};
         $this->identifier = get_class($this);
     }
 

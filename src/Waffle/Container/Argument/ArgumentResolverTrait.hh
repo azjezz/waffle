@@ -13,7 +13,7 @@ trait ArgumentResolverTrait
 {
     public function resolveArguments(Vector<mixed> $arguments): Vector<mixed>
     {
-        $resolved = new Vector<mixed>([]);
+        $resolved = Vector {};
 
         foreach ($arguments as $arg) {
             if ($arg instanceof RawArgumentInterface) {
