@@ -13,17 +13,16 @@ use Waffle\Container\ServiceProvider\ServiceProviderAggregate;
 use Waffle\Container\ServiceProvider\ServiceProviderAggregateInterface;
 use Waffle\Contract\Container\ContainerInterface;
 use function sprintf;
-use function array_walk;
 
 class Container implements ContainerInterface
 {
     protected bool $defaultToShared = false;
 
     public function __construct(
-        protected DefinitionAggregateInterface $definitions = new DefinitionAggregate(),
+        protected DefinitionAggregateInterface      $definitions = new DefinitionAggregate(),
         protected ServiceProviderAggregateInterface $providers = new ServiceProviderAggregate(),
         protected InflectorAggregateInterface       $inflectors = new InflectorAggregate(),
-        protected Vector<ContainerInterface> $delegates = new Vector<ContainerInterface>([])
+        protected Vector<ContainerInterface>        $delegates = new Vector<ContainerInterface>([])
     ) {
         if ($this->definitions instanceof ContainerAwareInterface) {
             $this->definitions->setContainer($this);
