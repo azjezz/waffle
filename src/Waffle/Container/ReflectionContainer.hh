@@ -8,13 +8,13 @@ use Waffle\Contract\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
-use function array_key_exists;
 use function sprintf;
 use function strpos;
 use function is_null;
 use function is_string;
 use function class_exists;
 use function explode;
+use function is_array;
 
 class ReflectionContainer implements ArgumentResolverInterface, ContainerInterface
 {
@@ -36,8 +36,8 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      */
     public function get(string $id, Map<string, mixed> $args = new Map<string, mixed>([])): mixed
     {
-        if ($this->cacheResolutions === true && array_key_exists($id, $this->cache)) {
-            return $this->cache[$id];
+        if ($this->cacheResolutions === true && $this->cache->contains($id)) {
+            return $this->cache->get($id);
         }
 
         if (! $this->has($id)) {
@@ -57,7 +57,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
         ;
 
         if ($this->cacheResolutions === true) {
-            $this->cache[$id] = $resolution;
+            $this->cache->set($id, $resolution);
         }
 
         return $resolution;
