@@ -2,8 +2,6 @@
 
 namespace Waffle\Contract\Log;
 
-use Map;
-
 /**
  * This is a simple Logger implementation that other Loggers can inherit from.
  *

@@ -2,8 +2,6 @@
 
 namespace Waffle\Contract\Log;
 
-use Map;
-
 /**
  * Describes a logger instance.
  *

@@ -2,8 +2,6 @@
 
 namespace Waffle\Contract\Log;
 
-use Map;
-
 /**
  * This Logger can be used to avoid conditional log calls.
  *
