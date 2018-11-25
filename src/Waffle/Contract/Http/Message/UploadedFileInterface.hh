@@ -78,18 +78,12 @@ interface UploadedFileInterface
     /**
      * Retrieve the error associated with the uploaded file.
      *
-     * The return value MUST be one of PHP's UPLOAD_ERR_XXX constants.
-     *
-     * If the file was uploaded successfully, this method MUST return
-     * UPLOAD_ERR_OK.
+     * If the file was uploaded successfully, this method MUST return null.
      *
      * Implementations SHOULD return the value stored in the "error" key of
      * the file in the $_FILES array.
-     *
-     * @see http://php.net/manual/en/features.file-upload.errors.php
-     * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
-    public function getError(): int;
+    public function getError(): ?UploadedFileError;
 
     /**
      * Retrieve the filename sent by the client.
