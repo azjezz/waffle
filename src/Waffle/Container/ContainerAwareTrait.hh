@@ -4,7 +4,6 @@ namespace Waffle\Container;
 
 use Waffle\Container\Exception\ContainerException;
 use Waffle\Contract\Container\ContainerInterface;
-use function sprintf;
 
 trait ContainerAwareTrait
 {
