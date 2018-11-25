@@ -8,3 +8,9 @@ Hack framework for building web applications with expressive, elegant syntax.
 ```bash
 $ composer require azjezz/waffle
 ```
+
+
+### FAQ
+
+- can i use this ?
+> NO
