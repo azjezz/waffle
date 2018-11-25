@@ -51,7 +51,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      *
      * @return array
      */
-    public function getServerParams(): Map<string, mixed>;
+    public function getServerParams(): Map<string, string>;
 
     /**
      * Retrieve cookies.
@@ -63,7 +63,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      *
      * @return array
      */
-    public function getCookieParams(): Map<string, mixed>;
+    public function getCookieParams(): Map<string, string>;
 
     /**
      * Return an instance with the specified cookies.
@@ -82,7 +82,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * @param array $cookies Array of key/value pairs representing cookies.
      * @return static
      */
-    public function withCookieParams(Map<string, mixed> $cookies): ServerRequestInterface;
+    public function withCookieParams(Map<string, string> $cookies): ServerRequestInterface;
 
     /**
      * Retrieve query string arguments.
@@ -96,7 +96,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      *
      * @return array
      */
-    public function getQueryParams(): Map<string, mixed>;
+    public function getQueryParams(): Map<string, string>;
 
     /**
      * Return an instance with the specified query string arguments.
@@ -120,7 +120,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      *     $_GET.
      * @return static
      */
-    public function withQueryParams(Map<string, mixed> $query): ServerRequestInterface;
+    public function withQueryParams(Map<string, string> $query): ServerRequestInterface;
 
     /**
      * Retrieve normalized file upload data.
