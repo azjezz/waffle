@@ -13,7 +13,7 @@ interface UploadedFileFactoryInterface
      * @param StreamInterface $stream Underlying stream representing the
      *     uploaded file content.
      * @param int $size in bytes
-     * @param ?UploadeFileError $error PHP file upload error or null.
+     * @param ?UploadeFileError $error Hack file upload error or null.
      * @param string $clientFilename Filename as provided by the client, if any.
      * @param string $clientMediaType Media type as provided by the client, if any.
      *

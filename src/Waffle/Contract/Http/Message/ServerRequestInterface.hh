@@ -15,7 +15,7 @@ namespace Waffle\Contract\Http\Message;
  * - Message body
  *
  * Additionally, it encapsulates all data as it has arrived to the
- * application from the CGI and/or PHP environment, including:
+ * application from the CGI and/or Hack environment, including:
  *
  * - The values represented in $_SERVER.
  * - Any cookies provided (generally via $_COOKIE)
@@ -46,7 +46,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * Retrieve server parameters.
      *
      * Retrieves data related to the incoming request environment,
-     * typically derived from PHP's $_SERVER superglobal. The data IS NOT
+     * typically derived from Hack's $_SERVER superglobal. The data IS NOT
      * REQUIRED to originate from $_SERVER.
      *
      * @return array
@@ -102,10 +102,10 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * Return an instance with the specified query string arguments.
      *
      * These values SHOULD remain immutable over the course of the incoming
-     * request. They MAY be injected during instantiation, such as from PHP's
+     * request. They MAY be injected during instantiation, such as from Hack's
      * $_GET superglobal, or MAY be derived from some other value such as the
      * URI. In cases where the arguments are parsed from the URI, the data
-     * MUST be compatible with what PHP's parse_str() would return for
+     * MUST be compatible with what Hack's parse_str() would return for
      * purposes of how duplicate query parameters are handled, and how nested
      * sets are handled.
      *

@@ -17,7 +17,7 @@ use DateInterval;
  * Cache\CacheItemPoolInterface object, which is responsible for any required
  * setup as well as associating the object with a unique Key.
  * Cache\CacheItemInterface objects MUST be able to store and retrieve any type
- * of PHP value defined in the Data section of the specification.
+ * of Hack value defined in the Data section of the specification.
  *
  * Calling Libraries MUST NOT instantiate Item objects themselves. They may only
  * be requested from a Pool object via the getItem() method.  Calling Libraries
@@ -65,7 +65,7 @@ interface CacheItemInterface
     /**
      * Sets the value represented by this cache item.
      *
-     * The $value argument may be any item that can be serialized by PHP,
+     * The $value argument may be any item that can be serialized by Hack,
      * although the method of serialization is left up to the Implementing
      * Library.
      *

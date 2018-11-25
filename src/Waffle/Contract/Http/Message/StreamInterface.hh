@@ -7,7 +7,7 @@ use const SEEK_SET;
 /**
  * Describes a data stream.
  *
- * Typically, an instance will wrap a PHP stream; this interface provides
+ * Typically, an instance will wrap a Hack stream; this interface provides
  * a wrapper around the most common operations, including serialization of
  * the entire stream to a string.
  */
@@ -21,7 +21,7 @@ interface StreamInterface
      *
      * Warning: This could attempt to load a large amount of data into memory.
      *
-     * This method MUST NOT raise an exception in order to conform with PHP's
+     * This method MUST NOT raise an exception in order to conform with Hack's
      * string casting operations.
      *
      * @see http://php.net/manual/en/language.oop5.magic.php#object.tostring
@@ -41,7 +41,7 @@ interface StreamInterface
      *
      * After the stream has been detached, the stream is in an unusable state.
      *
-     * @return resource|null Underlying PHP stream, if any
+     * @return resource|null Underlying Hack stream, if any
      */
     public function detach(): ?resource;
 
@@ -81,7 +81,7 @@ interface StreamInterface
      * @param int $offset Stream offset
      * @param int $whence Specifies how the cursor position will be calculated
      *     based on the seek offset. Valid values are identical to the built-in
-     *     PHP $whence values for `fseek()`.  SEEK_SET: Set position equal to
+     *     Hack $whence values for `fseek()`.  SEEK_SET: Set position equal to
      *     offset bytes SEEK_CUR: Set position to current location plus offset
      *     SEEK_END: Set position to end-of-stream plus offset.
      * @throws \RuntimeException on failure.
@@ -147,7 +147,7 @@ interface StreamInterface
     /**
      * Get stream metadata as an associative array or retrieve a specific key.
      *
-     * The keys returned are identical to the keys returned from PHP's
+     * The keys returned are identical to the keys returned from Hack's
      * stream_get_meta_data() function.
      *
      * @link http://php.net/manual/en/function.stream-get-meta-data.php

@@ -16,10 +16,10 @@ interface UploadedFileInterface
      * Retrieve a stream representing the uploaded file.
      *
      * This method MUST return a StreamInterface instance, representing the
-     * uploaded file. The purpose of this method is to allow utilizing native PHP
+     * uploaded file. The purpose of this method is to allow utilizing native Hack
      * stream functionality to manipulate the file upload, such as
      * stream_copy_to_stream() (though the result will need to be decorated in a
-     * native PHP stream wrapper to work with such functions).
+     * native Hack stream wrapper to work with such functions).
      *
      * If the moveTo() method has been called previously, this method MUST raise
      * an exception.
@@ -40,7 +40,7 @@ interface UploadedFileInterface
      * operation) to perform the operation.
      *
      * $targetPath may be an absolute path, or a relative path. If it is a
-     * relative path, resolution should be the same as used by PHP's rename()
+     * relative path, resolution should be the same as used by Hack's rename()
      * function.
      *
      * The original file or stream MUST be removed on completion.
@@ -68,7 +68,7 @@ interface UploadedFileInterface
      * Retrieve the file size.
      *
      * Implementations SHOULD return the value stored in the "size" key of
-     * the file in the $_FILES array if available, as PHP calculates this based
+     * the file in the $_FILES array if available, as Hack calculates this based
      * on the actual size transmitted.
      *
      * @return int|null The file size in bytes or null if unknown.
