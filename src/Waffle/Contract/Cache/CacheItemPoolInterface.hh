@@ -49,7 +49,7 @@ interface CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems(array<string> $keys = []): Traversable<CacheItemInterface>;
+    public function getItems(Traversable<string> $keys = []): Traversable<CacheItemInterface>;
 
     /**
      * Confirms if the cache contains specified cache item.
@@ -106,7 +106,7 @@ interface CacheItemPoolInterface
      * @return bool
      *   True if the items were successfully removed. False if there was an error.
      */
-    public function deleteItems(array<string> $keys): string;
+    public function deleteItems(Traversable<string> $keys): bool;
 
     /**
      * Persists a cache item immediately.

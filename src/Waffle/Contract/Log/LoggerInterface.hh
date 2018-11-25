@@ -25,11 +25,11 @@ interface LoggerInterface
      * System is unusable.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function emergency(string $message, array<arraykey, mixed> $context = []): void;
+    public function emergency(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Action must be taken immediately.
@@ -38,11 +38,11 @@ interface LoggerInterface
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function alert(string $message, array<arraykey, mixed> $context = []): void;
+    public function alert(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Critical conditions.
@@ -50,22 +50,22 @@ interface LoggerInterface
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function critical(string $message, array<arraykey, mixed> $context = []): void;
+    public function critical(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function error(string $message, array<arraykey, mixed> $context = []): void;
+    public function error(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Exceptional occurrences that are not errors.
@@ -74,21 +74,21 @@ interface LoggerInterface
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function warning(string $message, array<arraykey, mixed> $context = []): void;
+    public function warning(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Normal but significant events.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function notice(string $message, array<arraykey, mixed> $context = []): void;
+    public function notice(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Interesting events.
@@ -96,30 +96,30 @@ interface LoggerInterface
      * Example: User logs in, SQL logs.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function info(string $message, array<arraykey, mixed> $context = []): void;
+    public function info(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Detailed debug information.
      *
      * @param string $message
-     * @param Map  $context
+     * @param Vector $context
      *
      * @return void
      */
-    public function debug(string $message, array<arraykey, mixed> $context = []): void;
+    public function debug(string $message, Vector<mixed> $context = Vector {}): void;
 
     /**
      * Logs with an arbitrary level.
      *
      * @param LogLevel  $level
-     * @param string $message
-     * @param Map  $context
+     * @param string    $message
+     * @param Vector    $context
      *
      * @return void
      */
-    public function log(LogLevel $level, string $message, array<arraykey, mixed> $context = []): void;
+    public function log(LogLevel $level, string $message, Vector<mixed> $context = Vector {}): void;
 }

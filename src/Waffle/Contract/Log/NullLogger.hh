@@ -23,7 +23,7 @@ class NullLogger extends AbstractLogger
      *
      * @return void
      */
-    public function log(LogLevel $level, string $message, array<arraykey, mixed> $context = []): void
+    public function log(LogLevel $level, string $message, Vector<mixed> $context = Vector {}): void
     {
         // noop
     }

@@ -134,7 +134,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * @return array A Set of UploadedFileInterface instances; an empty
      *     Set MUST be returned if no data is present.
      */
-    public function getUploadedFiles(): Set<UploadedFileInterface>;
+    public function getUploadedFiles(): Vector<UploadedFileInterface>;
 
     /**
      * Create a new instance with the specified uploaded files.
@@ -143,11 +143,11 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * immutability of the message, and MUST return an instance that has the
      * updated body parameters.
      *
-     * @param Set<UploadedFileInterface> $uploadedFiles A Set of UploadedFileInterface instances.
-     * @return static
+     * @param Vector<UploadedFileInterface> $uploadedFiles A Set of UploadedFileInterface instances.
+     * @return this
      * @throws \InvalidArgumentException if an invalid structure is provided.
      */
-    public function withUploadedFiles(Set<UploadedFileInterface> $uploadedFiles): ServerRequestInterface;
+    public function withUploadedFiles(Vector<UploadedFileInterface> $uploadedFiles): ServerRequestInterface;
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -224,7 +224,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
-    public function getAttribute(string $name, mixed $default = null): ServerRequestInterface;
+    public function getAttribute(string $name, mixed $default = null): mixed;
 
     /**
      * Return an instance with the specified derived request attribute.

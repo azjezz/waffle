@@ -15,13 +15,8 @@ abstract class AbstractLogger implements LoggerInterface
 {
     /**
      * System is unusable.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function emergency(string $message, array<arraykey, mixed> $context = []): void
+    public function emergency(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::EMERGENCY, $message, $context);
     }
@@ -31,13 +26,8 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function alert(string $message, array<arraykey, mixed> $context = []): void
+    public function alert(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::ALERT, $message, $context);
     }
@@ -46,13 +36,8 @@ abstract class AbstractLogger implements LoggerInterface
      * Critical conditions.
      *
      * Example: Application component unavailable, unexpected exception.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function critical(string $message, array<arraykey, mixed> $context = []): void
+    public function critical(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::CRITICAL, $message, $context);
     }
@@ -60,13 +45,8 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function error(string $message, array<arraykey, mixed> $context = []): void
+    public function error(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::ERROR, $message, $context);
     }
@@ -76,26 +56,16 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function warning(string $message, array<arraykey, mixed> $context = []): void
+    public function warning(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::WARNING, $message, $context);
     }
 
     /**
      * Normal but significant events.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function notice(string $message, array<arraykey, mixed> $context = []): void
+    public function notice(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::NOTICE, $message, $context);
     }
@@ -104,26 +74,16 @@ abstract class AbstractLogger implements LoggerInterface
      * Interesting events.
      *
      * Example: User logs in, SQL logs.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function info(string $message, array<arraykey, mixed> $context = []): void
+    public function info(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::INFO, $message, $context);
     }
 
     /**
      * Detailed debug information.
-     *
-     * @param string $message
-     * @param Map  $context
-     *
-     * @return void
      */
-    public function debug(string $message, array<arraykey, mixed> $context = []): void
+    public function debug(string $message, Vector<mixed> $context = Vector {}): void
     {
         $this->log(LogLevel::DEBUG, $message, $context);
     }
