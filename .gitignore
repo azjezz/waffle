@@ -4,6 +4,9 @@ vendor/
 # Documentation is not ready yet. neither is the framework.
 docs/
 
+composer
 composer.phar
 
 main.hh
+
+hhast/

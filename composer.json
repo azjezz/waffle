@@ -13,8 +13,9 @@
         "facebook/xhp-lib": "^2.8"
     },
     "require-dev": {
-      "facebook/fbexpect": "^2.2",
-        "hhvm/hacktest": "^1.2"
+        "facebook/fbexpect": "^2.2",
+        "hhvm/hacktest": "^1.2",
+        "hhvm/hhast": "^3.29"
     },
     "autoload": {
         "psr-4": {
@@ -25,5 +26,9 @@
         "psr-4": {
             "Waffle\\Tests\\": "tests/Waffle"
         }
+    },
+    "scripts": {
+        "test": "hacktest -v tests/",
+        "lint": "hhast-lint -v src/"
     }
 }
