@@ -57,7 +57,7 @@ class RequestTest extends HackTest
             $r1 = new Request('GET', new Uri('/'));
             $r1->withRequestTarget('/foo bar');
         })->toThrow(
-            \InvalidArgumentException::class,
+            Exception\InvalidArgumentException::class,
             'Invalid request target provided; cannot contain whitespace'
         );
     }

@@ -5,6 +5,8 @@ namespace Waffle\Http\Message;
 use Waffle\Contract\Http\Message\RequestInterface;
 use Waffle\Contract\Http\Message\UriInterface;
 
+use function preg_match;
+
 trait RequestTrait 
 {
     require implements RequestInterface;
@@ -33,8 +35,8 @@ trait RequestTrait
 
     public function withRequestTarget(string $requestTarget): this
     {
-        if (\preg_match('#\s#', $requestTarget)) {
-            throw new \InvalidArgumentException('Invalid request target provided; cannot contain whitespace');
+        if (preg_match('#\s#', $requestTarget)) {
+            throw new Exception\InvalidArgumentException('Invalid request target provided; cannot contain whitespace');
         }
 
         $new = clone $this;
