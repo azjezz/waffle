@@ -3,10 +3,8 @@
 namespace Waffle\Container\ServiceProvider;
 
 use namespace HH\Lib\Str;
-use Generator;
 use Waffle\Container\{ContainerAwareInterface, ContainerAwareTrait};
 use Waffle\Container\Exception\ContainerException;
-use function is_string;
 use function class_exists;
 use ReflectionClass;
 
@@ -30,9 +28,9 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
      */
     public function add(mixed $provider): this
     {
-        if (is_string($provider) && $this->getContainer()->has($provider)) {
+        if (($provider is string) && $this->getContainer()->has($provider)) {
             $provider = $this->getContainer()->get($provider);
-        } elseif (is_string($provider) && class_exists($provider)) {
+        } elseif (($provider is string) && class_exists($provider)) {
             $reflection = new ReflectionClass($provider);
             $provider = $reflection->newInstance();
         }

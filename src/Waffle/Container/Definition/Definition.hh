@@ -162,7 +162,7 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
             $concrete = $concrete->getValue();
         }
 
-        if (is_string($concrete) && class_exists($concrete)) {
+        if (($concrete is string) && class_exists($concrete)) {
             $concrete = $this->resolveClass($concrete);
         }
 

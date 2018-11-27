@@ -11,7 +11,6 @@ use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
 use function is_object;
-use function is_string;
 use function class_exists;
 use function explode;
 use function is_array;
@@ -81,12 +80,12 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      */
     public function call(mixed $callable, Map<string, mixed> $args = Map {}): mixed
     {
-        if (is_string($callable) && Str\search($callable, '::') !== null) {
+        if (($callable is string) && Str\search($callable, '::') !== null) {
             $callable = explode('::', $callable);
         }
 
         if (is_array($callable)) {
-            if (is_string($callable[0])) {
+            if ($callable[0] is string) {
                 $callable[0] = $this->getContainer()->get($callable[0]);
             }
 

@@ -9,7 +9,6 @@ use Waffle\Http\Message\Stream;
 use Waffle\Http\Message\Functional;
 
 use function is_object;
-use function is_resource;
 use function json_encode;
 use function json_last_error;
 use function json_last_error_msg;
@@ -111,7 +110,7 @@ class JsonResponse extends Response
      */
     private function jsonEncode(mixed $data, int $encodingOptions): string
     {
-        if (is_resource($data)) {
+        if ($data is resource) {
             throw new Exception\InvalidArgumentException('Cannot JSON encode resources');
         }
 

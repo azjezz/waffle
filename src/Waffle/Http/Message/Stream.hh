@@ -4,8 +4,6 @@ namespace Waffle\Http\Message;
 
 use Waffle\Contract\Http\Message\StreamInterface;
 
-use function is_string;
-use function is_resource;
 use function fopen;
 use function fclose;
 use function fwrite;
@@ -51,7 +49,7 @@ class Stream implements StreamInterface
     public function close(): void
     {
         if (null !== $this->stream) {
-            if (is_resource($this->stream)) {
+            if ($this->stream is resource) {
                 fclose($this->stream);
             }
             $this->detach();

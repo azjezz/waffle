@@ -3,7 +3,8 @@
 namespace Waffle\Container\Argument;
 
 use namespace HH\Lib\Str;
-use Waffle\Container\Exception\{ContainerException, NotFoundException};
+use Waffle\Container\Exception\ContainerException;
+use Waffle\Container\Exception\NotFoundException;
 use Waffle\Container\ReflectionContainer;
 use Waffle\Contract\Container\ContainerInterface;
 use ReflectionFunctionAbstract;
@@ -25,7 +26,7 @@ trait ArgumentResolverTrait
                 $arg = $arg->getValue();
             }
 
-            if (! is_string($arg)) {
+            if (! ($arg is string)) {
                 $resolved->add($arg);
                 continue;
             }
