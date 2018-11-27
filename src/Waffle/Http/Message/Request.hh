@@ -11,8 +11,13 @@ class Request implements RequestInterface
     use MessageTrait;
     use RequestTrait;
 
-    public function __construct(string $method, UriInterface $uri, Map<string, Set<string>> $headers = Map {}, ?StreamInterface $body = null, string $version = '1.1')
-    {
+    public function __construct(
+        string $method, 
+        UriInterface $uri, 
+        Map<string, Set<string>> $headers = Map {}, 
+        ?StreamInterface $body = null, 
+        string $version = '1.1'
+    ) {
         $this->method = $method;
         $this->uri = $uri;
         $this->setHeaders($headers);

@@ -9,9 +9,6 @@ use Waffle\Contract\Http\Message\UriInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
 {
-    use MessageTrait;
-    use RequestTrait;
-
     protected Map<string, mixed> $attributes = Map {};
 
     protected Map<string, string> $cookieParams = Map {};
