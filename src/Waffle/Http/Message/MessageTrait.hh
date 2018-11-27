@@ -27,6 +27,13 @@ trait MessageTrait
 
     protected ?StreamInterface $stream;
 
+    public function __clone(): void 
+    {
+        $this->headers = clone $this->headers;
+        $this->stream = null === $this->stream ? null : (clone $this->stream);
+        $this->headerNames = clone $this->headerNames;
+    }
+
     public function getProtocolVersion(): string
     {
         return $this->protocol;
@@ -120,7 +127,7 @@ trait MessageTrait
 
         $new = clone $this;
 
-        $new->headerNames->remove($header);
+        $new->headerNames->remove($normalized);
         $new->headers->remove($header);
 
         return $new;

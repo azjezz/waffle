@@ -31,15 +31,7 @@ class Request implements RequestInterface
             $this->stream = $body;
         }
     }
-
-    public function __clone(): void 
-    {
-        $this->headers = clone $this->headers;
-        $this->headerNames = clone $this->headerNames;
-        $this->stream = null === $this->stream ? null : (clone $this->stream);
-        $this->uri = clone $this->uri;
-    }
-
+    
     protected function updateHostFromUri(): void
     {
         if ('' === $host = $this->uri->getHost()) {
