@@ -13,14 +13,6 @@ class UploadedFile implements UploadedFileInterface
 {
     private bool $moved = false;
 
-
-    /**
-     * @param StreamInterface|string|resource $streamOrFile
-     * @param int                             $size
-     * @param int                             $errorStatus
-     * @param string|null                     $clientFilename
-     * @param string|null                     $clientMediaType
-     */
     public function __construct(
         private StreamInterface $stream,
         private ?int $size,

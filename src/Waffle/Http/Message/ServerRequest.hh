@@ -21,6 +21,17 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     protected Map<string, UploadedFileInterface> $uploadedFiles = Map {};
 
+    public function __clone(): void 
+    {
+        parent::__clone();
+        $this->attributes = clone $this->attributes;
+        $this->cookieParams = clone $this->cookieParams;
+        $this->parsedBody = null === $this->parsedBody ? null : clone $this->parsedBody;
+        $this->queryParams = clone $this->queryParams;
+        $this->serverParams = clone $this->serverParams;
+        $this->uploadedFiles = clone $this->uploadedFiles;
+    }
+
     public function __construct(
         string $method, 
         UriInterface $uri, 

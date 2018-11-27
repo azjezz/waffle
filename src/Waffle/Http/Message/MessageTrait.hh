@@ -116,7 +116,8 @@ trait MessageTrait
             return $this;
         }
 
-        $header = $this->headerNames[$normalized];
+        $header = $this->headerNames->at($normalized);
+
         $new = clone $this;
 
         $new->headerNames->remove($header);

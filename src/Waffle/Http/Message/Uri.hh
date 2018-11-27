@@ -162,7 +162,7 @@ final class Uri implements UriInterface
         return $new;
     }
 
-    public function withPort(int $port): this
+    public function withPort(?int $port): this
     {
         $port = $this->filterPort($port);
 
