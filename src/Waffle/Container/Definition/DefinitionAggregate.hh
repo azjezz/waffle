@@ -19,7 +19,7 @@ class DefinitionAggregate implements DefinitionAggregateInterface
    /**
      * {@inheritdoc}
      */
-    public function add(string $id, mixed $definition, bool $shared = false) : DefinitionInterface
+    public function add(string $id, mixed $definition, bool $shared = false): DefinitionInterface
     {
         if (! $definition instanceof DefinitionInterface) {
             $definition = (new Definition($id, $definition));

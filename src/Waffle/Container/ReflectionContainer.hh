@@ -52,7 +52,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
 
         $resolution = null === $construct
             ? $reflector->newInstance()
-            : $reflector->newInstanceArgs(
+           : $reflector->newInstanceArgs(
                 $this->reflectArguments($construct, $args)
               )
         ;

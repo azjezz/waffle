@@ -10,7 +10,7 @@ interface DefinitionAggregateInterface extends ContainerAwareInterface, Iterator
     /**
      * Add a definition to the aggregate.
      */
-    public function add(string $id, mixed $definition, bool $shared = false) : DefinitionInterface;
+    public function add(string $id, mixed $definition, bool $shared = false): DefinitionInterface;
 
     /**
      * Checks whether alias exists as definition.
