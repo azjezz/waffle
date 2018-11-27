@@ -17,6 +17,7 @@ use function fread;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function array_key_exists;
+use function strstr;
 
 use const SEEK_SET;
 
@@ -25,46 +26,14 @@ class Stream implements StreamInterface
 {
     protected ?resource $stream;
 
-    protected bool $seekable;
-
-    protected bool $readable;
-
-    protected bool $writable;
-
     protected mixed $uri;
 
     protected ?int $size;
 
-    private static Set<string> $readHash = Set {
-            'r', 'w+', 'r+', 'x+', 'c+',
-            'rb', 'w+b', 'r+b', 'x+b',
-            'c+b', 'rt', 'w+t', 'r+t',
-            'x+t', 'c+t', 'a+',
-    };
-
-    private static Set<string> $writeHash = Set {
-            'w', 'w+', 'rw', 'r+', 'x+',
-            'c+', 'wb', 'w+b', 'r+b',
-            'x+b', 'c+b', 'w+t', 'r+t',
-            'x+t', 'c+t', 'a', 'a+',
-    };
-
     public function __construct(resource $body)
     {
         $this->stream = $body;
-        $meta = stream_get_meta_data($this->stream);
-        $this->seekable = $meta['seekable'] ?? false;
-        $wrMode = $meta['mode'];
-        $this->readable = self::$readHash->contains($wrMode);
-        $this->writable = self::$writeHash->contains($wrMode);
         $this->uri = $this->getMetadata('uri');
-    }
-
-    public static function createFromString(string $body): StreamInterface 
-    {
-        $resource = fopen('php://temp', 'rw+');
-        fwrite($resource, $body);
-        return new self($resource);
     }
 
     public function __toString(): string
@@ -100,7 +69,6 @@ class Stream implements StreamInterface
         $this->stream = null;
         
         $this->size = $this->uri = null;
-        $this->readable = $this->writable = $this->seekable = false;
 
         return $result;
     }
@@ -147,7 +115,12 @@ class Stream implements StreamInterface
 
     public function isSeekable(): bool
     {
-        return $this->seekable;
+        if (null === $this->stream) {
+            return false;
+        }
+
+        $meta = stream_get_meta_data($this->stream);
+        return $meta['seekable'];
     }
 
     public function seek(int $offset,int $whence = \SEEK_SET): void
@@ -156,7 +129,7 @@ class Stream implements StreamInterface
             throw Exception\UnseekableStreamException::dueToMissingResource();
         }
 
-        if (!$this->seekable) {
+        if (!$this->isSeekable()) {
             throw Exception\UnseekableStreamException::dueToConfiguration();
         }
         
@@ -174,7 +147,20 @@ class Stream implements StreamInterface
 
     public function isWritable(): bool
     {
-        return $this->writable;
+        if (null === $this->stream) {
+            return false;
+        }
+        
+        $meta = stream_get_meta_data($this->stream);
+        $mode = $meta['mode'];
+
+        return (
+            strstr($mode, 'x')
+            || strstr($mode, 'w')
+            || strstr($mode, 'c')
+            || strstr($mode, 'a')
+            || strstr($mode, '+')
+        );
     }
 
     public function write(string $string): int
@@ -183,7 +169,7 @@ class Stream implements StreamInterface
             throw Exception\UnwritableStreamException::dueToMissingResource();
         }
 
-        if (!$this->writable) {
+        if (!$this->isWritable()) {
             throw Exception\UnwritableStreamException::dueToConfiguration();
         }
 
@@ -200,7 +186,14 @@ class Stream implements StreamInterface
 
     public function isReadable(): bool
     {
-        return $this->readable;
+        if (null === $this->stream) {
+            return false;
+        }
+        
+        $meta = stream_get_meta_data($this->stream);
+        $mode = $meta['mode'];
+
+        return (strstr($mode, 'r') || strstr($mode, '+'));
     }
 
     public function read(int $length): string
@@ -209,7 +202,7 @@ class Stream implements StreamInterface
             throw Exception\UnreadableStreamException::dueToMissingResource();
         }
 
-        if (!$this->readable) {
+        if (!$this->isReadable()) {
             throw Exception\UnreadableStreamException::dueToConfiguration();
         }
 
