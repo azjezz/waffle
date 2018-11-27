@@ -110,7 +110,10 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     public function getAttribute(string $attribute, mixed $default = null): mixed
     {
-        return $this->attributes->get($attribute) ?? $default;
+        if ($this->attributes->contains($attribute)) {
+            return $this->attributes->at($attribute);
+        }
+        return $default;
     }
 
     public function withAttribute(string $attribute, mixed $value): this
