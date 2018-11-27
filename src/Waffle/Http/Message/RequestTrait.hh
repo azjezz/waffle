@@ -50,10 +50,6 @@ trait RequestTrait
 
     public function withMethod(string $method): this
     {
-        if (!\is_string($method)) {
-            throw new \InvalidArgumentException('Method must be a string');
-        }
-
         $new = clone $this;
         $new->method = $method;
 
