@@ -222,7 +222,7 @@ final class Uri implements UriInterface
      */
     private function applyParts(Map<string, arraykey> $parts): void
     {
-        $this->scheme = $parts->contains('schema') ? strtolower($parts->get('schema')): '';
+        $this->scheme = $parts->contains('scheme') ? strtolower($parts->get('scheme')): '';
         $this->host = $parts->contains('host') ? strtolower($parts->get('host')): '';
         $this->port = $parts->contains('port') ? $this->filterPort((int) $parts->get('port')): null;
         $this->path = $parts->contains('path') ? $this->filterPath((string) $parts->get('path')): '';
