@@ -3,6 +3,7 @@
 namespace Waffle\Contract\Http\Message;
 
 enum UploadedFileError: int {
+	ERROR_OK = 0;
 	ERROR_EXCEEDS_MAX_INI_SIZE = 1;
 	ERROR_EXCEEDS_MAX_FORM_SIZE = 2;
 	ERROR_INCOMPLETE = 3;

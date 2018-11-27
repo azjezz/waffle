@@ -96,6 +96,7 @@ interface StreamInterface
      *
      * @see seek()
      * @link http://www.php.net/manual/en/function.fseek.php
+     *
      * @throws \RuntimeException on failure.
      */
     public function rewind(): void;

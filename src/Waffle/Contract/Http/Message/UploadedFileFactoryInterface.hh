@@ -24,7 +24,7 @@ interface UploadedFileFactoryInterface
     public function createUploadedFile(
         StreamInterface $stream,
         ?int $size = null,
-        ?UploadedFileError $error = null,
+        UploadedFileError $error = UploadedFileError::ERROR_OK,
         ?string $clientFilename = null,
         ?string $clientMediaType = null
     ): UploadedFileInterface;

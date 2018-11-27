@@ -24,8 +24,6 @@ interface ResponseInterface extends MessageInterface
      *
      * The status code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
-     *
-     * @return int Status code.
      */
     public function getStatusCode(): int;
 
@@ -46,10 +44,10 @@ interface ResponseInterface extends MessageInterface
      * @param string $reasonPhrase The reason phrase to use with the
      *     provided status code; if none is provided, implementations MAY
      *     use the defaults as suggested in the HTTP specification.
-     * @return static
+     *
      * @throws \InvalidArgumentException For invalid status code arguments.
      */
-    public function withStatus(int $code, string $reasonPhrase = ''): ResponseInterface;
+    public function withStatus(int $code, string $reasonPhrase = ''): this;
 
     /**
      * Gets the response reason phrase associated with the status code.

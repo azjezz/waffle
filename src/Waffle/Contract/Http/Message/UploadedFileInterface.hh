@@ -78,12 +78,9 @@ interface UploadedFileInterface
     /**
      * Retrieve the error associated with the uploaded file.
      *
-     * If the file was uploaded successfully, this method MUST return null.
-     *
-     * Implementations SHOULD return the value stored in the "error" key of
-     * the file in the $_FILES array.
+     * If the file was uploaded successfully, this method MUST return UploadedFileError::ERROR_OK.
      */
-    public function getError(): ?UploadedFileError;
+    public function getError(): UploadedFileError;
 
     /**
      * Retrieve the filename sent by the client.

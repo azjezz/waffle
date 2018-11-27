@@ -40,7 +40,7 @@ namespace Waffle\Contract\Http\Message;
  * be implemented such that they retain the internal state of the current
  * message and return an instance that contains the changed state.
  */
-interface ServerRequestInterface /*extends RequestInterface*/
+interface ServerRequestInterface extends RequestInterface
 {
     /**
      * Retrieve server parameters.
@@ -48,8 +48,6 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * Retrieves data related to the incoming request environment,
      * typically derived from Hack's $_SERVER superglobal. The data IS NOT
      * REQUIRED to originate from $_SERVER.
-     *
-     * @return array
      */
     public function getServerParams(): Map<string, string>;
 
@@ -60,8 +58,6 @@ interface ServerRequestInterface /*extends RequestInterface*/
      *
      * The data MUST be compatible with the structure of the $_COOKIE
      * superglobal.
-     *
-     * @return array
      */
     public function getCookieParams(): Map<string, string>;
 
@@ -79,10 +75,9 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * immutability of the message, and MUST return an instance that has the
      * updated cookie values.
      *
-     * @param array $cookies Array of key/value pairs representing cookies.
-     * @return static
+     * @param Map<string, string> $cookies Map of key/value pairs representing cookies.
      */
-    public function withCookieParams(Map<string, string> $cookies): ServerRequestInterface;
+    public function withCookieParams(Map<string, string> $cookies): this;
 
     /**
      * Retrieve query string arguments.
@@ -93,10 +88,8 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * params. If you need to ensure you are only getting the original
      * values, you may need to parse the query string from `getUri()->getQuery()`
      * or from the `QUERY_STRING` server param.
-     *
-     * @return array
      */
-    public function getQueryParams(): Map<string, string>;
+    public function getQueryParams(): Map<string, mixed>;
 
     /**
      * Return an instance with the specified query string arguments.
@@ -116,11 +109,10 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * immutability of the message, and MUST return an instance that has the
      * updated query string arguments.
      *
-     * @param array $query Array of query string arguments, typically from
+     * @param Map<string, mixed> $query Map of query string arguments, typically from
      *     $_GET.
-     * @return static
      */
-    public function withQueryParams(Map<string, string> $query): ServerRequestInterface;
+    public function withQueryParams(Map<string, mixed> $query): this;
 
     /**
      * Retrieve normalized file upload data.
@@ -131,10 +123,10 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * These values MAY be prepared from $_FILES or the message body during
      * instantiation, or MAY be injected via withUploadedFiles().
      *
-     * @return array A Set of UploadedFileInterface instances; an empty
-     *     Set MUST be returned if no data is present.
+     * @return Map<string, UploadedFileInterface> A Map of UploadedFileInterface instances; an empty
+     *     Map MUST be returned if no data is present.
      */
-    public function getUploadedFiles(): Vector<UploadedFileInterface>;
+    public function getUploadedFiles(): Map<string, UploadedFileInterface>;
 
     /**
      * Create a new instance with the specified uploaded files.
@@ -143,11 +135,11 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * immutability of the message, and MUST return an instance that has the
      * updated body parameters.
      *
-     * @param Vector<UploadedFileInterface> $uploadedFiles A Set of UploadedFileInterface instances.
-     * @return this
+     * @param Map<string, UploadedFileInterface> $uploadedFiles A Map of UploadedFileInterface instances.
+     *
      * @throws \InvalidArgumentException if an invalid structure is provided.
      */
-    public function withUploadedFiles(Vector<UploadedFileInterface> $uploadedFiles): ServerRequestInterface;
+    public function withUploadedFiles(Map<string, UploadedFileInterface> $uploadedFiles): this;
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -161,10 +153,9 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * potential types MUST be arrays or objects only. A null value indicates
      * the absence of body content.
      *
-     * @return null|array|object The deserialized body parameters, if any.
-     *     These will typically be an array or an object.
+     * @return Map<string, mixed> The deserialized body parametersm if any.
      */
-    public function getParsedBody(): mixed;
+    public function getParsedBody(): ?Map<string, mixed>;
 
     /**
      * Return an instance with the specified body parameters.
@@ -188,13 +179,12 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * immutability of the message, and MUST return an instance that has the
      * updated body parameters.
      *
-     * @param null|array|object $data The deserialized body data. This will
-     *     typically be in an array or an object.
-     * @return static
+     * @param Map<string, mixed> $data The deserialized body data.
+
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody(mixed $data): ServerRequestInterface;
+    public function withParsedBody(Map<string, mixed> $data): this;
 
     /**
      * Retrieve attributes derived from the request.
@@ -205,7 +195,7 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * deserializing non-form-encoded message bodies; etc. Attributes
      * will be application and request specific, and CAN be mutable.
      *
-     * @return array Attributes derived from the request.
+     * @return Map<string, mixed> Attributes derived from the request.
      */
     public function getAttributes(): Map<string, mixed>;
 
@@ -220,9 +210,9 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * specifying a default value to return if the attribute is not found.
      *
      * @see getAttributes()
+     *
      * @param string $name The attribute name.
      * @param mixed $default Default value to return if the attribute does not exist.
-     * @return mixed
      */
     public function getAttribute(string $name, mixed $default = null): mixed;
 
@@ -237,11 +227,11 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * updated attribute.
      *
      * @see getAttributes()
+     *
      * @param string $name The attribute name.
      * @param mixed $value The value of the attribute.
-     * @return static
      */
-    public function withAttribute(string $name, mixed $value): ServerRequestInterface;
+    public function withAttribute(string $name, mixed $value): this;
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -254,8 +244,8 @@ interface ServerRequestInterface /*extends RequestInterface*/
      * the attribute.
      *
      * @see getAttributes()
+     *
      * @param string $name The attribute name.
-     * @return static
      */
-    public function withoutAttribute(string $name): ServerRequestInterface;
+    public function withoutAttribute(string $name): this;
 }
