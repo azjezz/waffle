@@ -1,18 +1,10 @@
-<?php
-/**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
- */
-
-declare(strict_types=1);
+<?hh // strict
 
 namespace Waffle\Http\Message\Response;
 
 use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Http\Message\Exception;
 use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Stream;
+use Waffle\Http\Message\Functional;
 
 use function get_class;
 use function gettype;
