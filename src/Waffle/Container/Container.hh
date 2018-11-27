@@ -2,6 +2,7 @@
 
 namespace Waffle\Container;
 
+use namespace HH\Lib\Str;
 use Waffle\Container\Definition\DefinitionAggregate;
 use Waffle\Container\Definition\DefinitionInterface;
 use Waffle\Container\Definition\DefinitionAggregateInterface;
@@ -12,7 +13,6 @@ use Waffle\Container\Inflector\InflectorAggregateInterface;
 use Waffle\Container\ServiceProvider\ServiceProviderAggregate;
 use Waffle\Container\ServiceProvider\ServiceProviderAggregateInterface;
 use Waffle\Contract\Container\ContainerInterface;
-use function sprintf;
 
 class Container implements ContainerInterface
 {
@@ -79,7 +79,7 @@ class Container implements ContainerInterface
         }
 
         throw new NotFoundException(
-            sprintf('Unable to extend alias (%s) as it is not being managed as a definition', $id)
+            Str\format('Unable to extend alias (%s) as it is not being managed as a definition', $id)
         );
     }
 
@@ -127,7 +127,7 @@ class Container implements ContainerInterface
             }
         }
 
-        throw new NotFoundException(sprintf('Alias (%s) is not being managed by the container or delegates', $id));
+        throw new NotFoundException(Str\format('Alias (%s) is not being managed by the container or delegates', $id));
     }
 
     /**

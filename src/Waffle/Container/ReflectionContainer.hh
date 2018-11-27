@@ -2,6 +2,7 @@
 
 namespace Waffle\Container;
 
+use namespace HH\Lib\Str;
 use Waffle\Container\Argument\ArgumentResolverInterface;
 use Waffle\Container\Argument\ArgumentResolverTrait;
 use Waffle\Container\Exception\NotFoundException;
@@ -9,8 +10,6 @@ use Waffle\Contract\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
-use function sprintf;
-use function strpos;
 use function is_object;
 use function is_string;
 use function class_exists;
@@ -43,7 +42,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
 
         if (! $this->has($id)) {
             throw new NotFoundException(
-                sprintf('Alias (%s) is not an existing class and therefore cannot be resolved', $id)
+                Str\format('Alias (%s) is not an existing class and therefore cannot be resolved', $id)
             );
         }
 
@@ -82,7 +81,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      */
     public function call(mixed $callable, Map<string, mixed> $args = Map {}): mixed
     {
-        if (is_string($callable) && strpos($callable, '::') !== false) {
+        if (is_string($callable) && Str\search($callable, '::') !== null) {
             $callable = explode('::', $callable);
         }
 

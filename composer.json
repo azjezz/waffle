@@ -10,6 +10,8 @@
         }
     ],
     "require": {
+        "hhvm": "3.29.*",
+        "hhvm/hsl": "^1.0.0|^3.26.0",
         "facebook/xhp-lib": "^2.8"
     },
     "require-dev": {

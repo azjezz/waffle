@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Message\Response;
 
+use namespace HH\Lib\Str;
 use Waffle\Http\Message\Exception;
 use Waffle\Http\Message\Response;
 use Waffle\Http\Message\Stream;
@@ -12,9 +13,7 @@ use function is_resource;
 use function json_encode;
 use function json_last_error;
 use function json_last_error_msg;
-use function sprintf;
 use function array_reduce;
-use function strtolower;
 
 use const JSON_ERROR_NONE;
 
@@ -122,7 +121,7 @@ class JsonResponse extends Response
         $json = json_encode($data, $encodingOptions);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception\InvalidArgumentException(sprintf(
+            throw new Exception\InvalidArgumentException(Str\format(
                 'Unable to encode data to JSON in %s: %s',
                 __CLASS__,
                 json_last_error_msg()

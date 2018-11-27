@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\Str;
 use Waffle\Contract\Http\Message\StreamInterface;
 use Waffle\Contract\Http\Message\UploadedFileInterface;
 use Waffle\Contract\Http\Message\UploadedFileError;
@@ -120,7 +121,7 @@ class UploadedFile implements UploadedFileInterface
         $bytes = 0;
         while (!$source->eof()) {
             $buf = $source->read($maxLen - $bytes);
-            if (!($len = strlen($buf))) {
+            if (!($len = Str\length($buf))) {
                 break;
             }
             $bytes += $len;

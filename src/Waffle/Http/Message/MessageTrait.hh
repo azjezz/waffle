@@ -2,13 +2,11 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\Str;
 use Waffle\Contract\Http\Message\StreamInterface;
 use Waffle\Contract\Http\Message\MessageInterface;
 
-use function strtolower;
-use function implode;
 use function preg_match;
-use function trim;
 
 /**
  * Trait implementing functionality common to requests and responses.
@@ -58,12 +56,12 @@ trait MessageTrait
 
     public function hasHeader(string $header): bool
     {
-        return $this->headerNames->contains(strtolower($header));
+        return $this->headerNames->contains(Str\lowercase($header));
     }
 
     public function getHeader(string $header): Set<string>
     {
-        $header = strtolower($header);
+        $header = Str\lowercase($header);
 
         $header = $this->headerNames->get($header);
         
@@ -76,14 +74,14 @@ trait MessageTrait
 
     public function getHeaderLine(string $header): string
     {
-        return implode(', ', $this->getHeader($header));
+        return Str\join($this->getHeader($header), ', ');
     }
 
     public function withHeader(string $header,Set<string> $value): this
     {
         $value = $this->validateAndTrimHeader($header, $value);
         
-        $normalized = strtolower($header);
+        $normalized = Str\lowercase($header);
 
         $new = clone $this;
         
@@ -117,7 +115,7 @@ trait MessageTrait
 
     public function withoutHeader(string $header): this
     {
-        $normalized = strtolower($header);
+        $normalized = Str\lowercase($header);
 
         if (!$this->headerNames->contains($normalized)) {
             return $this;
@@ -159,7 +157,7 @@ trait MessageTrait
         foreach ($headers as $header => $value) {
             $value = $this->validateAndTrimHeader($header, $value);
 
-            $normalized = strtolower($header);
+            $normalized = Str\lowercase($header);
 
             if ($this->headerNames->contains($normalized)) {
 
@@ -225,7 +223,7 @@ trait MessageTrait
             }
 
             $retval->add(
-                trim($value, " \t")
+                Str\trim($value, " \t")
             );
         }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12160182b60e1af9d763db66a8df3aeb",
+    "content-hash": "aff0d38f0867c739f06088b1cb4624a0",
     "packages": [
         {
             "name": "facebook/xhp-lib",
@@ -363,6 +363,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "hhvm": "3.29.*"
+    },
     "platform-dev": []
 }

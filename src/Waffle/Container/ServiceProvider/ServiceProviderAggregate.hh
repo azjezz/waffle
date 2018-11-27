@@ -2,12 +2,12 @@
 
 namespace Waffle\Container\ServiceProvider;
 
+use namespace HH\Lib\Str;
 use Generator;
 use Waffle\Container\{ContainerAwareInterface, ContainerAwareTrait};
 use Waffle\Container\Exception\ContainerException;
 use function is_string;
 use function class_exists;
-use function sprintf;
 use ReflectionClass;
 
 class ServiceProviderAggregate implements ServiceProviderAggregateInterface
@@ -86,7 +86,7 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
     {
         if (! $this->provides($service)) {
             throw new ContainerException(
-                sprintf('(%s) is not provided by a service provider', $service)
+                Str\format('(%s) is not provided by a service provider', $service)
             );
         }
 

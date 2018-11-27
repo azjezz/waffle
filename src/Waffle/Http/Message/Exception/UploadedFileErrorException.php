@@ -2,9 +2,8 @@
 
 namespace Waffle\Http\Message\Exception;
 
+use namespace HH\Lib\Str;
 use RuntimeException;
-
-use function sprintf;
 
 <<__ConsistentConstruct>>
 class UploadedFileErrorException extends RuntimeException implements ExceptionInterface
@@ -27,7 +26,7 @@ class UploadedFileErrorException extends RuntimeException implements ExceptionIn
     public static function dueToUnwritableTarget(string $targetDirectory): this
     {
         return new static(
-            sprintf(
+            Str\format(
                 'The target directory `%s` does not exists or is not writable',
                 $targetDirectory
             )

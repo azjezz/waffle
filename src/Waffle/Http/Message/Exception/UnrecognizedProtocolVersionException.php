@@ -2,9 +2,8 @@
 
 namespace Waffle\Http\Message\Exception;
 
+use namespace HH\Lib\Str;
 use UnexpectedValueException;
-
-use function sprintf;
 
 <<__ConsistentConstruct>>
 class UnrecognizedProtocolVersionException extends UnexpectedValueException implements ExceptionInterface
@@ -12,7 +11,7 @@ class UnrecognizedProtocolVersionException extends UnexpectedValueException impl
     public static function forVersion(string $version): this
     {
         return new static(
-            sprintf('Unrecognized protocol version (%s)', $version)
+            Str\format('Unrecognized protocol version (%s)', $version)
         );
     }
 }

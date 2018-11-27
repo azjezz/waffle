@@ -2,10 +2,10 @@
 
 namespace Waffle\Http\Message\Functional;
 
+use namespace HH\Lib\Str;
 use Waffle\Contract\Http\Message\StreamInterface;
 use Waffle\Http\Message\Stream;
 
-use function strtolower;
 use function array_reduce;
 
 /**
@@ -15,7 +15,7 @@ function InjectContentTypeInHeaders(string $contentType, Map<string, Set<string>
 {
     $hasContentType = array_reduce(
         $headers->keys()->toArray(),
-        ($carry, $item) ==> $carry ?: (strtolower($item) === 'content-type'),
+        ($carry, $item) ==> $carry ?: (Str\lowercase($item) === 'content-type'),
         false
     );
 

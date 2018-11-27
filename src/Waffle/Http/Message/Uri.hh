@@ -2,15 +2,12 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\Str;
 use Waffle\Contract\Http\Message\UriInterface;
 
 use function parse_url;
 use function preg_replace_callback;
 use function rawurlencode;
-use function sprintf;
-use function strlen;
-use function ltrim;
-use function strtolower;
 
 final class Uri implements UriInterface
 {
@@ -117,7 +114,7 @@ final class Uri implements UriInterface
 
     public function withScheme(string $scheme): this
     {
-        $scheme = strtolower($scheme);
+        $scheme = Str\lowercase($scheme);
 
         if ($this->scheme === $scheme) {
             return $this;
@@ -150,7 +147,7 @@ final class Uri implements UriInterface
 
     public function withHost(string $host): this
     {
-        $host = strtolower($host);
+        $host = Str\lowercase($host);
 
         if ($this->host === $host) {
             return $this;
@@ -222,8 +219,8 @@ final class Uri implements UriInterface
      */
     private function applyParts(Map<string, arraykey> $parts): void
     {
-        $this->scheme = $parts->contains('scheme') ? strtolower($parts->get('scheme')): '';
-        $this->host = $parts->contains('host') ? strtolower($parts->get('host')): '';
+        $this->scheme = $parts->contains('scheme') ? Str\lowercase($parts->get('scheme')): '';
+        $this->host = $parts->contains('host') ? Str\lowercase($parts->get('host')): '';
         $this->port = $parts->contains('port') ? $this->filterPort((int) $parts->get('port')): null;
         $this->path = $parts->contains('path') ? $this->filterPath((string) $parts->get('path')): '';
         $this->query = $parts->contains('query') ? $this->filterQueryAndFragment((string) $parts->get('query')): '';
@@ -254,17 +251,17 @@ final class Uri implements UriInterface
             $uri .= '//'.$authority;
         }
 
-        if (strlen($path) > 0) {
+        if (Str\length($path) > 0) {
             if ('/' !== $path[0]) {
                 if ('' !== $authority) {
                     // If the path is rootless and an authority is present, the path MUST be prefixed by "/"
                     $path = '/'.$path;
                 }
-            } elseif (strlen($path) > 1 && '/' === $path[1]) {
+            } elseif (Str\length($path) > 1 && '/' === $path[1]) {
                 if ('' === $authority) {
                     // If the path is starting with more than one "/" and no authority is present, the
                     // starting slashes MUST be reduced to one.
-                    $path = '/'.ltrim($path, '/');
+                    $path = '/'.Str\trim_left($path, '/');
                 }
             }
 
@@ -298,7 +295,7 @@ final class Uri implements UriInterface
 
         if (1 > $port || 0xffff < $port) {
             throw new Exception\InvalidArgumentException(
-                sprintf('Invalid port: %d. Must be between 1 and 65535', $port)
+                Str\format('Invalid port: %d. Must be between 1 and 65535', $port)
             );
         }
 

@@ -2,12 +2,12 @@
 
 namespace Waffle\Container\Argument;
 
+use namespace HH\Lib\Str;
 use Waffle\Container\Exception\{ContainerException, NotFoundException};
 use Waffle\Container\ReflectionContainer;
 use Waffle\Contract\Container\ContainerInterface;
 use ReflectionFunctionAbstract;
 use ReflectionParameter;
-use function sprintf;
 
 trait ArgumentResolverTrait
 {
@@ -78,7 +78,7 @@ trait ArgumentResolverTrait
                 return $param->getDefaultValue();
             }
 
-            throw new NotFoundException(sprintf(
+            throw new NotFoundException(Str\format(
                 'Unable to resolve a value for parameter (%s) in the function/method (%s)',
                 $name,
                 $method->getName()
