@@ -150,7 +150,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * Otherwise, this method may return any results of deserializing
      * the request body content; as parsing returns structured content, the
-     * potential types MUST be arrays or objects only. A null value indicates
+     * potential types MUST be a Map only. A null value indicates
      * the absence of body content.
      *
      * @return Map<string, mixed> The deserialized body parametersm if any.
@@ -168,7 +168,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * The data IS NOT REQUIRED to come from $_POST, but MUST be the results of
      * deserializing the request body content. Deserialization/parsing returns
-     * structured data, and, as such, this method ONLY accepts arrays or objects,
+     * structured data, and, as such, this method ONLY accepts Maps,
      * or a null value if nothing was available to parse.
      *
      * As an example, if content negotiation determines that the request data
@@ -184,7 +184,7 @@ interface ServerRequestInterface extends RequestInterface
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody(Map<string, mixed> $data): this;
+    public function withParsedBody(?Map<string, mixed> $data): this;
 
     /**
      * Retrieve attributes derived from the request.

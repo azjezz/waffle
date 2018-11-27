@@ -43,7 +43,7 @@ interface MessageInterface
      * Retrieves all message header values.
      *
      * The keys represent the header name as it will be sent over the wire, and
-     * each value is an array of strings associated with the header.
+     * each value is a set of strings associated with the header.
      *
      *     // Represent the headers as a string
      *     foreach ($message->getHeaders() as $name => $values) {
@@ -80,11 +80,11 @@ interface MessageInterface
     /**
      * Retrieves a message header value by the given case-insensitive name.
      *
-     * This method returns an array of all the header values of the given
+     * This method returns a set of all the header values of the given
      * case-insensitive header name.
      *
      * If the header does not appear in the message, this method MUST return an
-     * empty array.
+     * empty Set.
      *
      * @param string $name Case-insensitive header field name.
      *
