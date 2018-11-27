@@ -7,6 +7,8 @@ namespace Waffle\Contract\Log;
  */
 trait LoggerAwareTrait
 {
+    require implements LoggerAwareInterface;
+
     /**
      * The logger instance.
      */

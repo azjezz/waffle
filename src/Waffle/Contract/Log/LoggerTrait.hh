@@ -12,6 +12,8 @@ namespace Waffle\Contract\Log;
  */
 trait LoggerTrait
 {
+    require implements LoggerInterface;
+    
     /**
      * System is unusable.
      */
@@ -86,9 +88,4 @@ trait LoggerTrait
     {
         $this->log(LogLevel::DEBUG, $message, $context);
     }
-
-    /**
-     * Logs with an arbitrary level.
-     */
-     abstract public function log(LogLevel $level, string $message, Vector<mixed> $context = Vector {}): void;
 }
