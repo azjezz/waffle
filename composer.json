@@ -10,9 +10,11 @@
         }
     ],
     "require": {
+        "facebook/xhp-lib": "^2.8"
     },
     "require-dev": {
-      "facebook/fbexpect": "^2.2"
+      "facebook/fbexpect": "^2.2",
+        "hhvm/hacktest": "^1.2"
     },
     "autoload": {
         "psr-4": {

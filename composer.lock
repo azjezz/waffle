@@ -4,73 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f89268dea6b34ab850f0ca8e2ffc5349",
-    "packages": [],
-    "packages-dev": [
+    "content-hash": "6cd1448cdf398bf8533c9e226a63a585",
+    "packages": [
         {
-            "name": "facebook/difflib",
-            "version": "v1.0",
+            "name": "facebook/xhp-lib",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/hhvm/difflib.git",
-                "reference": "09505c7d66224fa7e5a8f775825bd70f05e57b01"
+                "url": "https://github.com/hhvm/xhp-lib.git",
+                "reference": "c1206482e07acdf9956a2d455613a840ed8fa610"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/difflib/zipball/09505c7d66224fa7e5a8f775825bd70f05e57b01",
-                "reference": "09505c7d66224fa7e5a8f775825bd70f05e57b01",
+                "url": "https://api.github.com/repos/hhvm/xhp-lib/zipball/c1206482e07acdf9956a2d455613a840ed8fa610",
+                "reference": "c1206482e07acdf9956a2d455613a840ed8fa610",
                 "shasum": ""
             },
             "require": {
-                "hhvm/hsl": "^3.28"
+                "hhvm": "~3.23",
+                "hhvm/hhvm-autoload": "^1.5",
+                "hhvm/type-assert": "^3.0"
             },
             "require-dev": {
-                "facebook/fbexpect": "^2.1.2",
-                "hhvm/hacktest": "^1.0",
-                "hhvm/hhast": "^3.28"
+                "facebook/fbexpect": "^2.0.0",
+                "hhvm/hacktest": "^1.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "time": "2018-09-24T22:01:02+00:00"
-        },
-        {
-            "name": "facebook/fbexpect",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hhvm/fbexpect.git",
-                "reference": "beff71282013f01609815acd3b8819685112ee4a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/beff71282013f01609815acd3b8819685112ee4a",
-                "reference": "beff71282013f01609815acd3b8819685112ee4a",
-                "shasum": ""
-            },
-            "require": {
-                "facebook/difflib": "^1.0.0",
-                "hhvm": "^3.28",
-                "hhvm/hhvm-autoload": "^1.6",
-                "hhvm/hsl": "^3.26"
-            },
-            "require-dev": {
-                "hhvm/hacktest": "^1.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
+            "description": "Class library for XHP",
+            "homepage": "https://github.com/facebook/xhp-lib",
+            "keywords": [
+                "facebook",
+                "hack",
+                "hhvm",
+                "xhp"
             ],
-            "description": "Unit test helpers for Facebook projects",
-            "time": "2018-10-18T16:44:23+00:00"
+            "time": "2018-10-19T20:45:31+00:00"
         },
         {
             "name": "hhvm/hhvm-autoload",
@@ -157,6 +134,185 @@
             ],
             "description": "The Hack Standard Library",
             "time": "2018-10-18T18:21:07+00:00"
+        },
+        {
+            "name": "hhvm/type-assert",
+            "version": "v3.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/type-assert.git",
+                "reference": "7b25cd12e70fa3f618ae2330ac0bec567548f32b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/type-assert/zipball/7b25cd12e70fa3f618ae2330ac0bec567548f32b",
+                "reference": "7b25cd12e70fa3f618ae2330ac0bec567548f32b",
+                "shasum": ""
+            },
+            "require": {
+                "hhvm": "^3.29.0",
+                "hhvm/hhvm-autoload": "^1.4",
+                "hhvm/hsl": "^3.29.0"
+            },
+            "require-dev": {
+                "facebook/fbexpect": "^2.0.0",
+                "hhvm/hacktest": "^1.0",
+                "hhvm/hhast": "^3.27"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Convert untyped data to typed data",
+            "keywords": [
+                "TypeAssert",
+                "hack"
+            ],
+            "time": "2018-10-18T18:02:20+00:00"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "facebook/difflib",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/difflib.git",
+                "reference": "09505c7d66224fa7e5a8f775825bd70f05e57b01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/difflib/zipball/09505c7d66224fa7e5a8f775825bd70f05e57b01",
+                "reference": "09505c7d66224fa7e5a8f775825bd70f05e57b01",
+                "shasum": ""
+            },
+            "require": {
+                "hhvm/hsl": "^3.28"
+            },
+            "require-dev": {
+                "facebook/fbexpect": "^2.1.2",
+                "hhvm/hacktest": "^1.0",
+                "hhvm/hhast": "^3.28"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2018-09-24T22:01:02+00:00"
+        },
+        {
+            "name": "facebook/fbexpect",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/fbexpect.git",
+                "reference": "beff71282013f01609815acd3b8819685112ee4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/fbexpect/zipball/beff71282013f01609815acd3b8819685112ee4a",
+                "reference": "beff71282013f01609815acd3b8819685112ee4a",
+                "shasum": ""
+            },
+            "require": {
+                "facebook/difflib": "^1.0.0",
+                "hhvm": "^3.28",
+                "hhvm/hhvm-autoload": "^1.6",
+                "hhvm/hsl": "^3.26"
+            },
+            "require-dev": {
+                "hhvm/hacktest": "^1.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Unit test helpers for Facebook projects",
+            "time": "2018-10-18T16:44:23+00:00"
+        },
+        {
+            "name": "facebook/hh-clilib",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/hh-clilib.git",
+                "reference": "12542c339972c6fd77b2037a41b8f9b53212adcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/hh-clilib/zipball/12542c339972c6fd77b2037a41b8f9b53212adcf",
+                "reference": "12542c339972c6fd77b2037a41b8f9b53212adcf",
+                "shasum": ""
+            },
+            "require": {
+                "hhvm/hsl": "^3.26",
+                "hhvm/type-assert": "^3.2"
+            },
+            "require-dev": {
+                "facebook/fbexpect": "^2.1.0",
+                "hhvm/hacktest": "^0.2.0",
+                "hhvm/hhast": "~3.28.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2018-09-14T20:36:22+00:00"
+        },
+        {
+            "name": "hhvm/hacktest",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhvm/hacktest.git",
+                "reference": "d83f09283dd60a8001807654afd2de67d8a26cc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhvm/hacktest/zipball/d83f09283dd60a8001807654afd2de67d8a26cc3",
+                "reference": "d83f09283dd60a8001807654afd2de67d8a26cc3",
+                "shasum": ""
+            },
+            "require": {
+                "facebook/hh-clilib": "^1.2.1",
+                "hhvm": "^3.28.0",
+                "hhvm/hhvm-autoload": "^1.6",
+                "hhvm/hsl": "^3.26",
+                "hhvm/type-assert": "^3.2"
+            },
+            "require-dev": {
+                "facebook/fbexpect": "^2.0.0",
+                "hhvm/hhast": "^3.27"
+            },
+            "bin": [
+                "bin/hacktest"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Hack Test Library",
+            "time": "2018-10-17T22:18:04+00:00"
         }
     ],
     "aliases": [],
