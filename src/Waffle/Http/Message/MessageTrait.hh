@@ -153,7 +153,7 @@ trait MessageTrait
 
             $normalized = strtolower($header);
 
-            if ($this->headerNames->concat($normalized)) {
+            if ($this->headerNames->contains($normalized)) {
 
                 $header = $this->headerNames->get($normalized);
 
