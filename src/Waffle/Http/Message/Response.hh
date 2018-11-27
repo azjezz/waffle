@@ -35,6 +35,7 @@ class Response implements ResponseInterface
         }
 
         $this->protocol = $version;
+        $this->stream = $body;
     }
 
     public function getStatusCode(): int
