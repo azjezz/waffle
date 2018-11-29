@@ -18,7 +18,7 @@ class ServerRequestTest extends HackTest
 
         $files = Map {
             'file' => new UploadedFile(
-                Functional\CreateStreamFromString('test'), 
+                Functional\create_stream_from_string('test'), 
                 123, 
                 UploadedFileError::ERROR_OK
             ),

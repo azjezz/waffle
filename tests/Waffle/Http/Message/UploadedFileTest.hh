@@ -8,7 +8,7 @@ use function Facebook\FBExpect\expect;
 use Waffle\Http\Message\UploadedFile;
 use Waffle\Contract\Http\Message\UploadedFileError;
 use Facebook\HackTest\HackTest;
-use function Waffle\Http\Message\Functional\CreateStreamFromString;
+use function Waffle\Http\Message\Functional\create_stream_from_string;
 
 class UploadedFileTest extends HackTest
 {
@@ -30,7 +30,7 @@ class UploadedFileTest extends HackTest
 
     public function testGetStreamReturnsOriginalStreamObject()
     {
-        $stream = CreateStreamFromString('');
+        $stream = create_stream_from_string('');
         $upload = new UploadedFile($stream, 0, UploadedFileError::ERROR_OK);
 
         expect($upload->getStream())->toBeSame($stream);
@@ -47,7 +47,7 @@ class UploadedFileTest extends HackTest
 
     public function testSuccessful()
     {
-        $stream = CreateStreamFromString('Foo bar!');
+        $stream = create_stream_from_string('Foo bar!');
         $upload = new UploadedFile($stream, $stream->getSize(), UploadedFileError::ERROR_OK, 'filename.txt', 'text/plain');
 
         expect($upload->getSize())->toBePHPEqual($stream->getSize());
@@ -61,7 +61,7 @@ class UploadedFileTest extends HackTest
 
     public function testMoveCannotBeCalledMoreThanOnce()
     {
-        $stream = CreateStreamFromString('Foo bar!');
+        $stream = create_stream_from_string('Foo bar!');
         $upload = new UploadedFile($stream, 0, UploadedFileError::ERROR_OK);
 
         $this->cleanup[] = $to = tempnam(sys_get_temp_dir(), 'diac');
@@ -77,7 +77,7 @@ class UploadedFileTest extends HackTest
 
     public function testCannotRetrieveStreamAfterMove()
     {
-        $stream = CreateStreamFromString('Foo bar!');
+        $stream = create_stream_from_string('Foo bar!');
         $upload = new UploadedFile($stream, 0, UploadedFileError::ERROR_OK);
 
         $this->cleanup[] = $to = tempnam(sys_get_temp_dir(), 'diac');
@@ -106,14 +106,14 @@ class UploadedFileTest extends HackTest
     <<DataProvider('nonOkErrorStatus')>>
     public function testConstructorDoesNotRaiseExceptionForInvalidStreamWhenErrorStatusPresent($status)
     {
-        $uploadedFile = new UploadedFile(CreateStreamFromString(''), 0, $status);
+        $uploadedFile = new UploadedFile(create_stream_from_string(''), 0, $status);
         expect($uploadedFile->getError())->toBeSame($status);
     }
 
     <<DataProvider('nonOkErrorStatus')>>
     public function testMoveToRaisesExceptionWhenErrorStatusPresent($status)
     {
-        $uploadedFile = new UploadedFile(CreateStreamFromString(''), 0, $status);
+        $uploadedFile = new UploadedFile(create_stream_from_string(''), 0, $status);
         expect(() ==> {
             $uploadedFile->moveTo(__DIR__.'/'.uniqid());
         })->toThrow(
@@ -125,7 +125,7 @@ class UploadedFileTest extends HackTest
     <<DataProvider('nonOkErrorStatus')>>
     public function testGetStreamRaisesExceptionWhenErrorStatusPresent($status)
     {
-        $uploadedFile = new UploadedFile(CreateStreamFromString(''), 0, $status);
+        $uploadedFile = new UploadedFile(create_stream_from_string(''), 0, $status);
         expect(() ==> {
             $stream = $uploadedFile->getStream();
         })->toThrow(

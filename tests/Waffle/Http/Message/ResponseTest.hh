@@ -37,7 +37,7 @@ class ResponseTest extends HackTest
     }
     public function testCanConstructWithBody()
     {
-        $r = new Response(200, Map {}, Functional\CreateStreamFromString('baz'));
+        $r = new Response(200, Map {}, Functional\create_stream_from_string('baz'));
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('baz');
     }
@@ -96,7 +96,7 @@ class ResponseTest extends HackTest
 
     public function testWithBody()
     {
-        $b = Functional\CreateStreamFromString('0');
+        $b = Functional\create_stream_from_string('0');
         $r = (new Response())->withBody($b);
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('0');
