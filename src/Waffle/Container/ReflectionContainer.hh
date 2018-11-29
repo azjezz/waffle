@@ -134,7 +134,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      *
      * @return self
      */
-    public function cacheResolutions(bool $option = true): ContainerInterface
+    public function cacheResolutions(bool $option = true): ReflectionContainer
     {
         $this->cacheResolutions = $option;
 
