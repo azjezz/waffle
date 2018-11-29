@@ -62,10 +62,10 @@ trait ArgumentResolverTrait
     public function reflectArguments(ReflectionFunctionAbstract $method, Map<string, mixed> $args): Vector<mixed>
     {
         $parameters = new Vector<ReflectionParameter>($method->getParameters());
-
         $arguments = $parameters->map<mixed>(function (ReflectionParameter $param) use ($method, $args) {
-            $name  = $param->getName();
-            $class = $param->getClass();
+
+            $name   = $param->getName();
+            $class  = $param->getClass();
 
             if ($args->contains($name)) {
                 return $args->get($name);
@@ -73,6 +73,15 @@ trait ArgumentResolverTrait
 
             if (null !== $class) {
                 return $class->getName();
+            }
+
+            $type = $param->getType();
+            if (null !== $type && !$type->isBuiltin()) {
+                if ($type->allowsNull()) {
+                    return Str\slice((string) $type, 1);
+                } else {
+                    return (string) $type;
+                }
             }
 
             if ($param->isDefaultValueAvailable()) {
