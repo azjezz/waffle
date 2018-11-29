@@ -31,6 +31,12 @@
     },
     "scripts": {
         "test": "hacktest -v tests/",
-        "lint": "hhast-lint -v src/"
+        "lint": "hhast-lint -v src/",
+        "type-check": "hh_client src/",
+        "check": [
+            "@type-check",
+            "@lint",
+            "@test"
+        ]
     }
 }
