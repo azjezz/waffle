@@ -2,8 +2,8 @@
 
 namespace Waffle\Http\Message;
 
-use Waffle\Contract\Http\Message\ResponseInterface;
-use Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Contract\Http\Message\ResponseInterface;
+use type Waffle\Contract\Http\Message\StreamInterface;
 
 class Response implements ResponseInterface
 {
@@ -22,7 +22,7 @@ class Response implements ResponseInterface
 
     private int $statusCode = 200;
 
-    public function __construct(int $status = 200, Map<string, Set<string>> $headers = Map {}, ?StreamInterface $body = null, string $version = '1.1', ?string $reason = null) 
+    public function __construct(int $status = 200, Map<string, Set<string>> $headers = Map {}, ?StreamInterface $body = null, string $version = '1.1', ?string $reason = null)
     {
         $this->assertValidStatusCode($status);
         $this->statusCode = $status;
@@ -53,7 +53,7 @@ class Response implements ResponseInterface
         $this->assertValidStatusCode($code);
         $new = clone $this;
         $new->statusCode = $code;
-        
+
         if ('' === $reasonPhrase && self::$phrases->contains($new->statusCode)) {
             $reasonPhrase = self::$phrases->get($new->statusCode) ?? '';
         }
@@ -63,7 +63,7 @@ class Response implements ResponseInterface
         return $new;
     }
 
-    protected function assertValidStatusCode(int $code): void 
+    protected function assertValidStatusCode(int $code): void
     {
         if ($code < 100 || $code > 599) {
             throw new Exception\InvalidArgumentException('Status code has to be an integer between 100 and 599');

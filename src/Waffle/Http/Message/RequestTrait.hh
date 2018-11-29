@@ -2,12 +2,11 @@
 
 namespace Waffle\Http\Message;
 
-use Waffle\Contract\Http\Message\RequestInterface;
-use Waffle\Contract\Http\Message\UriInterface;
-
+use type Waffle\Contract\Http\Message\RequestInterface;
+use type Waffle\Contract\Http\Message\UriInterface;
 use function preg_match;
 
-trait RequestTrait 
+trait RequestTrait
 {
     require implements RequestInterface;
 

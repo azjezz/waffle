@@ -3,12 +3,10 @@
 namespace Waffle\Http\Message;
 
 use namespace HH\Lib\Str;
-use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Contract\Http\Message\UploadedFileInterface;
-use Waffle\Contract\Http\Message\UploadedFileError;
-
+use type Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Contract\Http\Message\UploadedFileInterface;
+use type Waffle\Contract\Http\Message\UploadedFileError;
 use function fopen;
-use function strlen;
 
 class UploadedFile implements UploadedFileInterface
 {
@@ -17,8 +15,8 @@ class UploadedFile implements UploadedFileInterface
     public function __construct(
         private StreamInterface $stream,
         private ?int $size,
-        private UploadedFileError $error, 
-        private ?string $clientFilename = null, 
+        private UploadedFileError $error,
+        private ?string $clientFilename = null,
         private ?string $clientMediaType = null
     ) {}
 

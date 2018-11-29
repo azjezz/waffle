@@ -2,8 +2,8 @@
 
 namespace Waffle\Http\Message\Response;
 
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Functional;
+use namespace Waffle\Http\Message\Functional;
+use type Waffle\Http\Message\Response;
 
 /**
  * HTML response.
@@ -24,8 +24,8 @@ class HtmlResponse extends Response
     {
         parent::__construct(
             $status,
-            Functional\InjectContentTypeInHeaders('text/html; charset=utf8', $headers),
-            Functional\CreateStreamFromString($html),
+            Functional\inject_content_type_in_headers('text/html; charset=utf8', $headers),
+            Functional\create_stream_from_string($html),
         );
     }
 }

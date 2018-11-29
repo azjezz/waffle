@@ -3,12 +3,12 @@
 namespace Waffle\Container\Argument;
 
 use namespace HH\Lib\Str;
-use Waffle\Container\Exception\ContainerException;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Container\ReflectionContainer;
-use Waffle\Contract\Container\ContainerInterface;
-use ReflectionFunctionAbstract;
-use ReflectionParameter;
+use type Waffle\Container\Exception\ContainerException;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Container\ReflectionContainer;
+use type Waffle\Contract\Container\ContainerInterface;
+use type ReflectionFunctionAbstract;
+use type ReflectionParameter;
 
 trait ArgumentResolverTrait
 {

@@ -3,13 +3,13 @@
 namespace Waffle\Container;
 
 use namespace HH\Lib\Str;
-use Waffle\Container\Argument\ArgumentResolverInterface;
-use Waffle\Container\Argument\ArgumentResolverTrait;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Contract\Container\ContainerInterface;
-use ReflectionClass;
-use ReflectionFunction;
-use ReflectionMethod;
+use type Waffle\Container\Argument\ArgumentResolverInterface;
+use type Waffle\Container\Argument\ArgumentResolverTrait;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Contract\Container\ContainerInterface;
+use type ReflectionClass;
+use type ReflectionFunction;
+use type ReflectionMethod;
 use function is_object;
 use function class_exists;
 use function explode;
@@ -25,7 +25,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
     */
     protected Map<string, mixed> $cache;
 
-    public function __construct(protected bool $cacheResolutions = false) 
+    public function __construct(protected bool $cacheResolutions = false)
     {
         $this->cache = Map {};
     }
@@ -96,9 +96,9 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
             }
 
             return $reflection->invokeArgs(
-                $callable[0], 
+                $callable[0],
                 $this->reflectArguments(
-                    $reflection, 
+                    $reflection,
                     $args
                 )->toVArray()
             );
@@ -108,9 +108,9 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
             $reflection = new ReflectionMethod($callable, '__invoke');
 
             return $reflection->invokeArgs(
-                $callable, 
+                $callable,
                 $this->reflectArguments(
-                    $reflection, 
+                    $reflection,
                     $args
                 )->toVArray()
             );
@@ -120,7 +120,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
 
         return $reflection->invokeArgs(
             $this->reflectArguments(
-                $reflection, 
+                $reflection,
                 $args
             )->toVArray()
         );

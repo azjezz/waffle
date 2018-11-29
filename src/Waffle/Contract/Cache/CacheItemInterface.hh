@@ -2,8 +2,8 @@
 
 namespace Waffle\Contract\Cache;
 
-use DateTimeInterface;
-use DateInterval;
+use type DateTimeInterface;
+use type DateInterval;
 
 /**
  * CacheItemInterface defines an interface for interacting with objects inside a cache.

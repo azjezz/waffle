@@ -2,11 +2,13 @@
 
 namespace Waffle\Container;
 
-use Waffle\Container\Exception\ContainerException;
-use Waffle\Contract\Container\ContainerInterface;
+use type Waffle\Container\Exception\ContainerException;
+use type Waffle\Contract\Container\ContainerInterface;
 
 trait ContainerAwareTrait
 {
+    require implements ContainerAwareInterface;
+
     protected ?ContainerInterface $container;
 
     /**
@@ -14,7 +16,7 @@ trait ContainerAwareTrait
      */
     public function setContainer(ContainerInterface $container): this
     {
-        $this->container = $container;            
+        $this->container = $container;
         return $this;
     }
 

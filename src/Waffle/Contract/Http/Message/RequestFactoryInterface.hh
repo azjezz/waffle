@@ -2,7 +2,7 @@
 
 namespace Waffle\Contract\Http\Message;
 
-interface RequestFactoryInterface 
+interface RequestFactoryInterface
 {
     /**
      * Create a new request.

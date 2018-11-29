@@ -10,6 +10,7 @@ class CachingStream extends Stream
 
     private bool $reachedEof = false;
 
+    <<__Override>>
     public function __toString(): string
     {
         if ($this->reachedEof) {
@@ -20,11 +21,13 @@ class CachingStream extends Stream
         return $this->cache;
     }
 
+    <<__Override>>
     public function isWritable(): bool
     {
         return false;
     }
 
+    <<__Override>>
     public function read(int $length): string
     {
         $content = parent::read($length);
@@ -39,6 +42,7 @@ class CachingStream extends Stream
         return $content;
     }
 
+    <<__Override>>
     public function getContents(int $maxLength = -1): string
     {
         if ($this->reachedEof) {

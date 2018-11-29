@@ -3,9 +3,8 @@
 namespace Waffle\Http\Message;
 
 use namespace HH\Lib\Str;
-use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Contract\Http\Message\MessageInterface;
-
+use type Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Contract\Http\Message\MessageInterface;
 use function preg_match;
 
 /**
@@ -25,7 +24,7 @@ trait MessageTrait
 
     protected ?StreamInterface $stream;
 
-    public function __clone(): void 
+    public function __clone(): void
     {
         $this->headers = clone $this->headers;
         $this->stream = null === $this->stream ? null : (clone $this->stream);
@@ -64,7 +63,7 @@ trait MessageTrait
         $header = Str\lowercase($header);
 
         $header = $this->headerNames->get($header);
-        
+
         if (null === $header) {
             return Set {};
         }
@@ -80,11 +79,11 @@ trait MessageTrait
     public function withHeader(string $header,Set<string> $value): this
     {
         $value = $this->validateAndTrimHeader($header, $value);
-        
+
         $normalized = Str\lowercase($header);
 
         $new = clone $this;
-        
+
         if ($new->headerNames->contains($normalized)) {
             $new->headers->remove(
                 /* HH_IGNORE_ERROR[4110] */
@@ -134,7 +133,7 @@ trait MessageTrait
     public function getBody(): StreamInterface
     {
         if (!$this->stream) {
-            $this->stream = Functional\CreateStreamFromString('');
+            $this->stream = Functional\create_stream_from_string('');
         }
 
         return $this->stream;
@@ -165,7 +164,7 @@ trait MessageTrait
 
                 if (null !== $header) {
                     $this->headers->set(
-                        $header, 
+                        $header,
                         new Set<string>(
                             $this->headers->get($header)
                                 ?->concat($value)

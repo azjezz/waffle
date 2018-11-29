@@ -2,9 +2,9 @@
 
 namespace Waffle\Http\Message\Response;
 
-use Waffle\Contract\Http\Message\UriInterface;
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Functional;
+use namespace Waffle\Http\Message\Functional;
+use type Waffle\Contract\Http\Message\UriInterface;
+use type Waffle\Http\Message\Response;
 
 /**
  * Produce a redirect response.
@@ -29,9 +29,9 @@ class RedirectResponse extends Response
         });
 
         parent::__construct(
-            $status, 
+            $status,
             $headers,
-            Functional\CreateStreamFromString('')
+            Functional\create_stream_from_string('')
         );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Waffle\Contract\Http\Client;
 
-use Waffle\Contract\Http\Message\RequestInterface;
+use type Waffle\Contract\Http\Message\RequestInterface;
 
 /**
  * Exception for when a request failed.

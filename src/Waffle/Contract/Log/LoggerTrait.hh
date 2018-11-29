@@ -13,7 +13,7 @@ namespace Waffle\Contract\Log;
 trait LoggerTrait
 {
     require implements LoggerInterface;
-    
+
     /**
      * System is unusable.
      */

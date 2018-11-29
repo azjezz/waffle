@@ -2,7 +2,7 @@
 
 namespace Waffle\Container\ServiceProvider;
 
-use Waffle\Container\ContainerAwareInterface;
+use type Waffle\Container\ContainerAwareInterface;
 
 interface ServiceProviderInterface extends ContainerAwareInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Waffle\Contract\Http\Client;
 
-use Waffle\Contract\Http\Message\RequestInterface;
+use type Waffle\Contract\Http\Message\RequestInterface;
 
 /**
  * Thrown when the request cannot be completed because of network issues.

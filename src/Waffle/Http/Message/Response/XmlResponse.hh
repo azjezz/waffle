@@ -2,17 +2,8 @@
 
 namespace Waffle\Http\Message\Response;
 
-use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Functional;
-
-use function get_class;
-use function gettype;
-use function is_object;
-use function is_string;
-use function sprintf;
-use function array_reduce;
-use function strtolower;
+use namespace Waffle\Http\Message\Functional;
+use type Waffle\Http\Message\Response;
 
 /**
  * XML response.
@@ -32,8 +23,8 @@ class XmlResponse extends Response
     {
         parent::__construct(
             $status,
-            Functional\InjectContentTypeInHeaders('application/xml; charset=utf8', $headers),
-            Functional\CreateStreamFromString($xml),
+            Functional\inject_content_type_in_headers('application/xml; charset=utf8', $headers),
+            Functional\create_stream_from_string($xml),
         );
     }
 }

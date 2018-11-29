@@ -2,9 +2,7 @@
 
 namespace Waffle\Http\Message;
 
-use Waffle\Contract\Http\Message\StreamInterface;
-
-use function fopen;
+use type Waffle\Contract\Http\Message\StreamInterface;
 use function fclose;
 use function fwrite;
 use function fstat;
@@ -16,7 +14,6 @@ use function stream_get_contents;
 use function stream_get_meta_data;
 use function array_key_exists;
 use function strstr;
-
 use const SEEK_SET;
 
 <<__ConsistentConstruct>>
@@ -56,7 +53,7 @@ class Stream implements StreamInterface
         }
     }
 
-    public function detach(): ?resource 
+    public function detach(): ?resource
     {
         if (null === $this->stream) {
             return null;
@@ -65,7 +62,7 @@ class Stream implements StreamInterface
         $result = $this->stream;
 
         $this->stream = null;
-        
+
         $this->size = $this->uri = null;
 
         return $result;
@@ -130,9 +127,9 @@ class Stream implements StreamInterface
         if (!$this->isSeekable()) {
             throw Exception\UnseekableStreamException::dueToConfiguration();
         }
-        
+
         $retval = fseek($this->stream, $offset, $whence);
-        
+
         if ($retval === -1) {
             throw Exception\UnseekableStreamException::dueToPhpError();
         }
@@ -148,7 +145,7 @@ class Stream implements StreamInterface
         if (null === $this->stream) {
             return false;
         }
-        
+
         $meta = stream_get_meta_data($this->stream);
         $mode = $meta['mode'];
 
@@ -187,7 +184,7 @@ class Stream implements StreamInterface
         if (null === $this->stream) {
             return false;
         }
-        
+
         $meta = stream_get_meta_data($this->stream);
         $mode = $meta['mode'];
 

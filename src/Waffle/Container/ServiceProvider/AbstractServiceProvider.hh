@@ -2,7 +2,7 @@
 
 namespace Waffle\Container\ServiceProvider;
 
-use Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\ContainerAwareTrait;
 use function get_class;
 
 abstract class AbstractServiceProvider implements ServiceProviderInterface

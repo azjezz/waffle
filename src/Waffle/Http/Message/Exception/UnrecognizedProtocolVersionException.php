@@ -3,7 +3,7 @@
 namespace Waffle\Http\Message\Exception;
 
 use namespace HH\Lib\Str;
-use UnexpectedValueException;
+use type UnexpectedValueException;
 
 <<__ConsistentConstruct>>
 class UnrecognizedProtocolVersionException extends UnexpectedValueException implements ExceptionInterface

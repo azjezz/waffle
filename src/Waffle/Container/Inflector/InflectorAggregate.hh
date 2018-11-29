@@ -2,10 +2,8 @@
 
 namespace Waffle\Container\Inflector;
 
-use Generator;
-use Waffle\Container\ContainerAwareTrait;
-use function count;
-use Iterator;
+use type Waffle\Container\ContainerAwareTrait;
+use type Iterator;
 use function is_a;
 
 class InflectorAggregate implements InflectorAggregateInterface
@@ -21,9 +19,9 @@ class InflectorAggregate implements InflectorAggregateInterface
      */
     public function add(string $type, mixed $callback = null): Inflector
     {
-        $this->inflectors->add(
-            $inflector = new Inflector($type, $callback)
-        );
+        $inflector = new Inflector($type, $callback);
+
+        $this->inflectors->add($inflector);
 
         return $inflector;
     }

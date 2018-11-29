@@ -2,13 +2,13 @@
 
 namespace Waffle\Contract\Http\Client;
 
-use Waffle\Contract\Http\Message\RequestInterface;
-use Waffle\Contract\Http\Message\ResponseInterface;
+use type Waffle\Contract\Http\Message\RequestInterface;
+use type Waffle\Contract\Http\Message\ResponseInterface;
 
 interface ClientInterface
 {
     /**
-     * Sends a PSR-7 request and returns a PSR-7 response.
+     * Sends a request and returns a response.
      *
      * @param RequestInterface $request
      *
@@ -16,5 +16,5 @@ interface ClientInterface
      *
      * @throws \Waffle\Contract\Http\Client\ClientExceptionInterface If an error happens while processing the request.
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface;
+    public function send(RequestInterface $request): ResponseInterface;
 }

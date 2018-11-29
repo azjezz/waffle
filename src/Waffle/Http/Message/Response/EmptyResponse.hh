@@ -2,9 +2,8 @@
 
 namespace Waffle\Http\Message\Response;
 
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Stream;
-
+use type Waffle\Http\Message\Response;
+use type Waffle\Http\Message\Stream;
 use function fopen;
 
 /**

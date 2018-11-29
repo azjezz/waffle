@@ -2,8 +2,8 @@
 
 namespace Waffle\Container\Exception;
 
-use Waffle\Contract\Container\ContainerExceptionInterface;
-use RuntimeException;
+use type Waffle\Contract\Container\ContainerExceptionInterface;
+use type RuntimeException;
 
 class ContainerException extends RuntimeException implements ContainerExceptionInterface
 {

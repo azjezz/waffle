@@ -2,8 +2,8 @@
 
 namespace Waffle\Container\Argument;
 
-use Waffle\Container\ContainerAwareInterface;
-use ReflectionFunctionAbstract;
+use type Waffle\Container\ContainerAwareInterface;
+use type ReflectionFunctionAbstract;
 
 interface ArgumentResolverInterface extends ContainerAwareInterface
 {

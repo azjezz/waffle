@@ -2,17 +2,15 @@
 
 namespace Waffle\Container\Definition;
 
-
-use Waffle\Container\Argument\ArgumentResolverInterface;
-use Waffle\Container\Argument\ArgumentResolverTrait;
-use Waffle\Container\Argument\ClassNameArgumentInterface;
-use Waffle\Container\Argument\RawArgumentInterface;
-use Waffle\Container\ContainerAwareTrait;
-use ReflectionClass;
+use type Waffle\Container\Argument\ArgumentResolverInterface;
+use type Waffle\Container\Argument\ArgumentResolverTrait;
+use type Waffle\Container\Argument\ClassNameArgumentInterface;
+use type Waffle\Container\Argument\RawArgumentInterface;
+use type Waffle\Container\ContainerAwareTrait;
+use type ReflectionClass;
 use function is_null;
 use function is_callable;
 use function class_exists;
-use function inst_method;
 
 type MethodDefinition = Pair<
     string,
@@ -147,8 +145,8 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         }
 
         if (is_callable($concrete, false)) {
-            /* HH_IGNORE_ERROR[4110] 
-             * there's not way to tell the type-checker that $concrete is a function */
+            /* HH_IGNORE_ERROR[4110]
+             * there's no way to tell the type-checker that $concrete is a function */
             $concrete = $this->resolveCallable($concrete);
         }
 
@@ -197,10 +195,10 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
                 $method->lastValue()
             );
 
-            /* HH_IGNORE_ERROR[2025] 
-             * there's not way to tell the type-checker that $instance is an object */
+            /* HH_IGNORE_ERROR[2025]
+             * there's no way to tell the type-checker that $instance is an object */
             $callable = inst_meth($instance, $method->at(0));
-            
+
             $callable(...$args);
         }
 

@@ -2,7 +2,7 @@
 
 namespace Waffle\Contract\Cache;
 
-use Traversable;
+use type Traversable;
 
 /**
  * CacheItemPoolInterface generates CacheItemInterface objects.
@@ -25,7 +25,7 @@ interface CacheItemPoolInterface
      *   The key for which to return the corresponding Cache Item.
      *
      * @throws InvalidArgumentExceptionInterface
-     *   If the $key string is not a legal value a \Psr\Cache\InvalidArgumentException
+     *   If the $key string is not a legal value a \Waffle\Contract\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
      * @return CacheItemInterface

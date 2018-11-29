@@ -2,8 +2,8 @@
 
 namespace Waffle\Http\Message\Exception;
 
-use RuntimeException;
-use Exception;
+use type RuntimeException;
+use type Exception;
 
 class UploadedFileAlreadyMovedException extends RuntimeException implements ExceptionInterface
 {

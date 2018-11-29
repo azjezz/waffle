@@ -2,8 +2,8 @@
 
 namespace Waffle\Contract\Http\Server;
 
-use Waffle\Contract\Http\Message\ResponseInterface;
-use Waffle\Contract\Http\Message\ServerRequestInterface;
+use type Waffle\Contract\Http\Message\ResponseInterface;
+use type Waffle\Contract\Http\Message\ServerRequestInterface;
 
 /**
  * An HTTP middleware component participates in processing an HTTP message,

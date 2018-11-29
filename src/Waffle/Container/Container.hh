@@ -3,16 +3,16 @@
 namespace Waffle\Container;
 
 use namespace HH\Lib\Str;
-use Waffle\Container\Definition\DefinitionAggregate;
-use Waffle\Container\Definition\DefinitionInterface;
-use Waffle\Container\Definition\DefinitionAggregateInterface;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Container\Inflector\InflectorAggregate;
-use Waffle\Container\Inflector\InflectorInterface;
-use Waffle\Container\Inflector\InflectorAggregateInterface;
-use Waffle\Container\ServiceProvider\ServiceProviderAggregate;
-use Waffle\Container\ServiceProvider\ServiceProviderAggregateInterface;
-use Waffle\Contract\Container\ContainerInterface;
+use type Waffle\Container\Definition\DefinitionAggregate;
+use type Waffle\Container\Definition\DefinitionInterface;
+use type Waffle\Container\Definition\DefinitionAggregateInterface;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Container\Inflector\InflectorAggregate;
+use type Waffle\Container\Inflector\InflectorInterface;
+use type Waffle\Container\Inflector\InflectorAggregateInterface;
+use type Waffle\Container\ServiceProvider\ServiceProviderAggregate;
+use type Waffle\Container\ServiceProvider\ServiceProviderAggregateInterface;
+use type Waffle\Contract\Container\ContainerInterface;
 
 class Container implements ContainerInterface
 {
@@ -101,7 +101,7 @@ class Container implements ContainerInterface
     public function get(string $id, bool $new = false): mixed
     {
         if ($this->definitions->has($id)) {
-            
+
             $resolved = $this->definitions->resolve($id, $new);
 
             return $this->inflectors->inflect($resolved);

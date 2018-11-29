@@ -118,7 +118,7 @@ interface ServerRequestInterface extends RequestInterface
      * Retrieve normalized file upload data.
      *
      * This method returns upload metadata in a normalized tree, with each leaf
-     * an instance of Psr\Http\Message\UploadedFileInterface.
+     * an instance of Waffle\Contract\Http\Message\UploadedFileInterface.
      *
      * These values MAY be prepared from $_FILES or the message body during
      * instantiation, or MAY be injected via withUploadedFiles().

@@ -3,7 +3,7 @@
 namespace Waffle\Http\Message\Exception;
 
 use namespace HH\Lib\Str;
-use RuntimeException;
+use type RuntimeException;
 
 <<__ConsistentConstruct>>
 class UploadedFileErrorException extends RuntimeException implements ExceptionInterface

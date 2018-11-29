@@ -3,11 +3,9 @@
 namespace Waffle\Container\Definition;
 
 use namespace HH\Lib\Str;
-use Generator;
-use Waffle\Container\ContainerAwareTrait;
-use Waffle\Container\Exception\NotFoundException;
-use function sprintf;
-use Iterator;
+use type Iterator;
+use type Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\Exception\NotFoundException;
 
 class DefinitionAggregate implements DefinitionAggregateInterface
 {

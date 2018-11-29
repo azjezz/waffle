@@ -2,7 +2,7 @@
 
 namespace Waffle\Container;
 
-use Waffle\Contract\Container\ContainerInterface;
+use type Waffle\Contract\Container\ContainerInterface;
 
 interface ContainerAwareInterface
 {

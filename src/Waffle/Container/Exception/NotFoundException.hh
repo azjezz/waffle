@@ -2,8 +2,8 @@
 
 namespace Waffle\Container\Exception;
 
-use Waffle\Contract\Container\NotFoundExceptionInterface;
-use InvalidArgumentException;
+use type Waffle\Contract\Container\NotFoundExceptionInterface;
+use type InvalidArgumentException;
 
 class NotFoundException extends InvalidArgumentException implements NotFoundExceptionInterface
 {

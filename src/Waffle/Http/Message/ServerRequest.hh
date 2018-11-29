@@ -2,10 +2,10 @@
 
 namespace Waffle\Http\Message;
 
-use Waffle\Contract\Http\Message\ServerRequestInterface;
-use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Contract\Http\Message\UploadedFileInterface;
-use Waffle\Contract\Http\Message\UriInterface;
+use type Waffle\Contract\Http\Message\ServerRequestInterface;
+use type Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Contract\Http\Message\UploadedFileInterface;
+use type Waffle\Contract\Http\Message\UriInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
 {
@@ -21,7 +21,8 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     protected Map<string, UploadedFileInterface> $uploadedFiles = Map {};
 
-    public function __clone(): void 
+    <<__Override>>
+    public function __clone(): void
     {
         parent::__clone();
         $this->attributes = clone $this->attributes;
@@ -33,11 +34,11 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     public function __construct(
-        string $method, 
-        UriInterface $uri, 
-        Map<string, Set<string>> $headers = Map {}, 
-        ?StreamInterface $body = null, 
-        string $version = '1.1', 
+        string $method,
+        UriInterface $uri,
+        Map<string, Set<string>> $headers = Map {},
+        ?StreamInterface $body = null,
+        string $version = '1.1',
         Map<string, string> $serverParams = Map {}
     ) {
         $this->method = $method;

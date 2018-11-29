@@ -5,7 +5,6 @@ vendor/
 docs/
 
 composer
-composer.phar
 
 main.hh
 

@@ -3,10 +3,11 @@
 namespace Waffle\Container\ServiceProvider;
 
 use namespace HH\Lib\Str;
-use Waffle\Container\{ContainerAwareInterface, ContainerAwareTrait};
-use Waffle\Container\Exception\ContainerException;
+use type Waffle\Container\ContainerAwareInterface;
+use type Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\Exception\ContainerException;
+use type ReflectionClass;
 use function class_exists;
-use ReflectionClass;
 
 class ServiceProviderAggregate implements ServiceProviderAggregateInterface
 {
@@ -73,7 +74,7 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
      * {@inheritdoc}
      */
     public function getIterator(): Iterator<ServiceProviderInterface>
-    {   
+    {
         return $this->providers->getIterator();
     }
 

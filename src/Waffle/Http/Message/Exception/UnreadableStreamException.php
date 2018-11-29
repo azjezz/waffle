@@ -2,7 +2,7 @@
 
 namespace Waffle\Http\Message\Exception;
 
-use RuntimeException;
+use type RuntimeException;
 
 <<__ConsistentConstruct>>
 class UnreadableStreamException extends RuntimeException implements ExceptionInterface

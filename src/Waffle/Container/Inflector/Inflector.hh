@@ -2,10 +2,10 @@
 
 namespace Waffle\Container\Inflector;
 
-use Waffle\Container\ContainerAwareTrait;
-use Waffle\Container\Argument\ArgumentResolverInterface;
-use Waffle\Container\Argument\ArgumentResolverTrait;
-use ReflectionProperty;
+use type Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\Argument\ArgumentResolverInterface;
+use type Waffle\Container\Argument\ArgumentResolverTrait;
+use type ReflectionProperty;
 use function get_class;
 use function call_user_func_array;
 use function array_combine;

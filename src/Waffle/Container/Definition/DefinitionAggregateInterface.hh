@@ -2,8 +2,8 @@
 
 namespace Waffle\Container\Definition;
 
-use IteratorAggregate;
-use Waffle\Container\ContainerAwareInterface;
+use type IteratorAggregate;
+use type Waffle\Container\ContainerAwareInterface;
 
 interface DefinitionAggregateInterface extends ContainerAwareInterface, IteratorAggregate<DefinitionInterface>
 {

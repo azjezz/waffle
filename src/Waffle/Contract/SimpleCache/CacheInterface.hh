@@ -1,9 +1,9 @@
 <?hh // strict
 
-namespace Psr\SimpleCache;
+namespace Waffle\Contract\SimpleCache;
 
-use DateInterval;
-use Traversable;
+use type DateInterval;
+use type Traversable;
 
 interface CacheInterface
 {

@@ -3,8 +3,7 @@
 namespace Waffle\Http\Message;
 
 use namespace HH\Lib\Str;
-use Waffle\Contract\Http\Message\UriInterface;
-
+use type Waffle\Contract\Http\Message\UriInterface;
 use function parse_url;
 use function preg_replace_callback;
 use function rawurlencode;
@@ -12,7 +11,7 @@ use function rawurlencode;
 final class Uri implements UriInterface
 {
     private static Map<string, int> $schemes = Map {
-        'http' => 80, 
+        'http' => 80,
         'https' => 443
     };
 
@@ -50,10 +49,10 @@ final class Uri implements UriInterface
     public function __toString(): string
     {
         return self::createUriString(
-            $this->scheme, 
-            $this->getAuthority(), 
-            $this->path, 
-            $this->query, 
+            $this->scheme,
+            $this->getAuthority(),
+            $this->path,
+            $this->query,
             $this->fragment
         );
     }
@@ -219,18 +218,37 @@ final class Uri implements UriInterface
      */
     private function applyParts(Map<string, arraykey> $parts): void
     {
-        $this->scheme = $parts->contains('scheme') ? Str\lowercase($parts->get('scheme')): '';
-        $this->host = $parts->contains('host') ? Str\lowercase($parts->get('host')): '';
-        $this->port = $parts->contains('port') ? $this->filterPort((int) $parts->get('port')): null;
-        $this->path = $parts->contains('path') ? $this->filterPath((string) $parts->get('path')): '';
-        $this->query = $parts->contains('query') ? $this->filterQueryAndFragment((string) $parts->get('query')): '';
-        $this->fragment = $parts->contains('fragment') ? $this->filterQueryAndFragment((string) $parts->get('fragment')): '';
-    
+        $this->scheme = $parts->contains('scheme') ? Str\lowercase(
+            (string) $parts->at('scheme')
+        ): '';
+
+        $this->host = $parts->contains('host') ? Str\lowercase(
+            (string) $parts->at('host')
+        ): '';
+
+        $this->port = $parts->contains('port') ? $this->filterPort(
+            (int) $parts->get('port')
+        ): null;
+
+        $this->path = $parts->contains('path') ? $this->filterPath(
+            (string) $parts->at('path')
+        ): '';
+
+        $this->query = $parts->contains('query') ? $this->filterQueryAndFragment(
+            (string) $parts->at('query')
+        ): '';
+
+        $this->fragment = $parts->contains('fragment') ? $this->filterQueryAndFragment(
+            (string) $parts->at('fragment')
+        ): '';
+
         if ($parts->contains('user')) {
-            $this->userInfo = (string) $parts->get('user');
+            $this->userInfo = (string) $parts->at('user');
+
             if ($parts->contains('pass')) {
-                $this->userInfo .= ':' . $parts->get('pass');
+                $this->userInfo .= ':' . $parts->at('pass');
             }
+
         } else {
             $this->userInfo = '';
         }
@@ -305,8 +323,8 @@ final class Uri implements UriInterface
     private function filterPath(string $path): string
     {
         return preg_replace_callback(
-            '/(?:[^'.self::$charUnreserved.self::$charSubDelims.'%:@\/]++|%(?![A-Fa-f0-9]{2}))/', 
-            ($math) ==> rawurlencode($math[0]), 
+            '/(?:[^'.self::$charUnreserved.self::$charSubDelims.'%:@\/]++|%(?![A-Fa-f0-9]{2}))/',
+            ($match) ==> rawurlencode($match[0]),
             $path
         );
     }
@@ -314,8 +332,8 @@ final class Uri implements UriInterface
     private function filterQueryAndFragment(string $str): string
     {
         return preg_replace_callback(
-            '/(?:[^'.self::$charUnreserved.self::$charSubDelims.'%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/', 
-            ($math) ==> rawurlencode($math[0]), 
+            '/(?:[^'.self::$charUnreserved.self::$charSubDelims.'%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/',
+            ($match) ==> rawurlencode($match[0]),
             $str
         );
     }

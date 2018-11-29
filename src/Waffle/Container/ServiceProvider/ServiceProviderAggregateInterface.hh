@@ -2,8 +2,8 @@
 
 namespace Waffle\Container\ServiceProvider;
 
-use IteratorAggregate;
-use Waffle\Container\ContainerAwareInterface;
+use type IteratorAggregate;
+use type Waffle\Container\ContainerAwareInterface;
 
 interface ServiceProviderAggregateInterface extends ContainerAwareInterface, IteratorAggregate<ServiceProviderInterface>
 {
