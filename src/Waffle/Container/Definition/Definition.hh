@@ -104,7 +104,7 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         return $this;
     }
 
-    public function addArguments(array<mixed> $args): DefinitionInterface
+    public function addArguments(Vector<mixed> $args): DefinitionInterface
     {
         $this->arguments->addAll($args);
 
@@ -127,7 +127,7 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
     /**
      * {@inheritdoc}
      */
-    public function addMethodCalls(array<string, Vector<mixed>> $methods = []): DefinitionInterface
+    public function addMethodCalls(Map<string, Vector<mixed>> $methods = Map {}): DefinitionInterface
     {
         foreach ($methods as $method => $args) {
             $this->addMethodCall($method, $args);
@@ -173,11 +173,10 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         return $concrete;
     }
 
-    protected function resolveCallable((function(mixed): mixed) $concrete): mixed
+    protected function resolveCallable((function(mixed ...): mixed) $concrete): mixed
     {
         $resolved = $this->resolveArguments($this->arguments);
-
-        return $concrete($resolved);
+        return $concrete(...$resolved);
     }
 
     protected function resolveClass(string $concrete): mixed

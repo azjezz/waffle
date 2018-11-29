@@ -19,7 +19,7 @@ interface InflectorInterface
     /**
      * Defines multiple methods to be invoked on the subject object.
      */
-    public function invokeMethods(array<string, Vector<mixed>> $methods): InflectorInterface;
+    public function invokeMethods(Map<string, Vector<mixed>> $methods): InflectorInterface;
 
     /**
      * Defines a property to be set on the subject object.
@@ -29,7 +29,7 @@ interface InflectorInterface
     /**
      * Defines multiple properties to be set on the subject object.
      */
-    public function setProperties(array<string, mixed> $properties): InflectorInterface;
+    public function setProperties(Map<string, mixed> $properties): InflectorInterface;
 
     /**
      * Apply inflections to an object.

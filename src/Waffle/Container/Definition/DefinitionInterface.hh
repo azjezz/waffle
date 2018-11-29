@@ -54,7 +54,7 @@ interface DefinitionInterface extends ContainerAwareInterface
     /**
      * Add multiple arguments to be injected.
      */
-    public function addArguments(array<mixed> $args): DefinitionInterface;
+    public function addArguments(Vector<mixed> $args): DefinitionInterface;
 
     /**
      * Add a method to be invoked
@@ -64,7 +64,7 @@ interface DefinitionInterface extends ContainerAwareInterface
     /**
      * Add multiple methods to be invoked
      */
-    public function addMethodCalls(array<string, Vector<mixed>> $methods = []): DefinitionInterface;
+    public function addMethodCalls(Map<string, Vector<mixed>> $methods = Map {}): DefinitionInterface;
 
     /**
      * Handle instantiation and manipulation of value and return.

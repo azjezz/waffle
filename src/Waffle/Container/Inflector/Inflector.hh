@@ -52,7 +52,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     /**
      * {@inheritdoc}
      */
-    public function invokeMethods(array<string, Vector<mixed>> $methods): InflectorInterface
+    public function invokeMethods(Map<string, Vector<mixed>> $methods): InflectorInterface
     {
         foreach ($methods as $name => $args) {
             $this->invokeMethod($name, $args);
@@ -79,7 +79,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     /**
      * {@inheritdoc}
      */
-    public function setProperties(array<string, mixed> $properties): InflectorInterface
+    public function setProperties(Map<string, mixed> $properties): InflectorInterface
     {
         foreach ($properties as $property => $value) {
             $this->setProperty($property, $value);
