@@ -4,11 +4,19 @@ namespace Waffle\Tests\Http\Message;
 
 use Waffle\Http\Message\Stream;
 use Waffle\Http\Message\Exception;
-use function Facebook\FBExpect\expect;
 use Waffle\Http\Message\UploadedFile;
 use Waffle\Contract\Http\Message\UploadedFileError;
 use Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 use function Waffle\Http\Message\Functional\create_stream_from_string;
+use function is_scalar;
+use function file_exists;
+use function unlink;
+use function fopen;
+use function tempnam;
+use function sys_get_temp_dir;
+use function uniqid;
+use function file_get_contents;
 
 class UploadedFileTest extends HackTest
 {
@@ -117,7 +125,7 @@ class UploadedFileTest extends HackTest
         expect(() ==> {
             $uploadedFile->moveTo(__DIR__.'/'.uniqid());
         })->toThrow(
-            Exception\UploadedFileErrorException::class, 
+            Exception\UploadedFileErrorException::class,
             'Cannot retrieve stream due to upload error'
         );
     }
@@ -129,7 +137,7 @@ class UploadedFileTest extends HackTest
         expect(() ==> {
             $stream = $uploadedFile->getStream();
         })->toThrow(
-            Exception\UploadedFileErrorException::class, 
+            Exception\UploadedFileErrorException::class,
             'Cannot retrieve stream due to upload error'
         );
     }

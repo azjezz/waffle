@@ -12,6 +12,7 @@ use Waffle\Tests\Container\Asset\FooCallable;
 use Waffle\Tests\Container\Asset\Bar;
 use Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
+use function implode;
 
 class DefinitionTest extends HackTest
 {
@@ -78,7 +79,7 @@ class DefinitionTest extends HackTest
     {
 
             $container = new Container();
-            
+
             $bar = new Bar();
 
             $container->add(Bar::class, (): Bar ==> $bar);
@@ -148,7 +149,7 @@ class DefinitionTest extends HackTest
     public function testDefinitionResolvesSharedItemOnlyOnce()
     {
         $definition = new Definition('callable', new ClassNameArgument(Bar::class));
-        
+
         $definition->setShared(true);
 
         $actual1 = $definition->resolve();

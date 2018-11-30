@@ -3,8 +3,12 @@
 namespace Waffle\Tests\Http\Message;
 
 use Waffle\Http\Message\Stream;
-use function Facebook\FBExpect\expect;
 use Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
+use function fopen;
+use function fwrite;
+use function filesize;
+use function ftell;
 
 class StreamTest extends HackTest
 {
