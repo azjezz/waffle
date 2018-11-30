@@ -10,7 +10,7 @@ matrix:
         - php: hhvm-nightly
           env:
            - WAFFLE_CHECK=true
-	- php: hhvm-nightly
+        - php: hhvm-nightly
     allow_failures:
         - php: hhvm-nightly
 
