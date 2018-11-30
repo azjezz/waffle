@@ -1,0 +1,23 @@
+language: php
+sudo: false
+matrix:
+    fast_finish: true
+    include:
+	- php: hhvm
+	  env: 
+	    - WAFFLE_CHECK=true
+	- php: hhvm
+	- php: hhvm-nightly
+	  env:
+	    - WAFFLE_CHECK=true
+	- php: hhvm-nightly
+    allow_failures:
+	- php: hhvm-nightly
+
+install
+    - wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | hhvm -- --quiet
+    - hhvm composer.phar install
+
+script:
+    - if [[ $WAFFLE_CHECK='true' ]]; then hhvm composer.phar check; fi
+    - hhvm composer.phar test
