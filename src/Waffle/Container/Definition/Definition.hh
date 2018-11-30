@@ -186,9 +186,9 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         $constructor = $reflection->getConstructor();
 
         if (null !== $constructor) {
-            while($resolved->count() < $constructor->getNumberOfRequiredParameters()) 
+            while($resolved->count() < $constructor->getNumberOfRequiredParameters())
             {
-                $resolved->add(null);    
+                $resolved->add(null);
             }
         }
 
