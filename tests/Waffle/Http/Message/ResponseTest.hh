@@ -2,11 +2,12 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Waffle\Contract\Http\Message\StreamInterface;
-use function Facebook\FBExpect\expect;
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Functional;
 use Facebook\HackTest\HackTest;
+use Waffle\Contract\Http\Message\StreamInterface;
+use Waffle\Http\Message\Response;
+use Waffle\Http\Message\Cookie;
+use Waffle\Http\Message\Functional;
+use function Facebook\FBExpect\expect;
 
 class ResponseTest extends HackTest
 {
@@ -200,5 +201,45 @@ class ResponseTest extends HackTest
         expect($r->getHeaders())->toBePHPEqual(Map { 'OWS' => Set { 'Foo' } });
         expect($r->getHeaderLine('OWS'))->toBePHPEqual('Foo');
         expect($r->getHeader('OWS'))->toBePHPEqual(Set { 'Foo' });
+    }
+
+    public function testWithAndWithoutCookie()
+    {
+        $response = new Response();
+        $cookie = new Cookie('value');
+        $response2 = $response->withCookie('name', $cookie);
+        
+        expect($response2)->toNotBeSame($response);
+
+        expect($response->getCookie('name'))->toBeNull();
+        expect($response2->getCookie('name'))->toBeSame($cookie);
+    
+        $response3 = $response2->withoutCookie('name');
+
+        expect($response3)->toNotBeSame($response2);
+        expect($response3->getCookie('name'))->toBeNull();
+    }
+
+    public function testGetCookies()
+    {
+        $response = new Response();
+        $cookie1 = new Cookie('value1');
+        $cookie2 = new Cookie('value2');
+        $cookie3 = new Cookie('value3');
+        $response2 = $response->withCookie('name1', $cookie1);
+        
+        expect($response2)->toNotBeSame($response);
+        expect($response2->getCookies()->count())->toBeSame(1);
+        expect($response2->getCookies()->at('name1'))->toBeSame($cookie1);
+
+        $response3 = $response2
+                        ->withCookie('name2', $cookie2)
+                        ->withCookie('name3', $cookie3);
+
+        expect($response3)->toNotBeSame($response2);
+        expect($response3->getCookies()->count())->toBeSame(3);
+        expect($response3->getCookies()->at('name1'))->toBeSame($cookie1);
+        expect($response3->getCookies()->at('name2'))->toBeSame($cookie2);
+        expect($response3->getCookies()->at('name3'))->toBeSame($cookie3);
     }
 }

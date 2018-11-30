@@ -24,7 +24,7 @@ trait MessageTrait
 
     protected ?StreamInterface $stream;
 
-    public function __clone(): void
+    public function messageClone(): void
     {
         $this->headers = clone $this->headers;
         $this->stream = null === $this->stream ? null : (clone $this->stream);
@@ -86,9 +86,7 @@ trait MessageTrait
 
         if ($new->headerNames->contains($normalized)) {
             $new->headers->remove(
-                /* HH_IGNORE_ERROR[4110] */
-                /* we already know that 'headerNames' contains this key */
-                $new->headerNames->get($normalized)
+                $new->headerNames->at($normalized)
             );
         }
 

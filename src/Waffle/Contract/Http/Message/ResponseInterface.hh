@@ -20,14 +20,6 @@ namespace Waffle\Contract\Http\Message;
 interface ResponseInterface extends MessageInterface
 {
     /**
-     * Gets the response status code.
-     *
-     * The status code is a 3-digit integer result code of the server's attempt
-     * to understand and satisfy the request.
-     */
-    public function getStatusCode(): int;
-
-    /**
      * Return an instance with the specified status code and, optionally, reason phrase.
      *
      * If no reason phrase is specified, implementations MAY choose to default
@@ -50,6 +42,14 @@ interface ResponseInterface extends MessageInterface
     public function withStatus(int $code, string $reasonPhrase = ''): this;
 
     /**
+     * Gets the response status code.
+     *
+     * The status code is a 3-digit integer result code of the server's attempt
+     * to understand and satisfy the request.
+     */
+    public function getStatusCode(): int;
+
+    /**
      * Gets the response reason phrase associated with the status code.
      *
      * Because a reason phrase is not a required element in a response
@@ -63,4 +63,69 @@ interface ResponseInterface extends MessageInterface
      * @return string Reason phrase; must return an empty string if none present.
      */
     public function getReasonPhrase(): string;
+
+    /**
+     * Retrieve all cookies from the response.
+     *
+     * The keys represent the cookie name as it will be sent over the wire, and
+     * each value is a CookieInterface implementation associated with the cookie.
+     *
+     *      // emit cookies iteratively:
+     *      foreach ($response->getCookies() as $name => $cookie) {
+     *          setcookie(
+     *              $name,
+     *              $cookie->getValue(),
+     *              $cookie->getExpires() ?? 0,
+     *              $cookie->getPath() ?? '/',
+     *              $cookie->getDomain() ?? '',
+     *              $cookie->isSecure(),
+     *              $cookie->isHttpOnly()
+     *          )
+     *     }
+     *
+     * cookies names are case-sensitive, getCookies() MUST preserve the
+     * exact case in which cookies were originally specified.
+     *
+     * @return Map<string, CookiesInterface> Cookies derived from the request.
+     */
+    public function getCookies(): Map<string, CookieInterface>;
+
+    /**
+     * Retrieve a single request cookie.
+     *
+     * Retrieves a single derived request attribute as described in
+     * getAttributes(). If the attribute has not been previously set, returns
+     * the default value as provided.
+     *
+     * This method obviates the need for a hasAttribute() method, as it allows
+     * specifying a default value to return if the attribute is not found.
+     *
+     * @see getCookies()
+     */
+    public function getCookie(string $name): ?CookieInterface;
+
+    /**
+     * Create a new instance with the specified cookie.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return an instance that has the
+     * updated body parameters.
+     */
+    public function withCookie(string $name, CookieInterface $cookie): this;
+
+    /**
+     * Return an instance that removes the specified derived response cookie.
+     *
+     * This method allows removing a single derived response cookie as
+     * described in getCookie().
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return an instance that removes
+     * the cookie.
+     *
+     * @see getCookies()
+     *
+     * @param string $name The cookie name.
+     */
+    public function withoutCookie(string $name): this;
 }

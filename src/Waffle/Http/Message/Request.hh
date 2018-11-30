@@ -55,4 +55,9 @@ class Request implements RequestInterface
             $header, Set { $host }
         });
     }
+
+    public function __clone(): void
+    {
+        $this->messageClone();
+    }
 }

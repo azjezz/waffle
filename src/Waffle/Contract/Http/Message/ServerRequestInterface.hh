@@ -136,8 +136,6 @@ interface ServerRequestInterface extends RequestInterface
      * updated body parameters.
      *
      * @param Map<string, UploadedFileInterface> $uploadedFiles A Map of UploadedFileInterface instances.
-     *
-     * @throws \InvalidArgumentException if an invalid structure is provided.
      */
     public function withUploadedFiles(Map<string, UploadedFileInterface> $uploadedFiles): this;
 
