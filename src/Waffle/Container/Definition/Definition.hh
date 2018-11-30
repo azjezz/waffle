@@ -183,6 +183,14 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
     {
         $resolved   = $this->resolveArguments($this->arguments);
         $reflection = new ReflectionClass($concrete);
+        $constructor = $reflection->getConstructor();
+
+        if (null !== $constructor) {
+            while($resolved->count() < $constructor->getNumberOfRequiredParameters()) 
+            {
+                $resolved->add(null);    
+            }
+        }
 
         return $reflection->newInstanceArgs($resolved);
     }
