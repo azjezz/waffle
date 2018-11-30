@@ -3,7 +3,7 @@ sudo: false
 matrix:
     fast_finish: true
     include:
-	- php: hhvm
+        - php: hhvm
 	  env: 
 	    - WAFFLE_CHECK=true
 	- php: hhvm
@@ -12,7 +12,7 @@ matrix:
 	    - WAFFLE_CHECK=true
 	- php: hhvm-nightly
     allow_failures:
-	- php: hhvm-nightly
+        - php: hhvm-nightly
 
 install
     - wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | hhvm -- --quiet
