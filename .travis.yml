@@ -19,5 +19,5 @@ install:
     - composer install
 
 script:
-    - if [[ $WAFFLE_CHECK='true' ]]; then hhvm composer.phar check; fi
-    - hhvm composer.phar test
+    - if [[ $WAFFLE_CHECK='true' ]]; then composer check; fi
+    - composer test
