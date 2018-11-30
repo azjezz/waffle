@@ -18,6 +18,9 @@ install:
     - composer self-update
     - composer install
 
+before_script:
+    - if [[ $WAFFLE_CHECK='true' ]]; then hh_server --daemon ./ fi
+
 script:
     - if [[ $WAFFLE_CHECK='true' ]]; then composer check; fi
     - composer test
