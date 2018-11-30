@@ -86,16 +86,16 @@ interface ResponseInterface extends MessageInterface
      * cookies names are case-sensitive, getCookies() MUST preserve the
      * exact case in which cookies were originally specified.
      *
-     * @return Map<string, CookiesInterface> Cookies derived from the request.
+     * @return Map<string, CookiesInterface> response cookies.
      */
     public function getCookies(): Map<string, CookieInterface>;
 
     /**
      * Retrieve a single request cookie.
      *
-     * Retrieves a single derived request attribute as described in
-     * getAttributes(). If the attribute has not been previously set, returns
-     * the default value as provided.
+     * Retrieves a single cookie as described in
+     * getAttributes(). If the cookie has not been previously set, returns
+     * null.
      *
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
@@ -109,7 +109,7 @@ interface ResponseInterface extends MessageInterface
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return an instance that has the
-     * updated body parameters.
+     * new cookie added to the cookies map.
      */
     public function withCookie(string $name, CookieInterface $cookie): this;
 
