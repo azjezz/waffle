@@ -19,7 +19,7 @@ install:
     - composer install
 
 before_script:
-    - if [[ $WAFFLE_CHECK='true' ]]; then hh_server --daemon $TRAVIS_BUILD_DIR fi
+    - if [[ $WAFFLE_CHECK='true' ]]; then hh_server --daemon $TRAVIS_BUILD_DIR; fi
 
 script:
     - if [[ $WAFFLE_CHECK='true' ]]; then composer check; fi
