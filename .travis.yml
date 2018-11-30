@@ -4,13 +4,13 @@ matrix:
     fast_finish: true
     include:
         - php: hhvm
-	  env: 
-	    - WAFFLE_CHECK=true
-	- php: hhvm
-	- php: hhvm-nightly
-	  env:
-	    - WAFFLE_CHECK=true
-	- php: hhvm-nightly
+          env: 
+           - WAFFLE_CHECK=true
+        - php: hhvm
+        - php: hhvm-nightly
+          env:
+           - WAFFLE_CHECK=true
+	    - php: hhvm-nightly
     allow_failures:
         - php: hhvm-nightly
 
