@@ -86,7 +86,7 @@ interface CookieInterface
      * Create a new instance with the given same-site value.
      *
      * This method MUST retain the state of the current instance, and return
-     * an instance with the secure option set to false.
+     * an instance with the given same-site value, if any.
      *
      * A null value is equivalent to removing the same-site option.
      *
