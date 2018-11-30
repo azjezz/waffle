@@ -59,7 +59,7 @@ trait ArgumentResolverTrait
         return $resolved;
     }
 
-    public function reflectArguments(ReflectionFunctionAbstract $method, Map<string, mixed> $args): Vector<mixed>
+    public function reflectArguments(ReflectionFunctionAbstract $method, Map<string, mixed> $args = Map {}): Vector<mixed>
     {
         $parameters = new Vector<ReflectionParameter>($method->getParameters());
         $arguments = $parameters->map<mixed>(function (ReflectionParameter $param) use ($method, $args) {
