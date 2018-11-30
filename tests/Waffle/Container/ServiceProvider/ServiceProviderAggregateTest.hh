@@ -2,12 +2,13 @@
 
 namespace Waffle\Tests\Container\ServiceProvider;
 
-use Waffle\Container\{Container, ContainerAwareTrait};
+use Facebook\HackTest\HackTest;
+use Waffle\Container\Container;
+use Waffle\Container\ContainerAwareTrait;
 use Waffle\Container\Exception\ContainerException;
 use Waffle\Tests\Container\Asset\FakeServiceProvider;
-use function Facebook\FBExpect\expect;
 use Waffle\Container\ServiceProvider\ServiceProviderAggregate;
-use Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
 class ServiceProviderAggregateTest extends HackTest
 {
