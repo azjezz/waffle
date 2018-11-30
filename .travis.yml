@@ -15,8 +15,8 @@ matrix:
         - php: hhvm-nightly
 
 install:
-    - wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | hhvm -- --quiet
-    - hhvm composer.phar install
+    - composer self-update
+    - composer install
 
 script:
     - if [[ $WAFFLE_CHECK='true' ]]; then hhvm composer.phar check; fi
