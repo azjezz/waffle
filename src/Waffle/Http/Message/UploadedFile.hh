@@ -45,6 +45,7 @@ class UploadedFile implements UploadedFileInterface
     public function getStream(): StreamInterface
     {
         $this->validateActive();
+
         return $this->stream;
     }
 

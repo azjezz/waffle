@@ -116,11 +116,11 @@ interface ServerRequestInterface extends RequestInterface
 
     /**
      * Retrieve normalized file upload data as an UploadsFolder instance.
-     * 
+     *
      * If the uploads folder has not been previously set, returns
      * Null.
      *
-     * These values of the UploadsFolder MAY be prepared from $_FILES or 
+     * These values of the UploadsFolder MAY be prepared from $_FILES or
      * the message body during instantiation, or MAY be injected via withUploadsFolder().
      *
      * @return UploadsFolderInterface An UploadsFolderInterface instances, if any;

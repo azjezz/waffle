@@ -4,7 +4,6 @@ namespace Waffle\Http\Message;
 
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\StreamInterface;
-use type Waffle\Contract\Http\Message\UploadedFileInterface;
 use type Waffle\Contract\Http\Message\UriInterface;
 use type Waffle\Contract\Http\Message\UploadsFolderInterface;
 

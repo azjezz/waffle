@@ -51,7 +51,7 @@ interface UploadsFolderInterface
     /**
      * Return an instance that removes the specified uploaded file.
      *
-     * This method allows removing a single UploadedFileInterface instance as 
+     * This method allows removing a single UploadedFileInterface instance as
      * described in getFile().
      *
      * This method MUST be implemented in such a way as to retain the
@@ -65,7 +65,7 @@ interface UploadsFolderInterface
     /**
      * Return an instance that removes the specified uploads sub-folder.
      *
-     * This method allows removing a single UploadsFolderInterface instance as 
+     * This method allows removing a single UploadsFolderInterface instance as
      * described in getFolder().
      *
      * This method MUST be implemented in such a way as to retain the

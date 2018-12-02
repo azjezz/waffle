@@ -5,7 +5,7 @@ namespace Waffle\Http\Message;
 use namespace Waffle\Contract\Http\Message;
 use function fopen;
 
-class Factory implements 
+class Factory implements
     Message\ResponseFactoryInterface,
     Message\RequestFactoryInterface,
     Message\ServerRequestFactoryInterface,
