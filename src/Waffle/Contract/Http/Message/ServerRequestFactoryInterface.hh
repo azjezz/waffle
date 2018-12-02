@@ -13,10 +13,10 @@ interface ServerRequestFactoryInterface
      *
      * @param string $method The HTTP method associated with the request.
      * @param UriInterface $uri The URI associated with the request.
-     * @param Map<string, string> $serverParams Map of SAPI parameters with which to seed
+     * @param Map<string, mixed> $serverParams Map of SAPI parameters with which to seed
      *     the generated request instance.
      *
      * @return ServerRequestInterface
      */
-    public function createServerRequest(string $method, UriInterface $uri, Map<string, string> $serverParams = Map {}): ServerRequestInterface;
+    public function createServerRequest(string $method, UriInterface $uri, Map<string, mixed> $serverParams = Map {}): ServerRequestInterface;
 }

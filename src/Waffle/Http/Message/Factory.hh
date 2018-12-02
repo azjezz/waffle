@@ -26,7 +26,7 @@ class Factory implements
         return new Request($method, $uri);
     }
 
-    public function createServerRequest(string $method, Message\UriInterface $uri, Map<string, string> $serverParams = Map {}): Message\ServerRequestInterface
+    public function createServerRequest(string $method, Message\UriInterface $uri, Map<string, mixed> $serverParams = Map {}): Message\ServerRequestInterface
     {
         return new ServerRequest($method, $uri, Map {}, null, '1.1', $serverParams);
     }
