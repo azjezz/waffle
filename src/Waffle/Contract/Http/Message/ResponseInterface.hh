@@ -94,11 +94,8 @@ interface ResponseInterface extends MessageInterface
      * Retrieve a single request cookie.
      *
      * Retrieves a single cookie as described in
-     * getAttributes(). If the cookie has not been previously set, returns
+     * getCookiess(). If the cookie has not been previously set, returns
      * null.
-     *
-     * This method obviates the need for a hasAttribute() method, as it allows
-     * specifying a default value to return if the attribute is not found.
      *
      * @see getCookies()
      */
