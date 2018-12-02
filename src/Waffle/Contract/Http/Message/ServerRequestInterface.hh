@@ -115,29 +115,28 @@ interface ServerRequestInterface extends RequestInterface
     public function withQueryParams(Map<string, mixed> $query): this;
 
     /**
-     * Retrieve normalized file upload data.
+     * Retrieve normalized file upload data as an UploadsFolder instance.
+     * 
+     * If the uploads folder has not been previously set, returns
+     * Null.
      *
-     * This method returns upload metadata in a normalized tree, with each leaf
-     * an instance of Waffle\Contract\Http\Message\UploadedFileInterface.
+     * These values of the UploadsFolder MAY be prepared from $_FILES or 
+     * the message body during instantiation, or MAY be injected via withUploadsFolder().
      *
-     * These values MAY be prepared from $_FILES or the message body during
-     * instantiation, or MAY be injected via withUploadedFiles().
-     *
-     * @return Map<string, UploadedFileInterface> A Map of UploadedFileInterface instances; an empty
-     *     Map MUST be returned if no data is present.
+     * @return UploadsFolderInterface An UploadsFolderInterface instances, if any;
      */
-    public function getUploadedFiles(): Map<string, UploadedFileInterface>;
+    public function getUploadsFolder(): ?UploadsFolderInterface;
 
     /**
-     * Create a new instance with the specified uploaded files.
+     * Create a new instance with the specified uploads folder.
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return an instance that has the
      * updated body parameters.
      *
-     * @param Map<string, UploadedFileInterface> $uploadedFiles A Map of UploadedFileInterface instances.
+     * @param UploadsFolderInterface An UploadsFolderInterface instances;
      */
-    public function withUploadedFiles(Map<string, UploadedFileInterface> $uploadedFiles): this;
+    public function withUploadsFolder(UploadsFolderInterface $uploadsFolder): this;
 
     /**
      * Retrieve any parameters provided in the request body.

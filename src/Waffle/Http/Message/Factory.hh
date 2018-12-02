@@ -10,6 +10,7 @@ class Factory implements
     Message\RequestFactoryInterface,
     Message\ServerRequestFactoryInterface,
     Message\StreamFactoryInterface,
+    Message\UploadsFolderFactoryInterface,
     Message\UploadedFileFactoryInterface,
     Message\CookieFactoryInterface,
     Message\UriFactoryInterface
@@ -43,6 +44,11 @@ class Factory implements
     public function createStreamFromResource(resource $resource): Message\StreamInterface
     {
         return new Stream($resource);
+    }
+
+    public function createUploadsFolder(): Message\UploadsFolderInterface
+    {
+        return new UploadsFolder();
     }
 
     public function createUploadedFile(

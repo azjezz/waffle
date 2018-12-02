@@ -6,29 +6,31 @@ use Waffle\Http\Message\ServerRequest;
 use Waffle\Http\Message\Uri;
 use function Facebook\FBExpect\expect;
 use Waffle\Http\Message\UploadedFile;
+use Waffle\Http\Message\UploadsFolder;
 use Waffle\Http\Message\Functional;
 use Waffle\Contract\Http\Message\UploadedFileError;
 use Facebook\HackTest\HackTest;
 
 class ServerRequestTest extends HackTest
 {
-    public function testUploadedFiles()
+    public function testUploadsFolder()
     {
         $request1 = new ServerRequest('GET', new Uri('/'));
 
-        $files = Map {
-            'file' => new UploadedFile(
-                Functional\create_stream_from_string('test'), 
-                123, 
-                UploadedFileError::ERROR_OK
-            ),
-        };
+        $file = new UploadedFile(
+            Functional\create_stream_from_string('test'),
+            123,
+            UploadedFileError::ERROR_OK
+        );
 
-        $request2 = $request1->withUploadedFiles($files);
+        $folder = (new UploadsFolder())->withFile('file', $file);
+
+        $request2 = $request1->withUploadsFolder($folder);
 
         expect($request1)->toNotBeSame($request2);
-        expect($request1->getUploadedFiles())->toBePHPEqual(Map {});
-        expect($request2->getUploadedFiles())->toBeSame($files);
+        expect($request1->getUploadsFolder())->toBeNull();
+        expect($request2->getUploadsFolder())->toBeSame($folder);
+        expect($request2->getUploadsFolder()?->getFile('file'))->toBeSame($file);
     }
 
     public function testServerParams()

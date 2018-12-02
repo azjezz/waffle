@@ -6,6 +6,7 @@ use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Contract\Http\Message\UploadedFileInterface;
 use type Waffle\Contract\Http\Message\UriInterface;
+use type Waffle\Contract\Http\Message\UploadsFolderInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
 {
@@ -19,19 +20,7 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     protected Map<string, string> $serverParams = Map {};
 
-    protected Map<string, UploadedFileInterface> $uploadedFiles = Map {};
-
-    <<__Override>>
-    public function __clone(): void
-    {
-        parent::__clone();
-        $this->attributes = clone $this->attributes;
-        $this->cookieParams = clone $this->cookieParams;
-        $this->parsedBody = null === $this->parsedBody ? null : clone $this->parsedBody;
-        $this->queryParams = clone $this->queryParams;
-        $this->serverParams = clone $this->serverParams;
-        $this->uploadedFiles = clone $this->uploadedFiles;
-    }
+    protected ?UploadsFolderInterface $uploadsFolder;
 
     public function __construct(
         string $method,
@@ -47,20 +36,32 @@ class ServerRequest extends Request implements ServerRequestInterface
         parent::__construct($method, $uri, $headers, $body, $version);
     }
 
+    <<__Override>>
+    public function __clone(): void
+    {
+        parent::__clone();
+        $this->attributes = clone $this->attributes;
+        $this->cookieParams = clone $this->cookieParams;
+        $this->parsedBody = null === $this->parsedBody ? null : clone $this->parsedBody;
+        $this->queryParams = clone $this->queryParams;
+        $this->serverParams = clone $this->serverParams;
+        $this->uploadsFolder = null === $this->uploadsFolder ? null : clone $this->uploadsFolder;
+    }
+
     public function getServerParams(): Map<string, string>
     {
         return $this->serverParams;
     }
 
-    public function getUploadedFiles(): Map<string, UploadedFileInterface>
+    public function getUploadsFolder(): ?UploadsFolderInterface
     {
-        return $this->uploadedFiles;
+        return $this->uploadsFolder;
     }
 
-    public function withUploadedFiles(Map<string, UploadedFileInterface> $uploadedFiles): this
+    public function withUploadsFolder(UploadsFolderInterface $uploadsFolder): this
     {
         $new = clone $this;
-        $new->uploadedFiles = $uploadedFiles;
+        $new->uploadsFolder = $uploadsFolder;
 
         return $new;
     }
