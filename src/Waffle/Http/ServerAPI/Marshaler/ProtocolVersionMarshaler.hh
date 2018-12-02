@@ -2,7 +2,7 @@
 
 namespace Waffle\Http\ServerAPI\Marshaler;
 
-use Waffle\Http\Message\Exception;
+use namespace Waffle\Http\Message\Exception;
 use function preg_match;
 
 class ProtocolVersionMarshaler

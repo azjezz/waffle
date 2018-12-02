@@ -24,7 +24,7 @@ class Marshaler
         /* HH_IGNORE_ERROR[2050] */
         $query = new Map<string, mixed>($_GET);
         $protocolVersion = (new Marshaler\ProtocolVersionMarshaler())->marshal($server);
-    
+
         $stream = new Stream(fopen('php://input', 'r'));
 
         return (new ServerRequest($method, $uri, $headers, $stream, $protocolVersion, $server))

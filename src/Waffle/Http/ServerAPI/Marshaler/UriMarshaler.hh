@@ -30,14 +30,14 @@ class UriMarshaler
         if ($https || Str\lowercase((string) $this->getHeadersFromMap('x-forwarded-proto', $headers, '')) === 'https') {
             $scheme = 'https';
         }
- 
+
         $uri = $uri->withScheme($scheme);
- 
+
         // Set the host
         $hostAndPort = $this->marshalHostAndPort($headers, $server);
         $host = $hostAndPort['host'];
         $port = $hostAndPort['port'];
-        
+
         if ($host !== '') {
             $uri = $uri->withHost($host);
             if (null !== $port) {
@@ -73,7 +73,7 @@ class UriMarshaler
         }
 
         return shape(
-            'host' => $host, 
+            'host' => $host,
             'port' => $port
         );
     }
@@ -90,7 +90,7 @@ class UriMarshaler
         if (is_array($host)) {
             $host = Str\join($host, ', ');
         }
-        
+
         // trim and remove port number from host
         // host is lowercase as per RFC 952/2181
         $host = Str\lowercase(preg_replace('/:\d+$/', '', Str\trim((string) $host)));
@@ -121,7 +121,7 @@ class UriMarshaler
         } else {
             $pos = Str\search_last($host, ':');
         }
-        
+
         if (null !== $pos) {
             return (int) Str\slice($host, $pos + 1);
         }
@@ -174,7 +174,7 @@ class UriMarshaler
      * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
      * @license   http://framework.zend.com/license/new-bsd New BSD License
      */
-    private function marshalRequestPath(Map<string, mixed> $server): string 
+    private function marshalRequestPath(Map<string, mixed> $server): string
     {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
@@ -218,7 +218,7 @@ class UriMarshaler
     private function getHeadersFromMap(string $name, Map<string, Set<string>> $headers, mixed $default = null): mixed
     {
         $header  = Str\lowercase($name);
-    
+
         foreach ($headers as $key => $value) {
             if (Str\lowercase($key) === $header) {
                 return Str\join($value->toArray(),', ');

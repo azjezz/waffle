@@ -2,9 +2,10 @@
 
 namespace Waffle\Http\ServerAPI\Marshaler;
 
-use namespace HH\Lib\{Str, C};use function strtr;
+use namespace HH\Lib\Str;
+use namespace HH\Lib\C;
+use function strtr;
 use function is_array;
-use function count;
 
 class HeadersMarshaler
 {
@@ -27,7 +28,7 @@ class HeadersMarshaler
                     continue;
                 }
             }
-            
+
             if ($valid($value) && Str\search($key, 'HTTP_') === 0) {
                 $name = strtr(Str\lowercase(Str\slice($key, 5)), '_', '-');
                 if (!is_array($value)) {

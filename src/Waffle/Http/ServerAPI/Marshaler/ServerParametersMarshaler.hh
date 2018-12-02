@@ -1,4 +1,4 @@
-<?hh // strict 
+<?hh // strict
 
 namespace Waffle\Http\ServerAPI\Marshaler;
 
@@ -33,8 +33,8 @@ class ServerParametersMarshaler
             if ($apacheRequestHeaders->contains('AUTHORIZATION')) {
                 $server->set('HTTP_AUTHORIZATION', $apacheRequestHeaders->at('AUTHORIZATION'));
             }
-        } 
-        
+        }
+
         return $server;
     }
 }

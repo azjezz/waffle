@@ -176,6 +176,4 @@ class UploadsFolderMarshaler
             $fileSpec['type'] ?? null,
         );
     }
-
-
 }
