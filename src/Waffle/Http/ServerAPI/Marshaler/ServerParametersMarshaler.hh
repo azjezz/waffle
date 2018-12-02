@@ -20,7 +20,7 @@ class ServerParametersMarshaler
         }
 
         if (function_exists('apache_request_headers')) {
-            $apacheRequestHeaders = new Map<string, string>((fun('apache_request_headers'))());
+            $apacheRequestHeaders = new Map<string, mixed>((fun('apache_request_headers'))());
 
             if ($apacheRequestHeaders->contains('authorization')) {
                 $server->set('HTTP_AUTHORIZATION', $apacheRequestHeaders->at('authorization'));
