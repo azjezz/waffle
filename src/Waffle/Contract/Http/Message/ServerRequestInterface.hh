@@ -49,7 +49,7 @@ interface ServerRequestInterface extends RequestInterface
      * typically derived from Hack's $_SERVER superglobal. The data IS NOT
      * REQUIRED to originate from $_SERVER.
      */
-    public function getServerParams(): Map<string, string>;
+    public function getServerParams(): Map<string, mixed>;
 
     /**
      * Retrieve cookies.

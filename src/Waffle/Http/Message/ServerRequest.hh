@@ -17,8 +17,6 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     protected Map<string, mixed> $queryParams = Map {};
 
-    protected Map<string, string> $serverParams = Map {};
-
     protected ?UploadsFolderInterface $uploadsFolder;
 
     public function __construct(
@@ -27,11 +25,10 @@ class ServerRequest extends Request implements ServerRequestInterface
         Map<string, Set<string>> $headers = Map {},
         ?StreamInterface $body = null,
         string $version = '1.1',
-        Map<string, string> $serverParams = Map {}
+        protected Map<string, mixed> $serverParams = Map {}
     ) {
         $this->method = $method;
         $this->uri = $uri;
-        $this->serverParams = $serverParams;
         parent::__construct($method, $uri, $headers, $body, $version);
     }
 
@@ -47,7 +44,7 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->uploadsFolder = null === $this->uploadsFolder ? null : clone $this->uploadsFolder;
     }
 
-    public function getServerParams(): Map<string, string>
+    public function getServerParams(): Map<string, mixed>
     {
         return $this->serverParams;
     }
