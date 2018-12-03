@@ -15,8 +15,9 @@ class HelloWorldHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $method = $request->getMethod();
-        $target = $request->getRequestTarget();
-
+        $target = \urldecode($request->getRequestTarget());
+        $uri    = \urldecode((string) $request->getUri());
+        $query  = \print_r($request->getQueryParams(), true);
         $response = new Response\HtmlResponse((string) (
             <html>
                 <head>
@@ -25,7 +26,8 @@ class HelloWorldHandler implements RequestHandlerInterface
                 <body>
                     <h1>Hello, World!</h1>
                     <hr />
-                    <code>{$method} {$target}</code>
+                    <code>{$method} - {$target}  - {$uri}</code>
+                    <pre>{$query}</pre>
                 </body>
             </html>
         ));
