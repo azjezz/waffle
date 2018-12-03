@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI\Marshaler;
+namespace Waffle\Http\ServerApi\Marshaler;
 
 use namespace HH\Lib\Str;
 use namespace HH\Lib\C;

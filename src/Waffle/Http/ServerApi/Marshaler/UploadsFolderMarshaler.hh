@@ -1,12 +1,12 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI\Marshaler;
+namespace Waffle\Http\ServerApi\Marshaler;
 
 use namespace HH\Lib\Str;
+use namespace Waffle\Http\ServerApi\Exception;
 use type Waffle\Http\Message\Stream;
 use type Waffle\Http\Message\UploadedFile;
 use type Waffle\Http\Message\UploadsFolder;
-use namespace Waffle\Http\Message\Exception;
 use type Waffle\Contract\Http\Message\UploadedFileError;
 use type Waffle\Contract\Http\Message\UploadedFileInterface;
 use type Waffle\Contract\Http\Message\UploadsFolderInterface;

@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI;
+namespace Waffle\Http\ServerApi;
 
 use type Waffle\Http\Message\ServerRequest;
 use type Waffle\Http\Message\Stream;
@@ -8,7 +8,7 @@ use function fopen;
 
 class Marshaler
 {
-    public function marshalServerRequest(): ServerRequest
+    public function marshal(): ServerRequest
     {
         /* HH_IGNORE_ERROR[2050] */
         $server = (new Marshaler\ServerParametersMarshaler())->marshale($_SERVER);
@@ -25,7 +25,7 @@ class Marshaler
         $query = new Map<string, mixed>($_GET);
         $protocolVersion = (new Marshaler\ProtocolVersionMarshaler())->marshal($server);
 
-        $stream = new Stream(fopen('php://input', 'r'));
+        $stream = new Stream(fopen('php://input', 'rb'));
 
         return (new ServerRequest($method, $uri, $headers, $stream, $protocolVersion, $server))
             ->withCookieParams($cookies)

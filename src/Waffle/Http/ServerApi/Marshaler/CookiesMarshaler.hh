@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI\Marshaler;
+namespace Waffle\Http\ServerApi\Marshaler;
 
 use function preg_match_all;
 use function urldecode;

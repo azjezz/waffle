@@ -1,9 +1,9 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI\Marshaler;
+namespace Waffle\Http\ServerApi\Marshaler;
 
 use namespace HH\Lib\Str;
-use namespace Waffle\Http\Message\Exception;
+use namespace Waffle\Http\ServerApi\Exception;
 use type Waffle\Contract\Http\Message\UriInterface;
 use type Waffle\Http\Message\Uri;
 use function explode;

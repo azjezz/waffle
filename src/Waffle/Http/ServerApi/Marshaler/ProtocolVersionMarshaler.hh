@@ -1,8 +1,8 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerAPI\Marshaler;
+namespace Waffle\Http\ServerApi\Marshaler;
 
-use namespace Waffle\Http\Message\Exception;
+use namespace Waffle\Http\ServerApi\Exception;
 use function preg_match;
 
 class ProtocolVersionMarshaler
