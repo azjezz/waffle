@@ -2,6 +2,7 @@
 
 namespace Waffle\Tests\Container\Definition;
 
+use namespace HH\Lib\Str;
 use Waffle\Contract\Container\ContainerInterface;
 use Waffle\Container\Argument\ClassNameArgument;
 use Waffle\Container\Definition\Definition;
@@ -12,7 +13,6 @@ use Waffle\Tests\Container\Asset\FooCallable;
 use Waffle\Tests\Container\Asset\Bar;
 use Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
-use function implode;
 
 class DefinitionTest extends HackTest
 {
@@ -21,7 +21,7 @@ class DefinitionTest extends HackTest
      */
     public function testDefinitionResolvesClosureWithDefinedArgs()
     {
-        $definition = new Definition('callable', (...$args) ==> implode(' ', $args));
+        $definition = new Definition('callable', (...$args) ==> Str\join($args, ' '));
 
         $definition->addArguments(Vector { 'hello', 'world' });
 
