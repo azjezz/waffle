@@ -36,7 +36,8 @@
         "check": [
             "@type-check",
             "@lint",
-            "@test"
+            "@test",
+            "echo | cat test_passed.txt"
         ]
     }
 }
