@@ -7,6 +7,7 @@ use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Message\CookieSameSite;
 use type Waffle\Http\Message\Cookie;
+use function Waffle\Http\ServerApi\request;
 
 require __DIR__.'/../vendor/hh_autoload.php';
 
@@ -45,11 +46,10 @@ function main(): noreturn
     // example handler ~
     $handler = new HelloWorldHandler();
     
-    $marshaler = new ServerApi\Marshaler();
     $emitter = new ServerApi\Emitter();
     
     // marshal the request from SAPI 
-    $request = $marshaler->marshal();
+    $request = request();
     // handle the request
     $response = $handler->handle($request);
     // emit the response
