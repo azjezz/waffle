@@ -8,7 +8,6 @@ use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
 use type Waffle\Contract\Http\Server\RequestHandlerInterface;
 use type Waffle\Contract\Http\Server\MiddlewarePipeInterface;
-use type Waffle\Http\Server\RequestHandler\CallableRequestHandlerDecorator;
 use type SplQueue;
 
 /**

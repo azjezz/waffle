@@ -35,7 +35,7 @@ final class RequestHandlerMiddleware implements MiddlewareInterface, RequestHand
     /**
      * Proxies to decorated handler to handle the request.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $_): ResponseInterface
     {
         return $this->handler->handle($request);
     }

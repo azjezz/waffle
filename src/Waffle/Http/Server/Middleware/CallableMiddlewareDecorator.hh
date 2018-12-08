@@ -29,7 +29,7 @@ final class CallableMiddlewareDecorator implements MiddlewareInterface
     public function __construct(
         private (function(ServerRequestInterface, RequestHandlerInterface): ResponseInterface) $middleware)
     {}
-    
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $fun = $this->middleware;
