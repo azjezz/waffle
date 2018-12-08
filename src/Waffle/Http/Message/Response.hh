@@ -90,13 +90,6 @@ class Response implements ResponseInterface
         return $this->cookies->get($name);
     }
 
-    /**
-     * Create a new instance with the specified cookie.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * updated body parameters.
-     */
     public function withCookie(string $name, CookieInterface $cookie): this
     {
         $new = clone $this;
@@ -104,20 +97,6 @@ class Response implements ResponseInterface
         return $new;
     }
 
-    /**
-     * Return an instance that removes the specified derived response cookie.
-     *
-     * This method allows removing a single derived response cookie as
-     * described in getCookie().
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that removes
-     * the cookie.
-     *
-     * @see getCookies()
-     *
-     * @param string $name The cookie name.
-     */
     public function withoutCookie(string $name): this
     {
         if (!$this->cookies->contains($name)) {
