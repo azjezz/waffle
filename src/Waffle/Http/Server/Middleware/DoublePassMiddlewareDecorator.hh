@@ -11,13 +11,13 @@ use type Waffle\Http\Message\Response;
 class DoublePassMiddlewareDecorator implements MiddlewareInterface
 {
     public function __construct(
-        private (function(ServerRequestInterface, ResponseInterface, (function(ServerRequestInterface): ResponseInterface)): ResponseInterface) $call,
+        private (function(ServerRequestInterface, ResponseInterface, RequestHandlerInterface): ResponseInterface) $call,
         private ResponseInterface $response = new Response()
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $fun = $this->call;
-        return $fun($request, $this->response, (ServerRequestInterface $req): ResponseInterface ==> $handler->handle($req));
+        return $fun($request, $this->response, $handler);
     }
 }
