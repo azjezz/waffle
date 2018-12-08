@@ -31,6 +31,32 @@ class Factory implements
         return new ServerRequest($method, $uri, Map {}, null, '1.1', $serverParams);
     }
 
+    public function createServerRequestFromGlobals(): Message\ServerRequestInterface
+    {
+        /* HH_IGNORE_ERROR[2050] */
+        $server = (new __Private\ServerParametersMarshaler())->marshale($_SERVER);
+        $headers = (new __Private\HeadersMarshaler())->marshal($server);
+        /* HH_IGNORE_ERROR[2050] */
+        $cookies = (new __Private\CookiesMarshaler())->marshal($headers->get('cookie') ?? Set {}, $_COOKIE);
+        $uri = (new __Private\UriMarshaler())->marshal($server, $headers);
+        /* HH_IGNORE_ERROR[2050] */
+        $uploads = (new __Private\UploadsFolderMarshaler())->marshal($_FILES);
+        $method = (new __Private\MethodMarshaler())->marshal($server);
+        /* HH_IGNORE_ERROR[2050] */
+        $body = new Map<string, mixed>($_POST);
+        /* HH_IGNORE_ERROR[2050] */
+        $query = new Map<string, mixed>($_GET);
+        $protocolVersion = (new __Private\ProtocolVersionMarshaler())->marshal($server);
+
+        $stream = new Stream(fopen('php://input', 'rb'));
+
+        return (new ServerRequest($method, $uri, $headers, $stream, $protocolVersion, $server))
+            ->withCookieParams($cookies)
+            ->withQueryParams($query)
+            ->withParsedBody($body)
+            ->withUploadsFolder($uploads);
+    }
+
     public function createStream(string $content = ''): Message\StreamInterface
     {
         return Functional\create_stream_from_string($content);

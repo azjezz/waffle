@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerApi\Exception;
+namespace Waffle\Http\Emitter\Exception;
 
 use type RuntimeException;
 

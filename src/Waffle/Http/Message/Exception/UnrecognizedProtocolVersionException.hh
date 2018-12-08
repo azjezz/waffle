@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerApi\Exception;
+namespace Waffle\Http\Message\Exception;
 
 use namespace HH\Lib\Str;
 use type UnexpectedValueException;

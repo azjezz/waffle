@@ -1,9 +1,9 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerApi\Marshaler;
+namespace Waffle\Http\Message\__Private;
 
 use namespace HH\Lib\Str;
-use namespace Waffle\Http\ServerApi\Exception;
+use namespace Waffle\Http\Message\Exception;
 use type Waffle\Http\Message\Stream;
 use type Waffle\Http\Message\UploadedFile;
 use type Waffle\Http\Message\UploadsFolder;
@@ -14,7 +14,6 @@ use function is_readable;
 use function is_array;
 use function fopen;
 
-<<Internal>>
 type file_spec = shape(
     'tmp_name' => string,
     'size' => ?int,

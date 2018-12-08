@@ -44,6 +44,16 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->uploadsFolder = null === $this->uploadsFolder ? null : clone $this->uploadsFolder;
     }
 
+    /**
+     * Create a new Http Server Request Message from the global variables.
+     *
+     * @see Factory->createServerRequestFromGlobals()
+     */
+    public static function capture(): ServerRequestInterface
+    {
+        return (new Factory())->createServerRequestFromGlobals();
+    }
+
     public function getServerParams(): Map<string, mixed>
     {
         return $this->serverParams;

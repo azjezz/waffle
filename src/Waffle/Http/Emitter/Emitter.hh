@@ -1,9 +1,9 @@
 <?hh // strict
 
-namespace Waffle\Http\ServerApi;
+namespace Waffle\Http\Emitter;
 
 use namespace HH\Lib\Str;
-use namespace Waffle\Http\ServerApi\Exception;
+use namespace Waffle\Http\Emitter\Exception;
 use type Waffle\Contract\Http\Emitter\EmitterInterface;
 use type Waffle\Contract\Http\Message\CookieInterface;
 use type Waffle\Contract\Http\Message\CookieSameSite;
