@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Server\Middleware;
 
+use namespace HH\Lib\Str;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
@@ -18,7 +19,7 @@ class HostMiddlewareDecorator implements MiddlewareInterface
     {
         $host = $request->getUri()->getHost();
 
-        if ($host !== \strtolower($this->host)) {
+        if ($host !== Str\lowercase($this->host)) {
             return $handler->handle($request);
         }
 

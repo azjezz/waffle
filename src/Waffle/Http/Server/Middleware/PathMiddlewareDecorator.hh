@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Server\Middleware;
 
+use namespace HH\Lib\Str;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
@@ -16,19 +17,19 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
     {
         $this->prefix = $this->normalizePrefix($prefix);
     }
-    
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $path = $request->getUri()->getPath();
         $path = $path === '' ? '/' : $path;
-    
+
         // Current path is shorter than decorator path
-        if (\strlen($path) < \strlen($this->prefix)) {
+        if (Str\length($path) < Str\length($this->prefix)) {
             return $handler->handle($request);
         }
-    
+
         // Current path does not match decorator path
-        if (0 !== \stripos($path, $this->prefix)) {
+        if (0 !== Str\search_ci($path, $this->prefix)) {
             return $handler->handle($request);
         }
 
@@ -42,7 +43,7 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
         $requestToProcess = $this->prefix !== '/'
             ? $this->prepareRequestWithTruncatedPrefix($request)
             : $request;
-        
+
         // Process our middleware.
         // If the middleware calls on the handler, the handler should be provided
         // the original request, as this indicates we've left the path-segregated
@@ -59,9 +60,9 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
             return '/';
         }
 
-        $length = \strlen($this->prefix);
+        $length = Str\length($this->prefix);
 
-        return \strlen($path) > $length ? $path[$length] : '';
+        return Str\length($path) > $length ? $path[$length] : '';
     }
 
     private function prepareRequestWithTruncatedPrefix(ServerRequestInterface $request): ServerRequestInterface
@@ -81,7 +82,7 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
         }
 
         // Strip decorated path from start of current path
-        return \substr($path, \strlen($segment));
+        return Str\slice($path, Str\length($segment));
     }
 
     private function prepareHandlerForOriginalRequest(RequestHandlerInterface $handler): RequestHandlerInterface
@@ -101,9 +102,9 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
      */
     private function normalizePrefix(string $prefix): string
     {
-        $prefix = \strlen($prefix) > 1 ? \rtrim($prefix, '/') : $prefix;
+        $prefix = Str\length($prefix) > 1 ? Str\trim_right($prefix, '/') : $prefix;
 
-        if (0 !== \strpos($prefix, '/')) {
+        if (0 !== Str\search($prefix, '/')) {
             $prefix = '/' . $prefix;
         }
 

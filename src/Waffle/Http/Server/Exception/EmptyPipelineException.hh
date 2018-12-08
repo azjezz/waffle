@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Server\Exception;
 
+use namespace HH\Lib\Str;
 use type Waffle\Contract\Http\Server\MiddlewarePipeInterface;
 use type OutOfBoundsException;
 
@@ -10,7 +11,7 @@ class EmptyPipelineException extends OutOfBoundsException implements ExceptionIn
 {
     public static function forClass(classname<MiddlewarePipeInterface> $class): this
     {
-        return new static(\sprintf(
+        return new static(Str\format(
             '%s cannot handle request; no middleware available to process the request',
             $class
         ));

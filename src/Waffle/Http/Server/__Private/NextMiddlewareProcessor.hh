@@ -2,11 +2,11 @@
 
 namespace Waffle\Http\Server\__Private;
 
-use Waffle\Contract\Http\Message\ResponseInterface;
-use Waffle\Contract\Http\Message\ServerRequestInterface;
-use Waffle\Contract\Http\Server\RequestHandlerInterface;
-use Waffle\Contract\Http\Server\MiddlewareInterface;
-use SplQueue;
+use type Waffle\Contract\Http\Message\ResponseInterface;
+use type Waffle\Contract\Http\Message\ServerRequestInterface;
+use type Waffle\Contract\Http\Server\RequestHandlerInterface;
+use type Waffle\Contract\Http\Server\MiddlewareInterface;
+use type SplQueue;
 
 class NextMiddlewareProcessor implements RequestHandlerInterface
 {
