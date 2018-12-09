@@ -2,7 +2,7 @@
 
 namespace Waffle\Http\Message\Response;
 
-use namespace Waffle\Http\Message\Functional;
+use namespace Waffle\Http\Message\__Private;
 use type Waffle\Contract\Http\Message\UriInterface;
 use type Waffle\Http\Message\Response;
 
@@ -31,7 +31,7 @@ class RedirectResponse extends Response
         parent::__construct(
             $status,
             $headers,
-            Functional\create_stream_from_string('')
+            __Private\create_stream_from_string('')
         );
     }
 }

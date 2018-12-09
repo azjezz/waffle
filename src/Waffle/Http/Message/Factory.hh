@@ -59,7 +59,7 @@ class Factory implements
 
     public function createStream(string $content = ''): Message\StreamInterface
     {
-        return Functional\create_stream_from_string($content);
+        return __Private\create_stream_from_string($content);
     }
 
     public function createStreamFromFile(string $filename, string $mode = 'r'): Message\StreamInterface

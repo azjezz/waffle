@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\Message\Functional;
+namespace Waffle\Http\Message\__Private;
 
 use namespace HH\Lib\Str;
 use function array_reduce;

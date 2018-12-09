@@ -130,8 +130,8 @@ trait MessageTrait
 
     public function getBody(): StreamInterface
     {
-        if (!$this->stream) {
-            $this->stream = Functional\create_stream_from_string('');
+        if (null === $this->stream) {
+            $this->stream = __Private\create_stream_from_string('');
         }
 
         return $this->stream;

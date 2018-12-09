@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Http\Message\Functional;
+namespace Waffle\Http\Message\__Private;
 
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Http\Message\Stream;

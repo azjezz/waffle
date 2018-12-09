@@ -4,7 +4,7 @@ namespace Waffle\Http\Message\Response;
 
 use namespace HH\Lib\Str;
 use namespace Waffle\Http\Message\Exception;
-use namespace Waffle\Http\Message\Functional;
+use namespace Waffle\Http\Message\__Private;
 use type Waffle\Http\Message\Response;
 use function is_object;
 use function json_encode;
@@ -64,9 +64,9 @@ class JsonResponse extends Response
         $this->encodingOptions = $encodingOptions;
 
         $json = $this->jsonEncode($data, $this->encodingOptions);
-        $body = Functional\create_stream_from_string($json);
+        $body = __Private\create_stream_from_string($json);
 
-        $headers = Functional\inject_content_type_in_headers('application/json', $headers);
+        $headers = __Private\inject_content_type_in_headers('application/json', $headers);
 
         parent::__construct($status, $headers, $body);
     }
@@ -148,7 +148,7 @@ class JsonResponse extends Response
     private function updateBodyFor(JsonResponse $toUpdate): JsonResponse
     {
         $json = $this->jsonEncode($toUpdate->payload, $toUpdate->encodingOptions);
-        $body = Functional\create_stream_from_string($json);
+        $body = __Private\create_stream_from_string($json);
         return $toUpdate->withBody($body);
     }
 

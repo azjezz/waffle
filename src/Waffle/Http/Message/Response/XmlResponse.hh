@@ -2,7 +2,7 @@
 
 namespace Waffle\Http\Message\Response;
 
-use namespace Waffle\Http\Message\Functional;
+use namespace Waffle\Http\Message\__Private;
 use type Waffle\Http\Message\Response;
 
 /**
@@ -23,8 +23,8 @@ class XmlResponse extends Response
     {
         parent::__construct(
             $status,
-            Functional\inject_content_type_in_headers('application/xml; charset=utf8', $headers),
-            Functional\create_stream_from_string($xml),
+            __Private\inject_content_type_in_headers('application/xml; charset=utf8', $headers),
+            __Private\create_stream_from_string($xml),
         );
     }
 }

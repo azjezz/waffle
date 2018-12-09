@@ -50,7 +50,7 @@ class MiddlewareFactory
 
             if (is_object($middleware)) {
                 $reflection = new ReflectionMethod($middleware, '__invoke');
-            } elseif (is_array($middleware) && C\count($middleware) === 2) {
+            } elseif (is_array($middleware)) {
                 list($object, $method) = $middleware;
                 $reflection = new ReflectionMethod($object, $method);
             } else {
@@ -61,7 +61,7 @@ class MiddlewareFactory
                 /* HH_IGNORE_ERROR[4110] */
                 return new Middleware\CallableMiddlewareDecorator($middleware);
             } elseif ($this->isCallableHandler($reflection)) {
-                return $this->prepare(
+                return new Middleware\RequestHandlerMiddleware(
                     /* HH_IGNORE_ERROR[4110] */
                     new RequestHandler\CallableRequestHandlerDecorator($middleware)
                 );
