@@ -7,7 +7,7 @@ use Waffle\Http\Message\Uri;
 use function Facebook\FBExpect\expect;
 use Waffle\Http\Message\UploadedFile;
 use Waffle\Http\Message\UploadsFolder;
-use Waffle\Http\Message\Functional;
+use Waffle\Http\Message\__Private;
 use Waffle\Contract\Http\Message\UploadedFileError;
 use Facebook\HackTest\HackTest;
 
@@ -18,7 +18,7 @@ class ServerRequestTest extends HackTest
         $request1 = new ServerRequest('GET', new Uri('/'));
 
         $file = new UploadedFile(
-            Functional\create_stream_from_string('test'),
+            __Private\create_stream_from_string('test'),
             123,
             UploadedFileError::ERROR_OK
         );

@@ -6,7 +6,7 @@ use Facebook\HackTest\HackTest;
 use Waffle\Contract\Http\Message\StreamInterface;
 use Waffle\Http\Message\Response;
 use Waffle\Http\Message\Cookie;
-use Waffle\Http\Message\Functional;
+use Waffle\Http\Message\__Private;
 use function Facebook\FBExpect\expect;
 
 class ResponseTest extends HackTest
@@ -38,7 +38,7 @@ class ResponseTest extends HackTest
     }
     public function testCanConstructWithBody()
     {
-        $r = new Response(200, Map {}, Functional\create_stream_from_string('baz'));
+        $r = new Response(200, Map {}, __Private\create_stream_from_string('baz'));
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('baz');
     }
@@ -97,7 +97,7 @@ class ResponseTest extends HackTest
 
     public function testWithBody()
     {
-        $b = Functional\create_stream_from_string('0');
+        $b = __Private\create_stream_from_string('0');
         $r = (new Response())->withBody($b);
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('0');

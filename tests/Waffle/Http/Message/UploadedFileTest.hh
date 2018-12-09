@@ -8,7 +8,7 @@ use Waffle\Http\Message\UploadedFile;
 use Waffle\Contract\Http\Message\UploadedFileError;
 use Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
-use function Waffle\Http\Message\Functional\create_stream_from_string;
+use function Waffle\Http\Message\__Private\create_stream_from_string;
 use function is_scalar;
 use function file_exists;
 use function unlink;
