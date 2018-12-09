@@ -31,7 +31,7 @@ class MiddlewareFactory
             return new Middleware\RequestHandlerMiddleware($middleware);
         }
 
-        if ($middleware instanceof Traversable) {
+        if ($middleware instanceof Traversable || is_array($middleware)) {
             $pipe = new MiddlewarePipe();
             foreach ($middleware as $value) {
                 $pipe->pipe(
