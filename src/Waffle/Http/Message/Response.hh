@@ -32,7 +32,7 @@ class Response implements ResponseInterface
         $this->setHeaders($headers);
 
         if (null === $reason && self::$phrases->contains($status)) {
-            $this->reasonPhrase = self::$phrases->get($status) ?? '';
+            $this->reasonPhrase = self::$phrases->at($status);
         } else {
             $this->reasonPhrase = $reason ?? '';
         }
