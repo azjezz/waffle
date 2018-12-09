@@ -33,6 +33,7 @@ class MiddlewareFactory
 
         if ($middleware instanceof Traversable || is_array($middleware)) {
             $pipe = new MiddlewarePipe();
+            /* HH_IGNORE_ERROR[4110] */
             foreach ($middleware as $value) {
                 $pipe->pipe(
                     $this->prepare($value)
