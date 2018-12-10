@@ -4,13 +4,11 @@ namespace Waffle\Router;
 
 use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Dict;
 use type Facebook\HackRouter\PrefixMatching\PrefixMap;
 use type Waffle\Contract\Http\Message\RequestInterface;
 use type Facebook\HackRouter\NotFoundException;
 use function preg_match;
-use function array_filter;
-use function array_merge;
-use const ARRAY_FILTER_USE_KEY;
 
 class Router implements RouterInterface
 {
@@ -76,11 +74,11 @@ class Router implements RouterInterface
         return $routes;
     }
 
-    private function resolveWithMap(string $path, PrefixMap<Route> $map): (Route, array<string, string>)
+    private function resolveWithMap(string $path, PrefixMap<Route> $map): (Route, dict<string, string>)
     {
         $literals = $map->getLiterals();
         if (C\contains_key($literals, $path)) {
-            return tuple($literals[$path], []);
+            return tuple($literals[$path], dict[]);
         }
 
         $prefixes = $map->getPrefixes();
@@ -109,14 +107,7 @@ class Router implements RouterInterface
             $matched = $matches[0];
             $remaining = Str\strip_prefix($path, $matched);
 
-            /* HH_IGNORE_ERROR[4105] builtins_array.hhi contains wrong signature for array_filter */
-            $data = array_filter(
-                $matches,
-                $key ==> ($key is string),
-                /* HH_IGNORE_ERROR[2049] builtins_array.hhi doesn't containe the ARRAY_FILTER_* constants */
-                /* HH_IGNORE_ERROR[4106] builtins_array.hhi doesn't containe the ARRAY_FILTER_* constants */
-                ARRAY_FILTER_USE_KEY
-            );
+            $data = Dict\filter_keys<string, string>($matches, ($key) ==> $key is string);
             $sub = $regexps[$regexp];
 
             if ($sub->isResponder()) {
@@ -133,7 +124,7 @@ class Router implements RouterInterface
                 continue;
             }
 
-            return tuple($responder, array_merge($data, $sub_data));
+            return tuple($responder, Dict\merge($data, $sub_data));
         }
 
         throw new NotFoundException();

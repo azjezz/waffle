@@ -44,7 +44,7 @@ class RouteCollector
      *
      * Accepts a combination of a path and middleware, and optionally the HTTP methods allowed.
      *
-     * @param null|array $methods HTTP method to accept; null indicates any.
+     * @param null|Set<string> $methods HTTP method to accept; null indicates any.
      * @param null|string $name The name of the route.
      * @throws Exception\DuplicateRouteException if specification represents an existing route.
      */

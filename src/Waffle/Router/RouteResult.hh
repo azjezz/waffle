@@ -31,7 +31,7 @@ final class RouteResult implements MiddlewareInterface
 {
     private ?Set<string> $allowedMethods = null;
 
-    private array<string, mixed> $matchedParams = [];
+    private dict<string, string> $matchedParams = dict[];
 
     private ?string $matchedRouteName = null;
 
@@ -42,9 +42,9 @@ final class RouteResult implements MiddlewareInterface
     /**
      * Create an instance representing a route succes from the matching route.
      *
-     * @param array $params Parameters associated with the matched route, if any.
+     * @param dict $params Parameters associated with the matched route, if any.
      */
-    public static function fromRoute(Route $route, array<string, mixed> $params = []): this
+    public static function fromRoute(Route $route, dict<string, string> $params = dict[]): this
     {
         $result                = new static();
         $result->success       = true;
@@ -57,8 +57,8 @@ final class RouteResult implements MiddlewareInterface
     /**
      * Create an instance representing a route failure.
      *
-     * @param null|array $methods HTTP methods allowed for the current URI, if any.
-     *     null is equivalent to allowing any HTTP method; empty array means none.
+     * @param null|Set<string> $methods HTTP methods allowed for the current URI, if any.
+     *     null is equivalent to allowing any HTTP method; empty Set means none.
      */
     public static function fromRouteFailure(?Set<string> $methods): this
     {
@@ -129,9 +129,9 @@ final class RouteResult implements MiddlewareInterface
     /**
      * Returns the matched params.
      *
-     * Guaranted to return an array, even if it is simply empty.
+     * Guaranted to return a dict<string, string>, even if it is simply empty.
      */
-    public function getMatchedParams(): array<string, mixed>
+    public function getMatchedParams(): dict<string, string>
     {
         return $this->matchedParams;
     }

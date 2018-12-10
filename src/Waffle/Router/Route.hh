@@ -28,7 +28,7 @@ class Route implements MiddlewareInterface
 {
     const HTTP_METHOD_SEPARATOR = ':';
 
-    private array<string, mixed> $options = [];
+    private dict<string, mixed> $options = dict[];
 
     private ?Set<string> $methods = null;
 
@@ -114,12 +114,12 @@ class Route implements MiddlewareInterface
         return false;
     }
 
-    public function setOptions(array<string, mixed> $options) : void
+    public function setOptions(dict<string, mixed> $options) : void
     {
         $this->options = $options;
     }
 
-    public function getOptions(): array<string, mixed>
+    public function getOptions(): dict<string, mixed>
     {
         return $this->options;
     }
@@ -129,7 +129,7 @@ class Route implements MiddlewareInterface
      *
      * Validates, and then normalizes to upper case.
      *
-     * @param string[] An array of HTTP method names.
+     * @param Set<string> A Set of HTTP method names.
      * @return string[]
      * @throws Exception\InvalidArgumentException for any invalid method names.
      */
