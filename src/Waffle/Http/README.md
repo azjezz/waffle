@@ -5,7 +5,7 @@
 > Code is largely lifted from [Nyholm Psr7](https://github.com/Nyholm/psr7) package
 > released with the copyright and license below.
 
-### Waffle\Http\Message\Response & Waffle\Http\__Private
+### Waffle\Http\Message\Response and Waffle\Http\\__Private
 
 > Code is largely lifted from [Zend Diactoros](https://github.com/zendframework/zend-diactoros) package
 > released with the copyright and license below.
