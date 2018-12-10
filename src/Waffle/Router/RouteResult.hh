@@ -147,7 +147,7 @@ final class RouteResult implements MiddlewareInterface
     /**
      * Does the result represent failure to route due to HTTP method?
      */
-    public function isMethodFailure() : bool
+    public function isMethodFailure(): bool
     {
         if ($this->isSuccess() || $this->allowedMethods === null) {
             return false;
@@ -161,7 +161,7 @@ final class RouteResult implements MiddlewareInterface
      *
      * @return null|Set<string> HTTP methods allowed
      */
-    public function getAllowedMethods() : ?Set<string>
+    public function getAllowedMethods(): ?Set<string>
     {
         if ($this->isSuccess()) {
             $route = $this->getMatchedRoute();

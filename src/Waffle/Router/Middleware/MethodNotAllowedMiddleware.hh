@@ -27,7 +27,7 @@ class MethodNotAllowedMiddleware implements MiddlewareInterface
         private ResponseFactoryInterface $responseFactory
     ) {}
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $routeResult = $request->getAttribute(RouteResult::class);
 

@@ -42,7 +42,7 @@ class ImplicitOptionsMiddleware implements MiddlewareInterface
     /**
      * Handle an implicit OPTIONS request.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($request->getMethod() !== RequestMethod::METHOD_OPTIONS) {
             return $handler->handle($request);
