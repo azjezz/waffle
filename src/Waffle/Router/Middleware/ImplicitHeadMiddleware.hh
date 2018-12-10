@@ -52,7 +52,7 @@ class ImplicitHeadMiddleware implements MiddlewareInterface
      * resets the response body to be empty; otherwise, creates a new empty
      * response.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($request->getMethod() !== RequestMethod::METHOD_HEAD) {
             return $handler->handle($request);
@@ -64,7 +64,7 @@ class ImplicitHeadMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        if ($result->getMatchedRoute()) {
+        if (null !== $result->getMatchedRoute()) {
             return $handler->handle($request);
         }
 
