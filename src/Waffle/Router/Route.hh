@@ -80,7 +80,7 @@ class Route implements MiddlewareInterface
         $this->name = $name;
     }
 
-    public function getName() : string
+    public function getName(): string 
     {
         return $this->name;
     }
@@ -114,7 +114,7 @@ class Route implements MiddlewareInterface
         return false;
     }
 
-    public function setOptions(dict<string, mixed> $options) : void
+    public function setOptions(dict<string, mixed> $options): void
     {
         $this->options = $options;
     }

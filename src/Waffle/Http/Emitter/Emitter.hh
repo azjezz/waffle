@@ -118,7 +118,7 @@ class Emitter implements EmitterInterface
     /**
      * Emit the message body.
      */
-    private function emitBody(ResponseInterface $response) : void
+    private function emitBody(ResponseInterface $response): void
     {
         echo $response->getBody();
     }

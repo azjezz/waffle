@@ -53,7 +53,7 @@ class RouteCollector
         MiddlewareInterface $middleware,
         ?Set<string> $methods = null,
         ?string $name = null
-    ) : Route {
+    ): Route {
         $this->checkForDuplicateRoute($path, $methods);
 
         $route   = new Route($path, $middleware, $methods, $name);

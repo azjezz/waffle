@@ -62,7 +62,7 @@ class MiddlewarePipe implements MiddlewarePipeInterface
      * @throws Exception\EmptyPipelineException if no middleware is present in
      *     the instance in order to process the request.
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (0 === $this->pipeline->count()) {
             throw Exception\EmptyPipelineException::forClass(static::class);

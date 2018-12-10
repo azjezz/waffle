@@ -16,7 +16,7 @@ use type Waffle\Contract\Http\Server\RequestHandlerInterface;
  * function (
  *     ServerRequestInterface $request,
  *     RequestHandlerInterface $handler
- * ) : ResponseInterface
+ * ): ResponseInterface
  * </code>
  *
  * such that it will operate as PSR-15 middleware.
@@ -30,7 +30,7 @@ final class CallableMiddlewareDecorator implements MiddlewareInterface
         private (function(ServerRequestInterface, RequestHandlerInterface): ResponseInterface) $middleware)
     {}
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $fun = $this->middleware;
 

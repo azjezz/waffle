@@ -34,8 +34,8 @@ class Router implements RouterInterface
         try {
             $prefixMap = $this->createPrefixMap($routes);
             list($route, $params) = $this->resolveWithMap($path, $prefixMap);
-            return RouteResult::fromRoute($route, $params);
 
+            return RouteResult::fromRoute($route, $params);
         } catch(NotFoundException $e) {
             goto failure;
         }
