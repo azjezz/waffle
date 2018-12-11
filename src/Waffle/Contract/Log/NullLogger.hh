@@ -16,7 +16,7 @@ class NullLogger extends AbstractLogger
      * Logs with an arbitrary level.
      */
      <<__Override>>
-    public function log(LogLevel $_level, string $_message, Vector<mixed> $_context = Vector {}): void
+    public function log(LogLevel $_level, string $_message, vec<mixed> $_context = vec[]): void
     {
         // noop
     }

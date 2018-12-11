@@ -22,7 +22,7 @@ interface LoggerInterface
     /**
      * System is unusable.
      */
-    public function emergency(string $message, Vector<mixed> $context = Vector {}): void;
+    public function emergency(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Action must be taken immediately.
@@ -30,20 +30,20 @@ interface LoggerInterface
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
      */
-    public function alert(string $message, Vector<mixed> $context = Vector {}): void;
+    public function alert(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Critical conditions.
      *
      * Example: Application component unavailable, unexpected exception.
      */
-    public function critical(string $message, Vector<mixed> $context = Vector {}): void;
+    public function critical(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      */
-    public function error(string $message, Vector<mixed> $context = Vector {}): void;
+    public function error(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Exceptional occurrences that are not errors.
@@ -51,27 +51,27 @@ interface LoggerInterface
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
      */
-    public function warning(string $message, Vector<mixed> $context = Vector {}): void;
+    public function warning(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Normal but significant events.
      */
-    public function notice(string $message, Vector<mixed> $context = Vector {}): void;
+    public function notice(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Interesting events.
      *
      * Example: User logs in, SQL logs.
      */
-    public function info(string $message, Vector<mixed> $context = Vector {}): void;
+    public function info(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Detailed debug information.
      */
-    public function debug(string $message, Vector<mixed> $context = Vector {}): void;
+    public function debug(string $message, vec<mixed> $context = vec[]): void;
 
     /**
      * Logs with an arbitrary level.
      */
-    public function log(LogLevel $level, string $message, Vector<mixed> $context = Vector {}): void;
+    public function log(LogLevel $level, string $message, vec<mixed> $context = vec[]): void;
 }
