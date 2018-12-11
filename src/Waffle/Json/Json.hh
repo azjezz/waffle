@@ -38,7 +38,7 @@ class Json
         $error = json_last_error();
 
         if (JSON_ERROR_NONE !== $error) {
-            throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
+            throw new Exception\JsonDecodeException(json_last_error_msg(), $error);
         }
 
         return $value;
