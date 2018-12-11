@@ -65,7 +65,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
     /**
      * Allows for manipulation of specific types on resolution.
      */
-    public function inflector(string $type, ?(function(mixed...): void) $callback = null): InflectorInterface
+    public function inflector(string $type, ?(function(mixed): void) $callback = null): InflectorInterface
     {
         return $this->getWaffleContainer()->inflector($type, $callback);
     }

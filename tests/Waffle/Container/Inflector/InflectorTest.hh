@@ -129,7 +129,8 @@ class InflectorTest extends HackTest
 
         $bar = new Bar();
 
-        $inflector = new Inflector('Type', function ($object) use ($bar) {
+        $inflector = new Inflector('Type', (mixed $object): void ==> {
+            /* HH_IGNORE_ERROR[4064] x */
             $object->setBar($bar);
         });
 
