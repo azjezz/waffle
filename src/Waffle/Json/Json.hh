@@ -18,7 +18,7 @@ class Json
 {
     public static function encode(mixed $value, bool $pretty = false): string
     {
-		$flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | ($pretty ? JSON_PRETTY_PRINT : 0) | JSON_PRESERVE_ZERO_FRACTION;
+        $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | ($pretty ? JSON_PRETTY_PRINT : 0) | JSON_PRESERVE_ZERO_FRACTION;
 
         $json = json_encode($value, $flags);
 
@@ -26,7 +26,7 @@ class Json
 
         if (JSON_ERROR_NONE !== $error) {
             throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
-		}
+        }
 
 		return $json;
     }
@@ -38,7 +38,7 @@ class Json
         $error = json_last_error();
 
         if (JSON_ERROR_NONE !== $error) {
-            throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
+            throw new Exception\JsonDecodeException(json_last_error_msg(), $error);
         }
 
         return $value;
