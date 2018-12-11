@@ -14,7 +14,7 @@ use const JSON_BIGINT_AS_STRING;
 use const JSON_ERROR_NONE;
 use const JSON_FB_HACK_ARRAYS;
 
-class Json
+final class Json
 {
     public static function encode(mixed $value, bool $pretty = false): string
     {
@@ -28,7 +28,7 @@ class Json
             throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
         }
 
-		return $json;
+        return $json;
     }
 
     public static function decode(string $json, bool $assoc = false): mixed
