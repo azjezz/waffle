@@ -12,6 +12,7 @@ use const JSON_UNESCAPED_SLASHES;
 use const JSON_UNESCAPED_UNICODE;
 use const JSON_BIGINT_AS_STRING;
 use const JSON_ERROR_NONE;
+use const JSON_FB_HACK_ARRAYS;
 
 class Json
 {
@@ -32,7 +33,7 @@ class Json
 
     public static function decode(string $json, bool $assoc = false): mixed
     {
-        $value = json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING);
+        $value = json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING | JSON_FB_HACK_ARRAYS);
 
         $error = json_last_error();
 
