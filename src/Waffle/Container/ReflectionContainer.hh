@@ -74,7 +74,7 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      * Invoke a callable via the container.
      *
      * @param callable $callable
-     * @param array    $args
+     * @param Map<string, mixed>   $args
      *
      * @return mixed
      */

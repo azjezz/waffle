@@ -8,7 +8,7 @@ interface ServiceProviderInterface extends ContainerAwareInterface
 {
     /**
      * Returns a boolean if checking whether this provider provides a specific
-     * service or returns an array of provided services if no argument passed.
+     * service.
      *
      * @param string $service
      *

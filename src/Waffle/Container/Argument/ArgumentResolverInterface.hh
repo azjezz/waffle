@@ -8,7 +8,7 @@ use type ReflectionFunctionAbstract;
 interface ArgumentResolverInterface extends ContainerAwareInterface
 {
     /**
-     * Resolve an array of arguments to their concrete implementations.
+     * Resolve a vector of arguments to their concrete implementations.
      */
     public function resolveArguments(Vector<mixed> $arguments): Vector<mixed>;
 

@@ -50,7 +50,7 @@ interface DefinitionAggregateInterface extends ContainerAwareInterface, Iterator
     public function resolve(string $id, bool $new = false): mixed;
 
     /**
-     * Resolve and build an array of concrete values from a tag.
+     * Resolve and build a vector of concrete values from a tag.
      *
      * @param string  $tag
      * @param boolean $new
