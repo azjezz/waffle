@@ -159,7 +159,7 @@ class Container implements ContainerInterface
     /**
      * Allows for manipulation of specific types on resolution.
      */
-    public function inflector(string $type, mixed $callback = null): InflectorInterface
+    public function inflector(string $type, ?(function(mixed...): void) $callback = null): InflectorInterface
     {
         return $this->inflectors->add($type, $callback);
     }

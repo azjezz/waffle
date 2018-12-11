@@ -17,7 +17,7 @@ class InflectorAggregate implements InflectorAggregateInterface
     /**
      * {@inheritdoc}
      */
-    public function add(string $type, ?(function(mixed): void) $callback = null): Inflector
+    public function add(string $type, ?(function(mixed...): void) $callback = null): Inflector
     {
         $inflector = new Inflector($type, $callback);
 
