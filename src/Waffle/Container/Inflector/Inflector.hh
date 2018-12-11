@@ -17,13 +17,13 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
 
     protected string $type;
 
-    protected mixed $callback;
+    protected ?(function(mixed): void) $callback;
 
     protected Map<string, Vector<mixed>> $methods;
 
     protected Map<string, mixed> $properties;
 
-    public function __construct(string $type, mixed $callback = null)
+    public function __construct(string $type, ?(function(mixed): void) $callback = null)
     {
         $this->type     = $type;
         $this->callback = $callback;
