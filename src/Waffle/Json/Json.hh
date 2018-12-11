@@ -1,0 +1,45 @@
+<?hh // strict
+
+namespace Waffle\Json;
+
+use function json_encode;
+use function json_decode;
+use function json_last_error;
+use function json_last_error_msg;
+use const JSON_PRESERVE_ZERO_FRACTION;
+use const JSON_PRETTY_PRINT;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
+use const JSON_BIGINT_AS_STRING;
+use const JSON_ERROR_NONE;
+
+class Json
+{
+    public static function encode(mixed $value, bool $pretty = false): string
+    {
+		$flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | ($pretty ? JSON_PRETTY_PRINT : 0) | JSON_PRESERVE_ZERO_FRACTION;
+
+        $json = json_encode($value, $flags);
+
+        $error = json_last_error();
+
+        if (JSON_ERROR_NONE !== $error) {
+            throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
+		}
+
+		return $json;
+    }
+
+    public static function decode(string $json, bool $assoc = false): mixed
+    {
+        $value = json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING);
+
+        $error = json_last_error();
+
+        if (JSON_ERROR_NONE !== $error) {
+            throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
+        }
+
+        return $value;
+    }
+}
