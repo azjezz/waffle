@@ -4,12 +4,6 @@ matrix:
     fast_finish: true
     include:
         - php: hhvm
-          env: 
-           - WAFFLE_CHECK=true
-        - php: hhvm
-        - php: hhvm-nightly
-          env:
-           - WAFFLE_CHECK=true
         - php: hhvm-nightly
     allow_failures:
         - php: hhvm-nightly
@@ -19,8 +13,7 @@ install:
     - composer install
 
 before_script:
-    - if [[ $WAFFLE_CHECK='true' ]]; then hh_server --daemon $TRAVIS_BUILD_DIR; fi
+    - hh_server --daemon $TRAVIS_BUILD_DIR
 
 script:
-    - if [[ $WAFFLE_CHECK='true' ]]; then composer check; fi
-    - composer test
+    - composer check
