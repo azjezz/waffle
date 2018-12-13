@@ -14,7 +14,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * System is unusable.
      */
-    public function emergency(string $message, vec<mixed> $context = vec[]): void
+    public function emergency(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::EMERGENCY, $message, $context);
     }
@@ -25,7 +25,7 @@ abstract class AbstractLogger implements LoggerInterface
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
      */
-    public function alert(string $message, vec<mixed> $context = vec[]): void
+    public function alert(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::ALERT, $message, $context);
     }
@@ -35,7 +35,7 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * Example: Application component unavailable, unexpected exception.
      */
-    public function critical(string $message, vec<mixed> $context = vec[]): void
+    public function critical(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::CRITICAL, $message, $context);
     }
@@ -44,7 +44,7 @@ abstract class AbstractLogger implements LoggerInterface
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      */
-    public function error(string $message, vec<mixed> $context = vec[]): void
+    public function error(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::ERROR, $message, $context);
     }
@@ -55,7 +55,7 @@ abstract class AbstractLogger implements LoggerInterface
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
      */
-    public function warning(string $message, vec<mixed> $context = vec[]): void
+    public function warning(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::WARNING, $message, $context);
     }
@@ -63,7 +63,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * Normal but significant events.
      */
-    public function notice(string $message, vec<mixed> $context = vec[]): void
+    public function notice(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::NOTICE, $message, $context);
     }
@@ -73,7 +73,7 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * Example: User logs in, SQL logs.
      */
-    public function info(string $message, vec<mixed> $context = vec[]): void
+    public function info(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::INFO, $message, $context);
     }
@@ -81,7 +81,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * Detailed debug information.
      */
-    public function debug(string $message, vec<mixed> $context = vec[]): void
+    public function debug(string $message, dict<string, mixed> $context = dict[]): void
     {
         $this->log(LogLevel::DEBUG, $message, $context);
     }
