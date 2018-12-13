@@ -7,7 +7,6 @@ use namespace Waffle\Http\Message\Exception;
 use type Waffle\Contract\Http\Message\UriInterface;
 use type Waffle\Http\Message\Uri;
 use function explode;
-use function is_array;
 use function preg_match;
 use function preg_replace;
 use function gettype;
@@ -87,7 +86,8 @@ class UriMarshaler
      */
     private function marshalHostFromHeader(mixed $host): string
     {
-        if (is_array($host)) {
+        if ($host is Container<_>) {
+            /* HH_IGNORE_ERROR[4110] */
             $host = Str\join($host, ', ');
         }
 
@@ -221,7 +221,7 @@ class UriMarshaler
 
         foreach ($headers as $key => $value) {
             if (Str\lowercase($key) === $header) {
-                return Str\join($value->toArray(),', ');
+                return Str\join($value,', ');
             }
         }
 

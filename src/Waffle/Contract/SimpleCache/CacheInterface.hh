@@ -3,7 +3,6 @@
 namespace Waffle\Contract\SimpleCache;
 
 use type DateInterval;
-use type Traversable;
 
 interface CacheInterface
 {
@@ -62,12 +61,8 @@ interface CacheInterface
      * @param mixed    $default Default value to return for keys that do not exist.
      *
      * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
-     *
-     * @throws InvalidArgumentExceptionInterface
-     *   MUST be thrown if $keys is neither an array nor a Traversable,
-     *   or if any of the $keys are not a legal value.
      */
-    public function getMultiple(Traversable<string> $keys,mixed $default = null): Traversable<mixed>;
+    public function getMultiple(Container<string> $keys,mixed $default = null): Container<mixed>;
 
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
@@ -78,12 +73,8 @@ interface CacheInterface
      *                                       for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
-     *
-     * @throws InvalidArgumentExceptionInterface
-     *   MUST be thrown if $values is neither an array nor a Traversable,
-     *   or if any of the $values are not a legal value.
      */
-    public function setMultiple(Traversable<mixed> $values,?DateInterval $ttl = null): bool;
+    public function setMultiple(Container<mixed> $values,?DateInterval $ttl = null): bool;
 
     /**
      * Deletes multiple cache items in a single operation.
@@ -91,12 +82,8 @@ interface CacheInterface
      * @param iterable $keys A list of string-based keys to be deleted.
      *
      * @return bool True if the items were successfully removed. False if there was an error.
-     *
-     * @throws InvalidArgumentExceptionInterface
-     *   MUST be thrown if $keys is neither an array nor a Traversable,
-     *   or if any of the $keys are not a legal value.
      */
-    public function deleteMultiple(Traversable<string> $keys): bool;
+    public function deleteMultiple(Container<string> $keys): bool;
 
     /**
      * Determines whether an item is present in the cache.

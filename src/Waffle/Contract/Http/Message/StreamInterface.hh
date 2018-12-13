@@ -146,14 +146,14 @@ interface StreamInterface
     public function getContents(): string;
 
     /**
-     * Get stream metadata as an associative array or retrieve a specific key.
+     * Get stream metadata as an associative container or retrieve a specific key.
      *
      * The keys returned are identical to the keys returned from Hack's
      * stream_get_meta_data() function.
      *
      * @link http://php.net/manual/en/function.stream-get-meta-data.php
      * @param string $key Specific metadata to retrieve.
-     * @return array|mixed|null Returns an associative array if no key is
+     * @return Container<mixed>|mixed|null Returns an associative container if no key is
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */

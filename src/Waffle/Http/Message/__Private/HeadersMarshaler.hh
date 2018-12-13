@@ -5,7 +5,6 @@ namespace Waffle\Http\Message\__Private;
 use namespace HH\Lib\Str;
 use namespace HH\Lib\C;
 use function strtr;
-use function is_array;
 
 class HeadersMarshaler
 {
@@ -14,7 +13,7 @@ class HeadersMarshaler
         $headers = Map {};
 
         $valid = (mixed $value): bool ==> {
-            return is_array($value) ? C\count($value) > 0 : ((string) $value) !== '';
+            return $value is Container<_> ? C\count($value) > 0 : ((string) $value) !== '';
         };
 
         foreach ($server as $key => $value) {
@@ -31,9 +30,12 @@ class HeadersMarshaler
 
             if ($valid($value) && Str\search($key, 'HTTP_') === 0) {
                 $name = strtr(Str\lowercase(Str\slice($key, 5)), '_', '-');
-                if (!is_array($value)) {
-                    $value = [(string) $value];
+
+                if (!$value is Container<_>) {
+                    $value = vec[(string) $value];
                 }
+
+                /* HH_IGNORE_ERROR[4110] */
                 $value = new Set<string>($value);
                 $headers->set($name, $value);
                 continue;
@@ -41,9 +43,11 @@ class HeadersMarshaler
 
             if ($valid($value) && Str\search($key, 'CONTENT_') === 0) {
                 $name = 'content-' . Str\lowercase(Str\slice($key, 8));
-                if (!is_array($value)) {
-                    $value = [(string) $value];
+                if (!$value is Container<_>) {
+                    $value = vec[(string) $value];
                 }
+
+                /* HH_IGNORE_ERROR[4110] */
                 $value = new Set<string>($value);
                 $headers->set($name, $value);
                 continue;

@@ -13,7 +13,6 @@ use type ReflectionMethod;
 use function is_object;
 use function class_exists;
 use function explode;
-use function is_array;
 
 class ReflectionContainer implements ArgumentResolverInterface, ContainerInterface
 {
@@ -84,18 +83,24 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
             $callable = explode('::', $callable);
         }
 
-        if (is_array($callable)) {
+        if ($callable is KeyedContainer<_,_>) {
+            /* HH_IGNORE_ERROR[4110] */
             if ($callable[0] is string) {
+                /* HH_IGNORE_ERROR[4110] */
+                /* HH_IGNORE_ERROR[4011] */
                 $callable[0] = $this->getContainer()->get($callable[0]);
             }
 
+            /* HH_IGNORE_ERROR[4110] */
             $reflection = new ReflectionMethod($callable[0], $callable[1]);
 
             if ($reflection->isStatic()) {
+                /* HH_IGNORE_ERROR[4011] */
                 $callable[0] = null;
             }
 
             return $reflection->invokeArgs(
+                /* HH_IGNORE_ERROR[4110] */
                 $callable[0],
                 $this->reflectArguments(
                     $reflection,

@@ -164,9 +164,9 @@ trait MessageTrait
                     $this->headers->set(
                         $header,
                         new Set<string>(
-                            $this->headers->get($header)
+                            $this->headers
+                                 ->get($header)
                                 ?->concat($value)
-                                ?->toArray()
                         )
                     );
                 }

@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\C;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use function fclose;
 use function fwrite;
@@ -12,7 +13,6 @@ use function feof;
 use function fread;
 use function stream_get_contents;
 use function stream_get_meta_data;
-use function array_key_exists;
 use function strstr;
 use const SEEK_SET;
 
@@ -237,6 +237,6 @@ class Stream implements StreamInterface
             return $meta;
         }
 
-        return array_key_exists($key, $meta) ? $meta[$key]: null;
+        return C\contains_key($meta, $key) ? $meta[$key] : null;
     }
 }

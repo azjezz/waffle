@@ -83,8 +83,8 @@ class Emitter implements EmitterInterface
     /**
      * Emit response headers.
      *
-     * Loops through each header, emitting each; if the header value
-     * is an array with multiple values, ensures that each is sent
+     * Loops through each header, emitting each; the header value
+     * is a set with multiple values; ensures that each is sent
      * in such a way as to create aggregate headers (instead of replace
      * the previous).
      */

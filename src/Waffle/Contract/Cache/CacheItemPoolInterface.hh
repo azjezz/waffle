@@ -2,8 +2,6 @@
 
 namespace Waffle\Contract\Cache;
 
-use type Traversable;
-
 /**
  * CacheItemPoolInterface generates CacheItemInterface objects.
  *
@@ -37,7 +35,7 @@ interface CacheItemPoolInterface
      * Returns a traversable set of cache items.
      *
      * @param string[] $keys
-     *   An indexed array of keys of items to retrieve.
+     *   An indexed Container of keys of items to retrieve.
      *
      * @throws InvalidArgumentExceptionInterface
      *   If any of the keys in $keys are not a legal value a InvalidArgumentExceptionInterface
@@ -49,7 +47,7 @@ interface CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems(Traversable<string> $keys = []): Traversable<CacheItemInterface>;
+    public function getItems(Container<string> $keys = []): Container<CacheItemInterface>;
 
     /**
      * Confirms if the cache contains specified cache item.
@@ -97,7 +95,7 @@ interface CacheItemPoolInterface
      * Removes multiple items from the pool.
      *
      * @param string[] $keys
-     *   An array of keys that should be removed from the pool.
+     *   A Container of keys that should be removed from the pool.
 
      * @throws InvalidArgumentException
      *   If any of the keys in $keys are not a legal value a InvalidArgumentExceptionInterface
@@ -106,7 +104,7 @@ interface CacheItemPoolInterface
      * @return bool
      *   True if the items were successfully removed. False if there was an error.
      */
-    public function deleteItems(Traversable<string> $keys): bool;
+    public function deleteItems(Container<string> $keys): bool;
 
     /**
      * Persists a cache item immediately.

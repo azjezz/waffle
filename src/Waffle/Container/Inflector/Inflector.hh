@@ -2,13 +2,13 @@
 
 namespace Waffle\Container\Inflector;
 
+use namespace HH\Lib\Dict;
 use type Waffle\Container\ContainerAwareTrait;
 use type Waffle\Container\Argument\ArgumentResolverInterface;
 use type Waffle\Container\Argument\ArgumentResolverTrait;
 use type ReflectionProperty;
 use function get_class;
-use function call_user_func_array;
-use function array_combine;
+use function inst_meth;
 
 class Inflector implements ArgumentResolverInterface, InflectorInterface
 {
@@ -97,11 +97,9 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
             $this->properties->toVector()
         );
 
-        $properties = new Map<string, mixed>(
-            array_combine(
-                $this->properties->keys(),
-                $properties
-            )
+        $properties = Dict\associate(
+            $this->properties->keys(),
+            $properties
         );
 
         foreach ($properties as $property => $value) {
@@ -111,12 +109,14 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
 
         foreach ($this->methods as $method => $args) {
             $args = $this->resolveArguments($args);
-
-            call_user_func_array([$object, $method], $args);
+            /* HH_IGNORE_ERROR[2025] */
+            $callback = inst_meth($object, $method);
+            $callback(...$args);
         }
 
         if (null !== $this->callback) {
-            call_user_func_array($this->callback, [$object]);
+            $callback = $this->callback;
+            $callback($object);
         }
     }
 }

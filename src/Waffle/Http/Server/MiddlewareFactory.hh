@@ -13,7 +13,6 @@ use type ReflectionMethod;
 use type ReflectionFunction;
 use function is_callable;
 use function is_object;
-use function is_array;
 
 class MiddlewareFactory
 {
@@ -31,7 +30,7 @@ class MiddlewareFactory
             return new Middleware\RequestHandlerMiddleware($middleware);
         }
 
-        if ($middleware instanceof Traversable || is_array($middleware)) {
+        if ($middleware is Container<_>) {
             $pipe = new MiddlewarePipe();
             /* HH_IGNORE_ERROR[4110] */
             foreach ($middleware as $value) {
@@ -50,7 +49,8 @@ class MiddlewareFactory
 
             if (is_object($middleware)) {
                 $reflection = new ReflectionMethod($middleware, '__invoke');
-            } elseif (is_array($middleware)) {
+            } elseif ($middleware is Container<_>) {
+                /* HH_IGNORE_ERROR[4110] */
                 list($object, $method) = $middleware;
                 $reflection = new ReflectionMethod($object, $method);
             } else {
