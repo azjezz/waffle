@@ -33,8 +33,6 @@ class Emitter implements EmitterInterface
         $this->emitHeaders($response);
         $this->emitStatusLine($response);
         $this->emitBody($response);
-        
-        $response->getBody()->close();
 
         return true;
     }
