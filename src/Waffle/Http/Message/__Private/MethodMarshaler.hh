@@ -8,6 +8,6 @@ class MethodMarshaler
 {
     public function marshal(dict<string, mixed> $server): string
     {
-        return C\contains($server, 'REQUEST_METHOD') ? (string) $server['REQUEST_METHOD'] : 'GET';
+        return C\contains_key($server, 'REQUEST_METHOD') ? (string) $server['REQUEST_METHOD'] : 'GET';
     }
 }

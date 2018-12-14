@@ -19,22 +19,22 @@ class ServerParametersMarshaler
 
     private function normalize(dict<string, mixed> $server): dict<string, mixed>
     {
-        if (C\contains($server,'HTTP_AUTHORIZATION')) {
+        if (C\contains_key($server,'HTTP_AUTHORIZATION')) {
             return $server;
         }
 
         if (function_exists('apache_request_headers')) {
             $apacheRequestHeaders = (fun('apache_request_headers'))();
 
-            if (C\contains($apacheRequestHeaders,'authorization')) {
+            if (C\contains_key($apacheRequestHeaders,'authorization')) {
                 $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['authorization'];
             }
 
-            if (C\contains($apacheRequestHeaders,'Authorization')) {
+            if (C\contains_key($apacheRequestHeaders,'Authorization')) {
                 $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['Authorization'];
             }
 
-            if (C\contains($apacheRequestHeaders,'AUTHORIZATION')) {
+            if (C\contains_key($apacheRequestHeaders,'AUTHORIZATION')) {
                 $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['AUTHORIZATION'];
             }
         }

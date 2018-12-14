@@ -23,7 +23,7 @@ class HeadersMarshaler
                 $key = Str\slice($key, 9);
                 // We will not overwrite existing variables with the
                 // prefixed versions, though
-                if (C\contains($server,$key)) {
+                if (C\contains_key($server, $key)) {
                     continue;
                 }
             }

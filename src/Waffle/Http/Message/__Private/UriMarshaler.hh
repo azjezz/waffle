@@ -19,9 +19,9 @@ class UriMarshaler
         $uri = new Uri('');
         // URI scheme
         $scheme = 'http';
-        if (C\contains($server,'HTTPS')) {
+        if (C\contains_key($server,'HTTPS')) {
             $https = $this->marshalHttpsValue($server['HTTPS']);
-        } elseif (C\contains($server,'https')) {
+        } elseif (C\contains_key($server,'https')) {
             $https = $this->marshalHttpsValue($server['https']);
         } else {
             $https = false;
@@ -48,7 +48,7 @@ class UriMarshaler
         $path = $this->marshalRequestPath($server);
         $path = explode('?', $path, 2)[0];
         $query = '';
-        if (C\contains($server,'QUERY_STRING')) {
+        if (C\contains_key($server,'QUERY_STRING')) {
             $query = Str\trim_left((string) $server['QUERY_STRING'], '?');
         }
         // URI fragment
@@ -147,14 +147,14 @@ class UriMarshaler
             );
         }
 
-        if (!C\contains($server,'SERVER_NAME')) {
+        if (!C\contains_key($server,'SERVER_NAME')) {
             return $defaults;
         }
 
         $host = $server['SERVER_NAME'] as string;
-        $port = C\contains($server,'SERVER_PORT') ? $server['SERVER_PORT'] as int : null;
+        $port = C\contains_key($server,'SERVER_PORT') ? $server['SERVER_PORT'] as int : null;
 
-        if (!C\contains($server,'SERVER_ADDR') || ! preg_match('/^\[[0-9a-fA-F\:]+\]$/', $host)) {
+        if (!C\contains_key($server,'SERVER_ADDR') || ! preg_match('/^\[[0-9a-fA-F\:]+\]$/', $host)) {
             return shape('host' => $host, 'port' => $port);
         }
 
@@ -179,8 +179,8 @@ class UriMarshaler
     {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
-        $iisUrlRewritten = C\contains($server,'IIS_WasUrlRewritten') ? $server['IIS_WasUrlRewritten'] as string : null;
-        $unencodedUrl    = C\contains($server, 'UNENCODED_URL') ? $server['UNENCODED_URL'] as string : '';
+        $iisUrlRewritten = C\contains_key($server,'IIS_WasUrlRewritten') ? $server['IIS_WasUrlRewritten'] as string : null;
+        $unencodedUrl    = C\contains_key($server, 'UNENCODED_URL') ? $server['UNENCODED_URL'] as string : '';
 
         if ('1' === $iisUrlRewritten && '' !== $unencodedUrl) {
             return $unencodedUrl;

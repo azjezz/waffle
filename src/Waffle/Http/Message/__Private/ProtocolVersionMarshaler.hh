@@ -10,7 +10,7 @@ class ProtocolVersionMarshaler
 {
     public function marshal(dict<string, mixed> $server): string
     {
-        if (!C\contains($server, 'SERVER_PROTOCOL')) {
+        if (!C\contains_key($server, 'SERVER_PROTOCOL')) {
             return '1.1';
         }
 
