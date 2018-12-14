@@ -109,9 +109,9 @@ class Container implements ContainerInterface
         }
 
         if ($this->definitions->hasTag($id)) {
-            $set = $this->definitions->resolveTagged($id);
+            $tagged = $this->definitions->resolveTagged($id);
 
-            return Vec\map($set, ($resolved) ==> $this->inflectors->inflect($resolved));
+            return Vec\map($tagged, ($resolved) ==> $this->inflectors->inflect($resolved));
         }
 
         if ($this->providers->provides($id)) {
