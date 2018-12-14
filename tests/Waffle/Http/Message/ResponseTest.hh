@@ -2,11 +2,12 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Facebook\HackTest\HackTest;
-use Waffle\Contract\Http\Message\StreamInterface;
-use Waffle\Http\Message\Response;
-use Waffle\Http\Message\Cookie;
-use Waffle\Http\Message\__Private;
+use namespace HH\Lib\C;
+use namespace Waffle\Http\Message\__Private;
+use type Facebook\HackTest\HackTest;
+use type Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Http\Message\Response;
+use type Waffle\Http\Message\Cookie;
 use function Facebook\FBExpect\expect;
 
 class ResponseTest extends HackTest
@@ -31,37 +32,37 @@ class ResponseTest extends HackTest
 
     public function testCanConstructWithHeaders()
     {
-        $r = new Response(200, Map { 'Foo' => Set { 'Bar' } });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set { 'Bar' } });
+        $r = new Response(200, dict[ 'Foo' => vec[ 'Bar' ]]);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec[ 'Bar' ]]);
         expect($r->getHeaderLine('Foo'))->toBeSame('Bar');
-        expect($r->getHeader('Foo'))->toBePHPEqual(Set { 'Bar' });
+        expect($r->getHeader('Foo'))->toBePHPEqual(vec[ 'Bar' ]);
     }
     public function testCanConstructWithBody()
     {
-        $r = new Response(200, Map {}, __Private\create_stream_from_string('baz'));
+        $r = new Response(200, dict[], __Private\create_stream_from_string('baz'));
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('baz');
     }
 
     public function testNullBody()
     {
-        $r = new Response(200, Map {}, null);
+        $r = new Response(200, dict[], null);
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('');
     }
 
     public function testCanConstructWithReason()
     {
-        $r = new Response(200, Map {}, null, '1.1', 'bar');
+        $r = new Response(200, dict[], null, '1.1', 'bar');
         expect($r->getReasonPhrase())->toBeSame('bar');
 
-        $r = new Response(200, Map {}, null, '1.1', '0');
+        $r = new Response(200, dict[], null, '1.1', '0');
         expect($r->getReasonPhrase())->toBeSame('0', 'Falsey reason works');
     }
 
     public function testCanConstructWithProtocolVersion()
     {
-        $r = new Response(200, Map {}, null, '1000');
+        $r = new Response(200, dict[], null, '1000');
         expect($r->getProtocolVersion())->toBeSame('1000');
     }
 
@@ -112,72 +113,71 @@ class ResponseTest extends HackTest
 
     public function testWithHeader()
     {
-        $r = new Response(200, Map { 'Foo' => Set { 'Bar' }});
-        $r2 = $r->withHeader('baZ', Set { 'Bam' });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set { 'Bar' }});
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Foo' => Set { 'Bar' }, 'baZ' => Set {'Bam'}});
+        $r = new Response(200, dict[ 'Foo' => vec[ 'Bar' ]]);
+        $r2 = $r->withHeader('baZ', vec[ 'Bam' ]);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec[ 'Bar' ]]);
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec[ 'Bar' ], 'baZ' => vec[ 'Bam' ]]);
         expect($r2->getHeaderLine('baz'))->toBeSame('Bam');
-        expect($r2->getHeader('baz'))->toBePHPEqual(Set { 'Bam' });
+        expect($r2->getHeader('baz'))->toBePHPEqual(vec[ 'Bam' ]);
     }
 
     public function testWithHeaderReplacesDifferentCase()
     {
-        $r = new Response(200, Map {'Foo' => Set {'Bar'}});
-        $r2 = $r->withHeader('foO', Set {'Bam'});
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set { 'Bar' }});
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'foO' => Set { 'Bam' }});
+        $r = new Response(200, dict['Foo' => vec['Bar']]);
+        $r2 = $r->withHeader('foO', vec['Bam']);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec[ 'Bar' ] ]);
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'foO' => vec[ 'Bam' ]]);
         expect($r2->getHeaderLine('foo'))->toBeSame('Bam');
-        expect($r2->getHeader('foo'))->toBePHPEqual(Set { 'Bam' });
+        expect($r2->getHeader('foo'))->toBePHPEqual(vec[ 'Bam' ]);
     }
 
     public function testWithAddedHeader()
     {
-        $r = new Response(200, Map { 'Foo' => Set { 'Bar' }});
-        $r2 = $r->withAddedHeader('foO', Set { 'Baz' });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set {'Bar'} });
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Foo' => Set{'Bar', 'Baz'} });
+        $r = new Response(200, dict[ 'Foo' => vec[ 'Bar' ]]);
+        $r2 = $r->withAddedHeader('foO', vec[ 'Baz' ]);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec['Bar']]);
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec['Bar', 'Baz']]);
         expect($r2->getHeaderLine('foo'))->toBeSame('Bar, Baz');
-        expect($r2->getHeader('foo'))->toBePHPEqual(Set {'Bar', 'Baz'});
+        expect($r2->getHeader('foo'))->toBePHPEqual(vec['Bar', 'Baz']);
     }
 
     public function testWithAddedHeaderAsArray()
     {
-        $r = new Response(200, Map { 'Foo' => Set { 'Bar' }});
-        $r2 = $r->withAddedHeader('foO', Set { 'Baz', 'Bam' });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set { 'Bar' }});
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Foo' => Set {'Bar', 'Baz', 'Bam'} });
+        $r = new Response(200, dict[ 'Foo' => vec[ 'Bar' ]]);
+        $r2 = $r->withAddedHeader('foO', vec[ 'Baz', 'Bam' ]);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec[ 'Bar' ]]);
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec['Bar', 'Baz', 'Bam']]);
         expect($r2->getHeaderLine('foo'))->toBeSame('Bar, Baz, Bam');
-        expect($r2->getHeader('foo'))->toBePHPEqual(Set {'Bar', 'Baz', 'Bam'});
+        expect($r2->getHeader('foo'))->toBePHPEqual(vec['Bar', 'Baz', 'Bam']);
     }
 
     public function testWithAddedHeaderThatDoesNotExist()
     {
-        $r = new Response(200, Map { 'Foo' => Set { 'Bar' } 
-        });
-        $r2 = $r->withAddedHeader('nEw', Set { 'Baz' });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Foo' => Set {'Bar'} });
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Foo' => Set {'Bar'}, 'nEw' => Set {'Baz'} });
+        $r = new Response(200, dict[ 'Foo' => vec[ 'Bar']]);
+        $r2 = $r->withAddedHeader('nEw', vec[ 'Baz' ]);
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec['Bar']]);
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Foo' => vec['Bar'], 'nEw' => vec['Baz']]);
         expect($r2->getHeaderLine('new'))->toBeSame('Baz');
-        expect($r2->getHeader('new'))->toBePHPEqual(Set { 'Baz' });
+        expect($r2->getHeader('new'))->toBePHPEqual(vec[ 'Baz' ]);
     }
 
     public function testWithoutHeaderThatExists()
     {
-        $r = new Response(200, Map { 'Foo' => Set {'Bar'}, 'Baz' => Set {'Bam'} });
+        $r = new Response(200, dict[ 'Foo' => vec['Bar'], 'Baz' => vec['Bam']]);
         $r2 = $r->withoutHeader('foO');
         expect($r->hasHeader('foo'))->toBeTrue();
-        expect($r->getHeaders())->toBePHPEqual( Map { 'Foo' => Set {'Bar'}, 'Baz' => Set {'Bam'} });
+        expect($r->getHeaders())->toBePHPEqual( dict[ 'Foo' => vec['Bar'], 'Baz' => vec['Bam']]);
         expect($r2->hasHeader('foo'))->toBeFalse();
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Baz' => Set {'Bam'} });
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Baz' => vec['Bam']]);
     }
 
     public function testWithoutHeaderThatDoesNotExist()
     {
-        $r = new Response(200, Map { 'Baz' => Set { 'Bam' }});
+        $r = new Response(200, dict[ 'Baz' => vec[ 'Bam' ]]);
         $r2 = $r->withoutHeader('foO');
         expect($r2)->toBeSame($r);
         expect($r2->hasHeader('foo'))->toBeFalse();
-        expect($r2->getHeaders())->toBePHPEqual(Map { 'Baz' => Set { 'Bam' } });
+        expect($r2->getHeaders())->toBePHPEqual(dict[ 'Baz' => vec[ 'Bam']]);
     }
 
     public function testSameInstanceWhenRemovingMissingHeader()
@@ -189,18 +189,18 @@ class ResponseTest extends HackTest
     public function trimmedHeaderValues()
     {
         return [
-            [new Response(200, Map { 'OWS' => Set { " \t \tFoo\t \t " } })],
-            [(new Response())->withHeader('OWS', Set { " \t \tFoo\t \t " })],
-            [(new Response())->withAddedHeader('OWS', Set { " \t \tFoo\t \t " })],
+            [new Response(200, dict[ 'OWS' => vec[ " \t \tFoo\t \t " ]])],
+            [(new Response())->withHeader('OWS', vec[ " \t \tFoo\t \t " ])],
+            [(new Response())->withAddedHeader('OWS', vec[ " \t \tFoo\t \t " ])],
         ];
     }
 
     <<DataProvider('trimmedHeaderValues')>>
     public function testHeaderValuesAreTrimmed($r)
     {
-        expect($r->getHeaders())->toBePHPEqual(Map { 'OWS' => Set { 'Foo' } });
+        expect($r->getHeaders())->toBePHPEqual(dict[ 'OWS' => vec[ 'Foo' ]]);
         expect($r->getHeaderLine('OWS'))->toBePHPEqual('Foo');
-        expect($r->getHeader('OWS'))->toBePHPEqual(Set { 'Foo' });
+        expect($r->getHeader('OWS'))->toBePHPEqual(vec[ 'Foo' ]);
     }
 
     public function testWithAndWithoutCookie()
@@ -229,17 +229,17 @@ class ResponseTest extends HackTest
         $response2 = $response->withCookie('name1', $cookie1);
         
         expect($response2)->toNotBeSame($response);
-        expect($response2->getCookies()->count())->toBeSame(1);
-        expect($response2->getCookies()->at('name1'))->toBeSame($cookie1);
+        expect(C\count($response2->getCookies()))->toBeSame(1);
+        expect($response2->getCookies()['name1'])->toBeSame($cookie1);
 
         $response3 = $response2
                         ->withCookie('name2', $cookie2)
                         ->withCookie('name3', $cookie3);
 
         expect($response3)->toNotBeSame($response2);
-        expect($response3->getCookies()->count())->toBeSame(3);
-        expect($response3->getCookies()->at('name1'))->toBeSame($cookie1);
-        expect($response3->getCookies()->at('name2'))->toBeSame($cookie2);
-        expect($response3->getCookies()->at('name3'))->toBeSame($cookie3);
+        expect(C\count($response3->getCookies()))->toBeSame(3);
+        expect($response3->getCookies()['name1'])->toBeSame($cookie1);
+        expect($response3->getCookies()['name2'])->toBeSame($cookie2);
+        expect($response3->getCookies()['name3'])->toBeSame($cookie3);
     }
 }

@@ -8,18 +8,18 @@ use namespace HH\Lib\C;
 /**
 * Inject the provided Content-Type, if none is already present.
 */
-function inject_content_type_in_headers(string $contentType, Map<string, Set<string>> $headers): Map<string, Set<string>>
+function inject_content_type_in_headers(string $contentType, dict<string, vec<string>> $headers): dict<string, vec<string>>
 {
-    $hasContentType = C\reduce(
-        $headers->keys(),
-        ($carry, $item) ==> $carry ?: (Str\lowercase($item) === 'content-type'),
+    $hasContentType = C\reduce_with_key(
+        $headers,
+        ($carry, $key, $item) ==> $carry ?: (Str\lowercase($key) === 'content-type'),
         false
     );
 
     if (false === $hasContentType) {
-        $headers->set('content-type', Set {
+        $headers['content-type'] = vec[
             $contentType
-        });
+        ];
     }
 
     return $headers;

@@ -230,7 +230,7 @@ class ReflectionContainerTest extends HackTest
     {
         $container = new ReflectionContainer();
 
-        $foo = $container->call(new FooCallable(), Map { 'bar' => new Bar() });
+        $foo = $container->call(new FooCallable(), dict[ 'bar' => new Bar() ]);
 
         expect($foo)->toBeInstanceOf(Foo::class);
         /* HH_IGNORE_ERROR[4064] */

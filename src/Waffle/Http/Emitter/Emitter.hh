@@ -126,10 +126,10 @@ class Emitter implements EmitterInterface
     private function renderCookiesIntoHeader(ResponseInterface $response): ResponseInterface
     {
         $response = $response->withoutHeader(static::SET_COOKIE_HEADER);
-        $cookies = Set {};
+        $cookies = vec[];
 
         foreach ($response->getCookies() as $name => $cookie) {
-            $cookies->add($this->convertCookieIntoString($name, $cookie));
+            $cookies[] = $this->convertCookieIntoString($name, $cookie);
         }
 
         return $response->withAddedHeader(static::SET_COOKIE_HEADER, $cookies);

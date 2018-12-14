@@ -3,6 +3,8 @@
 namespace Waffle\Http\Message;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Vec;
+use namespace HH\Lib\C;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Contract\Http\Message\MessageInterface;
 use function preg_match;
@@ -14,11 +16,11 @@ trait MessageTrait
 {
     require implements MessageInterface;
 
-    /** @var Map<string, Set<string>> Map of all registered headers, as original name => Set of values */
-    protected Map<string, Set<string>> $headers = Map {};
+    /** @var dict<string, vec<string>> Map of all registered headers, as original name => Set of values */
+    protected dict<string, vec<string>> $headers = dict[];
 
-    /** @var Map<string, string> Map of lowercase header name => original name at registration */
-    protected Map<string, string> $headerNames = Map {};
+    /** @var dict<string, string> Map of lowercase header name => original name at registration */
+    protected dict<string, string> $headerNames = dict[];
 
     protected string $protocol = '1.1';
 
@@ -26,9 +28,7 @@ trait MessageTrait
 
     public function messageClone(): void
     {
-        $this->headers = clone $this->headers;
         $this->stream = null === $this->stream ? null : (clone $this->stream);
-        $this->headerNames = clone $this->headerNames;
     }
 
     public function getProtocolVersion(): string
@@ -48,27 +48,27 @@ trait MessageTrait
         return $new;
     }
 
-    public function getHeaders():  Map<string, Set<string>>
+    public function getHeaders():  dict<string, vec<string>>
     {
         return $this->headers;
     }
 
     public function hasHeader(string $header): bool
     {
-        return $this->headerNames->contains(Str\lowercase($header));
+        return C\contains_key($this->headerNames, Str\lowercase($header));
     }
 
-    public function getHeader(string $header): Set<string>
+    public function getHeader(string $header): vec<string>
     {
         $header = Str\lowercase($header);
 
-        $header = $this->headerNames->get($header);
+        $header = $this->headerNames[$header] ?? null;
 
         if (null === $header) {
-            return Set {};
+            return vec[];
         }
 
-        return $this->headers->get($header) ?? Set {};
+        return $this->headers[$header] ?? vec[];
     }
 
     public function getHeaderLine(string $header): string
@@ -76,7 +76,7 @@ trait MessageTrait
         return Str\join($this->getHeader($header), ', ');
     }
 
-    public function withHeader(string $header,Set<string> $value): this
+    public function withHeader(string $header,vec<string> $value): this
     {
         $value = $this->validateAndTrimHeader($header, $value);
 
@@ -84,28 +84,28 @@ trait MessageTrait
 
         $new = clone $this;
 
-        if ($new->headerNames->contains($normalized)) {
-            $new->headers->remove(
-                $new->headerNames->at($normalized)
-            );
+        if (C\contains_key($new->headerNames, $normalized)) {
+            unset($new->headers[
+                $new->headerNames[$normalized]
+            ]);
         }
 
-        $new->headerNames->set($normalized, $header);
-        $new->headers->set($header, $value);
+        $new->headerNames[$normalized] = $header;
+        $new->headers[$header] = $value;
 
         return $new;
     }
 
-    public function withAddedHeader(string $header, Set<string> $value): this
+    public function withAddedHeader(string $header, vec<string> $value): this
     {
         if ('' === $header) {
             throw new Exception\InvalidArgumentException('Header name must be an RFC 7230 compatible string.');
         }
 
         $new = clone $this;
-        $new->setHeaders(Map {
+        $new->setHeaders(dict[
             $header => $value
-        });
+        ]);
 
         return $new;
     }
@@ -114,16 +114,16 @@ trait MessageTrait
     {
         $normalized = Str\lowercase($header);
 
-        if (!$this->headerNames->contains($normalized)) {
+        if (!C\contains_key($this->headerNames, $normalized)) {
             return $this;
         }
 
-        $header = $this->headerNames->at($normalized);
+        $header = $this->headerNames[$normalized];
 
         $new = clone $this;
 
-        $new->headerNames->remove($normalized);
-        $new->headers->remove($header);
+        unset($new->headerNames[$normalized]);
+        unset($new->headers[$header]);
 
         return $new;
     }
@@ -149,30 +149,19 @@ trait MessageTrait
         return $new;
     }
 
-    private function setHeaders(Map<string, Set<string>> $headers): void
+    private function setHeaders(dict<string, vec<string>> $headers): void
     {
         foreach ($headers as $header => $value) {
             $value = $this->validateAndTrimHeader($header, $value);
 
             $normalized = Str\lowercase($header);
 
-            if ($this->headerNames->contains($normalized)) {
-
-                $header = $this->headerNames->get($normalized);
-
-                if (null !== $header) {
-                    $this->headers->set(
-                        $header,
-                        new Set<string>(
-                            $this->headers
-                                 ->get($header)
-                                ?->concat($value)
-                        )
-                    );
-                }
+            if (C\contains_key($this->headerNames, $normalized)) {
+                $header = $this->headerNames[$normalized];
+                $this->headers[$header] = Vec\unique(Vec\concat($this->headers[$header], $value));
             } else {
-                $this->headerNames->set($normalized, $header);
-                $this->headers->set($header, $value);
+                $this->headerNames[$normalized] = $header;
+                $this->headers[$header] = $value;
             }
         }
     }
@@ -195,7 +184,7 @@ trait MessageTrait
      *
      * @see https://tools.ietf.org/html/rfc7230#section-3.2.4
      */
-    private function validateAndTrimHeader(string $header, Set<string> $values): Set<string>
+    private function validateAndTrimHeader(string $header, vec<string> $values): vec<string>
     {
         if (1 !== preg_match("@^[!#$%&'*+.^_`|~0-9A-Za-z-]+$@", $header)) {
             throw new Exception\InvalidArgumentException(
@@ -203,13 +192,13 @@ trait MessageTrait
             );
         }
 
-        if (0 === $values->count()) {
+        if (0 === C\count($values)) {
             throw new Exception\InvalidArgumentException(
-                'Header values must be a Set of strings, empty Set given.'
+                'Header values must be a vector of strings, empty vector given.'
             );
         }
 
-        $retval = Set {};
+        $retval = vec[];
 
         foreach ($values as $value) {
 
@@ -219,9 +208,7 @@ trait MessageTrait
                 );
             }
 
-            $retval->add(
-                Str\trim($value, " \t")
-            );
+            $retval[] = Str\trim($value, " \t");
         }
 
         return $retval;

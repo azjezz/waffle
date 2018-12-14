@@ -2,6 +2,7 @@
 
 namespace Waffle\Tests\Container\Inflector;
 
+use namespace HH\Lib\C;
 use type Waffle\Container\Inflector\Inflector;
 use type Waffle\Container\Container;
 use type Facebook\HackTest\HackTest;
@@ -21,25 +22,25 @@ class InflectorTest extends HackTest
         $container = new Container();
         $inflector = (new Inflector('Type'))->setContainer($container);
 
-        $inflector->invokeMethod('method1', Vector { 'arg1' });
+        $inflector->invokeMethod('method1', vec[ 'arg1' ]);
 
-        $inflector->invokeMethods(Map {
-            'method2' => Vector { 'arg1' } ,
-            'method3' => Vector { 'arg1' }
-        });
+        $inflector->invokeMethods(dict[
+            'method2' => vec[ 'arg1' ] ,
+            'method3' => vec[ 'arg1' ]
+        ]);
 
         $methods = (new \ReflectionClass($inflector))->getProperty('methods');
         $methods->setAccessible(true);
 
-        $map = $methods->getValue($inflector);
+        $methods = $methods->getValue($inflector);
         
-        expect($map->contains('method1'))->toBeTrue();
-        expect($map->contains('method2'))->toBeTrue();
-        expect($map->contains('method3'))->toBeTrue();
+        expect(C\contains_key($methods, 'method1'))->toBeTrue();
+        expect(C\contains_key($methods, 'method2'))->toBeTrue();
+        expect(C\contains_key($methods, 'method3'))->toBeTrue();
 
-        expect($map->at('method1')->toArray())->toBeSame(['arg1']);
-        expect($map->at('method2')->toArray())->toBeSame(['arg1']);
-        expect($map->at('method3')->toArray())->toBeSame(['arg1']);
+        expect($methods['method1'])->toBeSame(vec['arg1']);
+        expect($methods['method2'])->toBeSame(vec['arg1']);
+        expect($methods['method3'])->toBeSame(vec['arg1']);
     }
 
     /**
@@ -52,23 +53,23 @@ class InflectorTest extends HackTest
 
         $inflector->setProperty('property1', 'value');
 
-        $inflector->setProperties(Map {
+        $inflector->setProperties(dict[
             'property2' => 'value',
             'property3' => 'value'
-        });
+        ]);
 
         $properties = (new \ReflectionClass($inflector))->getProperty('properties');
         $properties->setAccessible(true);
 
-        $map = $properties->getValue($inflector);
+        $dict = $properties->getValue($inflector);
 
-        expect($map->contains('property1'))->toBeTrue();
-        expect($map->contains('property2'))->toBeTrue();
-        expect($map->contains('property3'))->toBeTrue();
+        expect(C\contains_key($dict, 'property1'))->toBeTrue();
+        expect(C\contains_key($dict, 'property2'))->toBeTrue();
+        expect(C\contains_key($dict, 'property3'))->toBeTrue();
 
-        expect($map->at('property1'))->toBeSame('value');
-        expect($map->at('property2'))->toBeSame('value');
-        expect($map->at('property3'))->toBeSame('value');
+        expect($dict['property1'])->toBeSame('value');
+        expect($dict['property2'])->toBeSame('value');
+        expect($dict['property3'])->toBeSame('value');
     }
 
     /**
@@ -107,9 +108,9 @@ class InflectorTest extends HackTest
 
         $inflector = (new Inflector('Type'))
             ->setContainer($container)
-            ->invokeMethod('setBar', Vector { 
+            ->invokeMethod('setBar', vec[
                 Bar::class
-            })
+            ])
         ;
 
         $foo = new Foo(null);

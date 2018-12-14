@@ -9,10 +9,10 @@ use type Waffle\Container\ServiceProvider\{
 
 class FakeServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
-    protected ?Set<string> $provides = Set {
+    protected vec<string> $provides = vec[
         'SomeService',
         'AnotherService'
-    };
+    ];
 
     public int $registered = 0;
 

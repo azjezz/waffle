@@ -2,10 +2,12 @@
 
 namespace Waffle\Http\Message\__Private;
 
+use namespace HH\Lib\C;
+
 class MethodMarshaler
 {
-    public function marshal(Map<string, mixed> $server): string
+    public function marshal(dict<string, mixed> $server): string
     {
-        return $server->contains('REQUEST_METHOD') ? (string) $server->at('REQUEST_METHOD') : 'GET';
+        return C\contains($server, 'REQUEST_METHOD') ? (string) $server['REQUEST_METHOD'] : 'GET';
     }
 }

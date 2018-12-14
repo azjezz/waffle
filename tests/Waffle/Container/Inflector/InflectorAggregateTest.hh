@@ -52,10 +52,9 @@ class InflectorAggregateTest extends HackTest
         $aggregate->setContainer($container);
 
         $aggregate->add(ContainerAwareInterface::class)
-            ->invokeMethod('setContainer', Vector { $container });
-        
-        $aggregate->add('Ignored\Type');
+            ->invokeMethod('setContainer', vec[ $container ]);
 
+        $aggregate->add('Ignored\Type');
 
         $containerAware = new BarContainerAware();
         $aggregate->inflect($containerAware);

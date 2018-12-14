@@ -8,9 +8,12 @@ use const PREG_SET_ORDER;
 
 class CookiesMarshaler
 {
-    public function marshal(Set<string> $header, array<string, string> $cookies): Map<string, string>
+    public function marshal(vec<string> $header, KeyedContainer<string, string> $cookies): dict<string, string>
     {
-        $cookies = new Map<string, string>($cookies);
+        $dict = dict[];
+        foreach ($cookies as $key => $value) {
+            $dict[$key] = $value;
+        }
 
         $matches = [];
 
@@ -25,9 +28,9 @@ class CookiesMarshaler
         )x', $header, &$matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $cookies[$match['name']] = urldecode($match['value']);
+            $dict[$match['name'] as string] = urldecode($match['value'] as string);
         }
 
-        return $cookies;
+        return $dict;
     }
 }

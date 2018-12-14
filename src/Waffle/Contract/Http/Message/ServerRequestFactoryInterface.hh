@@ -18,5 +18,5 @@ interface ServerRequestFactoryInterface
      *
      * @return ServerRequestInterface
      */
-    public function createServerRequest(string $method, UriInterface $uri, Map<string, mixed> $serverParams = Map {}): ServerRequestInterface;
+    public function createServerRequest(string $method, UriInterface $uri, dict<string, mixed> $serverParams = dict[]): ServerRequestInterface;
 }

@@ -20,7 +20,7 @@ class HtmlResponse extends Response
      * Produces an HTML response with a Content-Type of text/html and a default
      * status of 200.
      */
-    public function __construct(string $html, int $status = 200, Map<string, Set<string>> $headers = Map {})
+    public function __construct(string $html, int $status = 200, dict<string, vec<string>> $headers = dict[])
     {
         parent::__construct(
             $status,

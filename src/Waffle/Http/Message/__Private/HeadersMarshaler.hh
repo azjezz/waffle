@@ -8,9 +8,9 @@ use function strtr;
 
 class HeadersMarshaler
 {
-    public function marshal(Map<string, mixed> $server): Map<string, Set<string>>
+    public function marshal(dict<string, mixed> $server): dict<string, vec<string>>
     {
-        $headers = Map {};
+        $headers = dict[];
 
         $valid = (mixed $value): bool ==> {
             return $value is Container<_> ? C\count($value) > 0 : ((string) $value) !== '';
@@ -23,7 +23,7 @@ class HeadersMarshaler
                 $key = Str\slice($key, 9);
                 // We will not overwrite existing variables with the
                 // prefixed versions, though
-                if ($server->contains($key)) {
+                if (C\contains($server,$key)) {
                     continue;
                 }
             }
@@ -36,8 +36,10 @@ class HeadersMarshaler
                 }
 
                 /* HH_IGNORE_ERROR[4110] */
-                $value = new Set<string>($value);
-                $headers->set($name, $value);
+                $value = vec[
+                    $value as string
+                ];
+                $headers[$name] = $value;
                 continue;
             }
 
@@ -47,9 +49,8 @@ class HeadersMarshaler
                     $value = vec[(string) $value];
                 }
 
-                /* HH_IGNORE_ERROR[4110] */
-                $value = new Set<string>($value);
-                $headers->set($name, $value);
+                $value = vec[ $value as string];
+                $headers[$name] = $value;
                 continue;
             }
         }

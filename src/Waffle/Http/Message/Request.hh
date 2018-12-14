@@ -2,6 +2,8 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\C;
+use namespace Waffle\Http\Message\__Private;
 use type Waffle\Contract\Http\Message\RequestInterface;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Contract\Http\Message\UriInterface;
@@ -14,7 +16,7 @@ class Request implements RequestInterface
     public function __construct(
         string $method,
         UriInterface $uri,
-        Map<string, Set<string>> $headers = Map {},
+        dict<string, vec<string>> $headers = dict[],
         ?StreamInterface $body = null,
         string $version = '1.1'
     ) {
@@ -44,16 +46,17 @@ class Request implements RequestInterface
             $host .= ':' . ((string) $port);
         }
 
-        if ($this->headerNames->contains('host')) {
-            $header = $this->headerNames->get('host') ?? 'Host';
+        if (C\contains_key($this->headerNames, 'host')) {
+            $header = $this->headerNames['host'];
         } else {
             $header = 'Host';
-            $this->headerNames->set('host', 'Host');
+            $this->headerNames['host'] = 'Host';
         }
 
-        $this->headers->add(Pair {
-            $header, Set { $host }
-        });
+        $this->headers = __Private\dict_union(
+            dict[ $header => vec[$host]],
+            $this->headers,
+        );
     }
 
     public function __clone(): void

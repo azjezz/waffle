@@ -12,7 +12,7 @@ class DefinitionAggregate implements DefinitionAggregateInterface
     use ContainerAwareTrait;
 
     public function __construct(
-        protected Vector<DefinitionInterface> $definitions = new Vector<DefinitionInterface>([])
+        protected vec<DefinitionInterface> $definitions = vec[]
     ) {}
 
    /**
@@ -35,7 +35,7 @@ class DefinitionAggregate implements DefinitionAggregateInterface
      */
     public function has(string $id): bool
     {
-        foreach ($this->getIterator() as $definition) {
+        foreach ($this->definitions as $definition) {
             if ($id === $definition->getAlias()) {
                 return true;
             }
@@ -49,7 +49,7 @@ class DefinitionAggregate implements DefinitionAggregateInterface
      */
     public function hasTag(string $tag): bool
     {
-        foreach ($this->getIterator() as $definition) {
+        foreach ($this->definitions as $definition) {
             if ($definition->hasTag($tag)) {
                 return true;
             }
@@ -63,7 +63,7 @@ class DefinitionAggregate implements DefinitionAggregateInterface
      */
     public function getDefinition(string $id): DefinitionInterface
     {
-        foreach ($this->getIterator() as $definition) {
+        foreach ($this->definitions as $definition) {
             if ($id === $definition->getAlias()) {
                 $definition->setContainer($this->getContainer());
                 return $definition;
@@ -84,15 +84,13 @@ class DefinitionAggregate implements DefinitionAggregateInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveTagged(string $tag, bool $new = false): Vector<mixed>
+    public function resolveTagged(string $tag, bool $new = false): vec<mixed>
     {
-        $vec = Vector {};
+        $vec = vec[];
 
         foreach ($this->getIterator() as $definition) {
             if ($definition->hasTag($tag)) {
-                $vec->add(
-                    $definition->setContainer($this->getContainer())->resolve($new)
-                );
+                $vec[] = $definition->setContainer($this->getContainer())->resolve($new);
             }
         }
 
@@ -101,6 +99,6 @@ class DefinitionAggregate implements DefinitionAggregateInterface
 
     public function getIterator(): Iterator<DefinitionInterface>
     {
-        return $this->definitions->getIterator();
+        return (new Vector($this->definitions))->getIterator();
     }
 }

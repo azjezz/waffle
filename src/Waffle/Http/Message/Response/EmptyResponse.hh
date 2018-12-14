@@ -15,9 +15,9 @@ class EmptyResponse extends Response
      * Create an empty response with the given status code.
      *
      * @param int $status Status code for the response, if any.
-     * @param Map<string, Set<string>> $headers Headers for the response, if any.
+     * @param dict<string, vec<string>> $headers Headers for the response, if any.
      */
-    public function __construct(int $status = 204, Map<string, Set<string>> $headers = Map {})
+    public function __construct(int $status = 204, dict<string, vec<string>> $headers = dict[])
     {
         $body = new Stream(fopen('php://temp', 'r'));
         parent::__construct($status, $headers, $body);
@@ -26,10 +26,10 @@ class EmptyResponse extends Response
     /**
      * Create an empty response with the given headers.
      *
-     * @param Map<string, Set<string>> $headers Headers for the response.
+     * @param dict<string, vec<string>> $headers Headers for the response.
      * @return EmptyResponse
      */
-    public static function withHeaders(Map<string, Set<string>> $headers): EmptyResponse
+    public static function withHeaders(dict<string, vec<string>> $headers): EmptyResponse
     {
         return new self(204, $headers);
     }

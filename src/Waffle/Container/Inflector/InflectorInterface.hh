@@ -14,12 +14,12 @@ interface InflectorInterface
     /**
      * Defines a method to be invoked on the subject object.
      */
-    public function invokeMethod(string $name, Vector<mixed> $args): InflectorInterface;
+    public function invokeMethod(string $name, vec<mixed> $args): InflectorInterface;
 
     /**
      * Defines multiple methods to be invoked on the subject object.
      */
-    public function invokeMethods(Map<string, Vector<mixed>> $methods): InflectorInterface;
+    public function invokeMethods(dict<string, vec<mixed>> $methods): InflectorInterface;
 
     /**
      * Defines a property to be set on the subject object.
@@ -29,7 +29,7 @@ interface InflectorInterface
     /**
      * Defines multiple properties to be set on the subject object.
      */
-    public function setProperties(Map<string, mixed> $properties): InflectorInterface;
+    public function setProperties(dict<string, mixed> $properties): InflectorInterface;
 
     /**
      * Apply inflections to an object.

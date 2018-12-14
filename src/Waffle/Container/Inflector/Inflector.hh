@@ -2,7 +2,6 @@
 
 namespace Waffle\Container\Inflector;
 
-use namespace HH\Lib\Dict;
 use type Waffle\Container\ContainerAwareTrait;
 use type Waffle\Container\Argument\ArgumentResolverInterface;
 use type Waffle\Container\Argument\ArgumentResolverTrait;
@@ -19,16 +18,14 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
 
     protected ?(function(mixed): void) $callback;
 
-    protected Map<string, Vector<mixed>> $methods;
+    protected dict<string, vec<mixed>> $methods = dict[];
 
-    protected Map<string, mixed> $properties;
+    protected dict<string, mixed> $properties = dict[];
 
     public function __construct(string $type, ?(function(mixed): void) $callback = null)
     {
         $this->type     = $type;
         $this->callback = $callback;
-        $this->properties = Map {};
-        $this->methods = Map {};
     }
 
     /**
@@ -42,9 +39,9 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     /**
      * {@inheritdoc}
      */
-    public function invokeMethod(string $name, Vector<mixed> $args): InflectorInterface
+    public function invokeMethod(string $name, vec<mixed> $args): InflectorInterface
     {
-        $this->methods->set($name, $args);
+        $this->methods[$name] = $args;
 
         return $this;
     }
@@ -52,7 +49,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     /**
      * {@inheritdoc}
      */
-    public function invokeMethods(Map<string, Vector<mixed>> $methods): InflectorInterface
+    public function invokeMethods(dict<string, vec<mixed>> $methods): InflectorInterface
     {
         foreach ($methods as $name => $args) {
             $this->invokeMethod($name, $args);
@@ -66,12 +63,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
      */
     public function setProperty(string $property, mixed $value): InflectorInterface
     {
-        $this->properties->set(
-            $property,
-            $this->resolveArguments(
-                Vector { $value }
-            )->firstValue()
-        );
+        $this->properties[$property] = $this->resolveArguments(vec[$value])[0];
 
         return $this;
     }
@@ -79,7 +71,7 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
     /**
      * {@inheritdoc}
      */
-    public function setProperties(Map<string, mixed> $properties): InflectorInterface
+    public function setProperties(dict<string, mixed> $properties): InflectorInterface
     {
         foreach ($properties as $property => $value) {
             $this->setProperty($property, $value);
@@ -93,14 +85,12 @@ class Inflector implements ArgumentResolverInterface, InflectorInterface
      */
     public function inflect(mixed $object): void
     {
-        $properties = $this->resolveArguments(
-            $this->properties->toVector()
-        );
-
-        $properties = Dict\associate(
-            $this->properties->keys(),
-            $properties
-        );
+        $properties = dict[];
+        foreach ($this->properties as $key => $value) {
+            $arguments = vec[ $value ];
+            $resolved = $this->resolveArguments($arguments);
+            $properties[$key] = $resolved[0];
+        }
 
         foreach ($properties as $property => $value) {
             $reflection = new ReflectionProperty(get_class($object), $property);

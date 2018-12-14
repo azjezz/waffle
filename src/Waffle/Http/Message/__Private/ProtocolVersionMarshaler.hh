@@ -2,22 +2,23 @@
 
 namespace Waffle\Http\Message\__Private;
 
+use namespace HH\Lib\C;
 use namespace Waffle\Http\Message\Exception;
 use function preg_match;
 
 class ProtocolVersionMarshaler
 {
-    public function marshal(Map<string, mixed> $server): string
+    public function marshal(dict<string, mixed> $server): string
     {
-        if (!$server->contains('SERVER_PROTOCOL')) {
+        if (!C\contains($server, 'SERVER_PROTOCOL')) {
             return '1.1';
         }
 
         $matches = [];
 
-        if (! preg_match('#^(HTTP/)?(?P<version>[1-9]\d*(?:\.\d)?)$#',(string) $server->at('SERVER_PROTOCOL'), &$matches)) {
+        if (! preg_match('#^(HTTP/)?(?P<version>[1-9]\d*(?:\.\d)?)$#',(string) $server['SERVER_PROTOCOL'], &$matches)) {
             throw Exception\UnrecognizedProtocolVersionException::forVersion(
-                (string) $server->at('SERVER_PROTOCOL')
+                (string) $server['SERVER_PROTOCOL']
             );
         }
 

@@ -2,36 +2,40 @@
 
 namespace Waffle\Http\Message\__Private;
 
+use namespace HH\Lib\C;
 use function function_exists;
 
 class ServerParametersMarshaler
 {
-    public function marshale(array<string, mixed> $server): Map<string, mixed>
+    public function marshale(KeyedContainer<string, mixed> $server): dict<string, mixed>
     {
-        return $this->normalize(
-            new Map<string, mixed>($server)
-        );
+        $dict = dict[];
+        foreach ($server as $key => $value) {
+            $dict[$key] = $value;
+        }
+
+        return $this->normalize($dict);
     }
 
-    private function normalize(Map<string, mixed> $server): Map<string, mixed>
+    private function normalize(dict<string, mixed> $server): dict<string, mixed>
     {
-        if ($server->contains('HTTP_AUTHORIZATION')) {
+        if (C\contains($server,'HTTP_AUTHORIZATION')) {
             return $server;
         }
 
         if (function_exists('apache_request_headers')) {
-            $apacheRequestHeaders = new Map<string, mixed>((fun('apache_request_headers'))());
+            $apacheRequestHeaders = (fun('apache_request_headers'))();
 
-            if ($apacheRequestHeaders->contains('authorization')) {
-                $server->set('HTTP_AUTHORIZATION', $apacheRequestHeaders->at('authorization'));
+            if (C\contains($apacheRequestHeaders,'authorization')) {
+                $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['authorization'];
             }
 
-            if ($apacheRequestHeaders->contains('Authorization')) {
-                $server->set('HTTP_AUTHORIZATION', $apacheRequestHeaders->at('Authorization'));
+            if (C\contains($apacheRequestHeaders,'Authorization')) {
+                $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['Authorization'];
             }
 
-            if ($apacheRequestHeaders->contains('AUTHORIZATION')) {
-                $server->set('HTTP_AUTHORIZATION', $apacheRequestHeaders->at('AUTHORIZATION'));
+            if (C\contains($apacheRequestHeaders,'AUTHORIZATION')) {
+                $server['HTTP_AUTHORIZATION'] = $apacheRequestHeaders['AUTHORIZATION'];
             }
         }
 

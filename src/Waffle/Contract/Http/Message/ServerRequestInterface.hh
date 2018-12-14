@@ -49,7 +49,7 @@ interface ServerRequestInterface extends RequestInterface
      * typically derived from Hack's $_SERVER superglobal. The data IS NOT
      * REQUIRED to originate from $_SERVER.
      */
-    public function getServerParams(): Map<string, mixed>;
+    public function getServerParams(): dict<string, mixed>;
 
     /**
      * Retrieve cookies.
@@ -59,7 +59,7 @@ interface ServerRequestInterface extends RequestInterface
      * The data MUST be compatible with the structure of the $_COOKIE
      * superglobal.
      */
-    public function getCookieParams(): Map<string, string>;
+    public function getCookieParams(): dict<string, string>;
 
     /**
      * Return an instance with the specified cookies.
@@ -75,9 +75,9 @@ interface ServerRequestInterface extends RequestInterface
      * immutability of the message, and MUST return an instance that has the
      * updated cookie values.
      *
-     * @param Map<string, string> $cookies Map of key/value pairs representing cookies.
+     * @param dict<string, string> $cookies dict of key/value pairs representing cookies.
      */
-    public function withCookieParams(Map<string, string> $cookies): this;
+    public function withCookieParams(dict<string, string> $cookies): this;
 
     /**
      * Retrieve query string arguments.
@@ -89,7 +89,7 @@ interface ServerRequestInterface extends RequestInterface
      * values, you may need to parse the query string from `getUri()->getQuery()`
      * or from the `QUERY_STRING` server param.
      */
-    public function getQueryParams(): Map<string, mixed>;
+    public function getQueryParams(): dict<string, mixed>;
 
     /**
      * Return an instance with the specified query string arguments.
@@ -109,10 +109,10 @@ interface ServerRequestInterface extends RequestInterface
      * immutability of the message, and MUST return an instance that has the
      * updated query string arguments.
      *
-     * @param Map<string, mixed> $query Map of query string arguments, typically from
+     * @param dict<string, mixed> $query dict of query string arguments, typically from
      *     $_GET.
      */
-    public function withQueryParams(Map<string, mixed> $query): this;
+    public function withQueryParams(dict<string, mixed> $query): this;
 
     /**
      * Retrieve normalized file upload data as an UploadsFolder instance.
@@ -147,12 +147,12 @@ interface ServerRequestInterface extends RequestInterface
      *
      * Otherwise, this method may return any results of deserializing
      * the request body content; as parsing returns structured content, the
-     * potential types MUST be a Map only. A null value indicates
+     * potential types MUST be a dict only. A null value indicates
      * the absence of body content.
      *
-     * @return Map<string, mixed> The deserialized body parametersm if any.
+     * @return dict<string, mixed> The deserialized body parametersm if any.
      */
-    public function getParsedBody(): ?Map<string, mixed>;
+    public function getParsedBody(): ?dict<string, mixed>;
 
     /**
      * Return an instance with the specified body parameters.
@@ -176,12 +176,12 @@ interface ServerRequestInterface extends RequestInterface
      * immutability of the message, and MUST return an instance that has the
      * updated body parameters.
      *
-     * @param Map<string, mixed> $data The deserialized body data.
+     * @param dict<string, mixed> $data The deserialized body data.
 
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody(?Map<string, mixed> $data): this;
+    public function withParsedBody(?dict<string, mixed> $data): this;
 
     /**
      * Retrieve attributes derived from the request.
@@ -192,9 +192,9 @@ interface ServerRequestInterface extends RequestInterface
      * deserializing non-form-encoded message bodies; etc. Attributes
      * will be application and request specific, and CAN be mutable.
      *
-     * @return Map<string, mixed> Attributes derived from the request.
+     * @return dict<string, mixed> Attributes derived from the request.
      */
-    public function getAttributes(): Map<string, mixed>;
+    public function getAttributes(): dict<string, mixed>;
 
     /**
      * Retrieve a single derived request attribute.

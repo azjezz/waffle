@@ -37,6 +37,6 @@ class MethodNotAllowedMiddleware implements MiddlewareInterface
 
         return $this->responseFactory->createResponse()
             ->withStatus(StatusCode::STATUS_METHOD_NOT_ALLOWED)
-            ->withHeader('Allow', $routeResult->getAllowedMethods() ?? Set {});
+            ->withHeader('Allow', $routeResult->getAllowedMethods() ?? vec[]);
     }
 }

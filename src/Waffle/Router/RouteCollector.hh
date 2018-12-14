@@ -3,6 +3,8 @@
 namespace Waffle\Router;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Vec;
+use namespace HH\Lib\C;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
 
 /**
@@ -32,7 +34,7 @@ class RouteCollector
     /**
      * List of all routes registered directly with the application.
      */
-    private Vector<Route> $routes = Vector {};
+    private vec<Route> $routes = vec[];
 
     public function __construct(RouterInterface $router)
     {
@@ -51,13 +53,13 @@ class RouteCollector
     public function route(
         string $path,
         MiddlewareInterface $middleware,
-        ?Set<string> $methods = null,
+        ?vec<string> $methods = null,
         ?string $name = null
     ): Route {
         $this->checkForDuplicateRoute($path, $methods);
 
         $route   = new Route($path, $middleware, $methods, $name);
-        $this->routes->add($route);
+        $this->routes[] = $route;
         $this->router->addRoute($route);
         return $route;
     }
@@ -67,7 +69,7 @@ class RouteCollector
      */
     public function get(string $path, MiddlewareInterface $middleware, ?string $name = null): Route
     {
-        return $this->route($path, $middleware, Set { 'GET' }, $name);
+        return $this->route($path, $middleware, vec['GET'], $name);
     }
 
     /**
@@ -75,7 +77,7 @@ class RouteCollector
      */
     public function post(string $path, MiddlewareInterface $middleware, ?string $name = null): Route
     {
-        return $this->route($path, $middleware, Set { 'POST' }, $name);
+        return $this->route($path, $middleware, vec['POST'], $name);
     }
 
     /**
@@ -83,7 +85,7 @@ class RouteCollector
      */
     public function put(string $path, MiddlewareInterface $middleware, ?string $name = null): Route
     {
-        return $this->route($path, $middleware, Set { 'PUT' }, $name);
+        return $this->route($path, $middleware, vec['PUT'], $name);
     }
 
     /**
@@ -91,7 +93,7 @@ class RouteCollector
      */
     public function patch(string $path, MiddlewareInterface $middleware, ?string $name = null): Route
     {
-        return $this->route($path, $middleware, Set { 'PATCH' }, $name);
+        return $this->route($path, $middleware, vec['PATCH'], $name);
     }
 
     /**
@@ -99,7 +101,7 @@ class RouteCollector
      */
     public function delete(string $path, MiddlewareInterface $middleware, ?string $name = null): Route
     {
-        return $this->route($path, $middleware, Set { 'DELETE' }, $name);
+        return $this->route($path, $middleware, vec['DELETE'], $name);
     }
 
     /**
@@ -113,7 +115,7 @@ class RouteCollector
     /**
      * Retrieve all directly registered routes with the application.
      */
-    public function getRoutes(): Vector<Route>
+    public function getRoutes(): vec<Route>
     {
         return $this->routes;
     }
@@ -127,9 +129,9 @@ class RouteCollector
      *
      * @throws Exception\DuplicateRouteException on duplicate route detection.
      */
-    private function checkForDuplicateRoute(string $path, ?Set<string> $methods = null): void
+    private function checkForDuplicateRoute(string $path, ?vec<string> $methods = null): void
     {
-        $matches = $this->routes->filter((Route $route) ==> {
+        $matches = Vec\filter($this->routes,(Route $route) ==> {
             if ($path !== $route->getPath()) {
                 return false;
             }
@@ -146,9 +148,9 @@ class RouteCollector
             return $carry;
         });
 
-        $match = $matches->firstValue();
+        $match = C\first($matches);
 
-        if (0 !== $matches->count() && $match is nonnull) {
+        if (0 !== C\count($matches) && $match is nonnull) {
             $allowedMethods = $match->getAllowedMethods() ?? ['(any)'];
             $name = $match->getName();
 

@@ -55,7 +55,7 @@ interface DefinitionAggregateInterface extends ContainerAwareInterface, Iterator
      * @param string  $tag
      * @param boolean $new
      *
-     * @return mixed
+     * @return vec<mixed>
      */
-    public function resolveTagged(string $tag, bool $new = false): Vector<mixed>;
+    public function resolveTagged(string $tag, bool $new = false): vec<mixed>;
 }

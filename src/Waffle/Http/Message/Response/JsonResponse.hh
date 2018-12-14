@@ -50,14 +50,14 @@ class JsonResponse extends Response
      *
      * @param mixed $data Data to convert to JSON.
      * @param int $status Integer status code for the response; 200 by default.
-     * @param Map<string, Set<string>> $headers Map of headers to use at initialization.
+     * @param dict<string, vec<string>> $headers Map of headers to use at initialization.
      * @param int $encodingOptions JSON encoding options to use.
      * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
      */
     public function __construct(
         mixed $data,
         int $status = 200,
-        Map<string, Set<string>> $headers = Map {},
+        dict<string, vec<string>> $headers = dict[],
         int $encodingOptions = self::DEFAULT_JSON_FLAGS
     ) {
         $this->setPayload($data);

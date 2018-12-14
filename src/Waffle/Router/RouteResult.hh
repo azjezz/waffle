@@ -29,7 +29,7 @@ use type Waffle\Contract\Http\Server\RequestHandlerInterface;
  */
 final class RouteResult implements MiddlewareInterface
 {
-    private ?Set<string> $allowedMethods = null;
+    private ?vec<string> $allowedMethods = null;
 
     private dict<string, string> $matchedParams = dict[];
 
@@ -60,7 +60,7 @@ final class RouteResult implements MiddlewareInterface
      * @param null|Set<string> $methods HTTP methods allowed for the current URI, if any.
      *     null is equivalent to allowing any HTTP method; empty Set means none.
      */
-    public static function fromRouteFailure(?Set<string> $methods): this
+    public static function fromRouteFailure(?vec<string> $methods): this
     {
         $result = new static();
         $result->success = false;
@@ -161,7 +161,7 @@ final class RouteResult implements MiddlewareInterface
      *
      * @return null|Set<string> HTTP methods allowed
      */
-    public function getAllowedMethods(): ?Set<string>
+    public function getAllowedMethods(): ?vec<string>
     {
         if ($this->isSuccess()) {
             $route = $this->getMatchedRoute();
@@ -170,7 +170,7 @@ final class RouteResult implements MiddlewareInterface
                 return $route->getAllowedMethods();
             }
 
-            return Set {};
+            return vec[];
         }
 
         return $this->allowedMethods;

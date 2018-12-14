@@ -11,7 +11,7 @@ class InflectorAggregate implements InflectorAggregateInterface
     use ContainerAwareTrait;
 
     public function __construct(
-        protected Vector<Inflector> $inflectors = Vector {}
+        protected vec<Inflector> $inflectors = vec[]
     ) {}
 
     /**
@@ -21,7 +21,7 @@ class InflectorAggregate implements InflectorAggregateInterface
     {
         $inflector = new Inflector($type, $callback);
 
-        $this->inflectors->add($inflector);
+        $this->inflectors[] = $inflector;
 
         return $inflector;
     }
@@ -31,7 +31,7 @@ class InflectorAggregate implements InflectorAggregateInterface
      */
     public function getIterator(): Iterator<Inflector>
     {
-        return $this->inflectors->getIterator();
+        return (new Vector($this->inflectors))->getIterator();
     }
 
     /**

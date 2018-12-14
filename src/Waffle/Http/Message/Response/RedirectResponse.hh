@@ -20,13 +20,13 @@ class RedirectResponse extends Response
      * Note: this method overwrites the `location` $headers value.
      *
      * @param int $status Integer status code for the redirect; 302 by default.
-     * @param Map<string, Set<string>> $headers Map of headers to use at initialization.
+     * @param dict<string, vec<string>> $headers Map of headers to use at initialization.
      */
-    public function __construct(UriInterface $uri, int $status = 302, Map<string, Set<string>> $headers = Map {})
+    public function __construct(UriInterface $uri, int $status = 302, dict<string, vec<string>> $headers = dict[])
     {
-        $headers->set('location', Set {
-            $uri->__toString()
-        });
+        $headers['location'] = vec [
+            $uri as string
+        ];
 
         parent::__construct(
             $status,

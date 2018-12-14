@@ -3,6 +3,7 @@
 namespace Waffle\Http\Message\__Private;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\C;
 use namespace Waffle\Http\Message\Exception;
 use type Waffle\Contract\Http\Message\UriInterface;
 use type Waffle\Http\Message\Uri;
@@ -13,15 +14,15 @@ use function gettype;
 
 class UriMarshaler
 {
-    public function marshal(Map<string, mixed> $server, Map<string, Set<string>> $headers): UriInterface
+    public function marshal(dict<string, mixed> $server, dict<string, vec<string>> $headers): UriInterface
     {
         $uri = new Uri('');
         // URI scheme
         $scheme = 'http';
-        if ($server->contains('HTTPS')) {
-            $https = $this->marshalHttpsValue($server->at('HTTPS'));
-        } elseif ($server->contains('https')) {
-            $https = $this->marshalHttpsValue($server->at('https'));
+        if (C\contains($server,'HTTPS')) {
+            $https = $this->marshalHttpsValue($server['HTTPS']);
+        } elseif (C\contains($server,'https')) {
+            $https = $this->marshalHttpsValue($server['https']);
         } else {
             $https = false;
         }
@@ -47,8 +48,8 @@ class UriMarshaler
         $path = $this->marshalRequestPath($server);
         $path = explode('?', $path, 2)[0];
         $query = '';
-        if ($server->contains('QUERY_STRING')) {
-            $query = Str\trim_left((string) $server->at('QUERY_STRING') ?? '', '?');
+        if (C\contains($server,'QUERY_STRING')) {
+            $query = Str\trim_left((string) $server['QUERY_STRING'], '?');
         }
         // URI fragment
         $fragment = '';
@@ -61,9 +62,9 @@ class UriMarshaler
             ->withQuery($query);
     }
 
-    private function marshalIpv6HostAndPort(Map<string, mixed> $server, string $host, ?int $port): shape('host' => string, 'port' => ?int,...)
+    private function marshalIpv6HostAndPort(dict<string, mixed> $server, string $host, ?int $port): shape('host' => string, 'port' => ?int,...)
     {
-        $host = '[' . ((string) $server->get('SERVER_ADDR') ?? '') . ']';
+        $host = '[' . ((string) $server['SERVER_ADDR'] ?? '') . ']';
         $port = $port ?? 80;
         if ($port . ']' === Str\slice($host, ((int) Str\search_last($host, ':')) + 1)) {
             // The last digit of the IPv6-Address has been taken as port
@@ -134,7 +135,7 @@ class UriMarshaler
      *
      * @return shape('host' => string, 'port' => ?int,...) shape of two items, host and port, in that order.
      */
-    private function marshalHostAndPort(Map<string, Set<string>> $headers, Map<string, mixed> $server): shape('host' => string, 'port' => ?int,...)
+    private function marshalHostAndPort(dict<string, vec<string>> $headers, dict<string, mixed> $server): shape('host' => string, 'port' => ?int,...)
     {
         static $defaults = shape('host' => '', 'port' => null);
 
@@ -146,14 +147,14 @@ class UriMarshaler
             );
         }
 
-        if (!$server->contains('SERVER_NAME')) {
+        if (!C\contains($server,'SERVER_NAME')) {
             return $defaults;
         }
 
-        $host = (string) $server->get('SERVER_NAME') ?? '';
-        $port = $server->contains('SERVER_PORT') ? (int) $server->get('SERVER_PORT') : null;
+        $host = $server['SERVER_NAME'] as string;
+        $port = C\contains($server,'SERVER_PORT') ? $server['SERVER_PORT'] as int : null;
 
-        if (! $server->contains('SERVER_ADDR') || ! preg_match('/^\[[0-9a-fA-F\:]+\]$/', $host)) {
+        if (!C\contains($server,'SERVER_ADDR') || ! preg_match('/^\[[0-9a-fA-F\:]+\]$/', $host)) {
             return shape('host' => $host, 'port' => $port);
         }
 
@@ -174,29 +175,30 @@ class UriMarshaler
      * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
      * @license   http://framework.zend.com/license/new-bsd New BSD License
      */
-    private function marshalRequestPath(Map<string, mixed> $server): string
+    private function marshalRequestPath(dict<string, mixed> $server): string
     {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
-        $iisUrlRewritten = $server->contains('IIS_WasUrlRewritten') ? (string) $server->get('IIS_WasUrlRewritten') : null;
-        $unencodedUrl    = (string) $server->get('UNENCODED_URL');
+        $iisUrlRewritten = C\contains($server,'IIS_WasUrlRewritten') ? $server['IIS_WasUrlRewritten'] as string : null;
+        $unencodedUrl    = C\contains($server, 'UNENCODED_URL') ? $server['UNENCODED_URL'] as string : '';
 
         if ('1' === $iisUrlRewritten && '' !== $unencodedUrl) {
             return $unencodedUrl;
         }
 
-        $requestUri = $server->get('REQUEST_URI');
+        $requestUri = $server['REQUEST_URI'] ?? null;
+
         if (null !== $requestUri) {
-            return preg_replace('#^[^/:]+://[^/]+#', '', (string) $requestUri);
+            return preg_replace('#^[^/:]+://[^/]+#', '', $requestUri as string);
         }
 
-        $origPathInfo = $server->get('ORIG_PATH_INFO');
+        $origPathInfo = $server['ORIG_PATH_INFO'] ?? null;
 
         if (null === $origPathInfo || '' === $origPathInfo) {
             return '/';
         }
 
-        return (string) $origPathInfo;
+        return $origPathInfo as string;
     }
 
     private function marshalHttpsValue(mixed $https): bool
@@ -215,7 +217,7 @@ class UriMarshaler
         return '' !== $https && 'off' !== Str\lowercase($https);
     }
 
-    private function getHeadersFromMap(string $name, Map<string, Set<string>> $headers, mixed $default = null): mixed
+    private function getHeadersFromMap(string $name, dict<string, vec<string>> $headers, mixed $default = null): mixed
     {
         $header  = Str\lowercase($name);
 

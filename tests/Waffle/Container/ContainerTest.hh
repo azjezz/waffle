@@ -2,12 +2,16 @@
 
 namespace Waffle\Tests\Container;
 
-use Waffle\Container\Definition\DefinitionInterface;
+use namespace HH\Lib\C;
+use type Waffle\Container\Definition\DefinitionInterface;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Tests\Container\Asset\Foo;
+use type Waffle\Tests\Container\Asset\Bar;
+use type Waffle\Tests\Container\Asset\FooServiceProvider;
+use type Waffle\Container\Container;
+use type Waffle\Container\ReflectionContainer;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Tests\Container\Asset\{Foo, Bar, FooServiceProvider};
-use Waffle\Container\{Container, ReflectionContainer};
-use Facebook\HackTest\HackTest;
 
 class ContainerTest extends HackTest
 {
@@ -98,12 +102,11 @@ class ContainerTest extends HackTest
 
         expect($container->has('foobar'))->toBeTrue();
 
-        /** @var Vector $vec */
         $vec = $container->get('foobar');
 
-        expect($vec)->toBeInstanceOf(Vector::class);
-        /* HH_IGNORE_ERROR[4064] */
-        expect($vec->count())->toBePHPEqual(2);
+        expect($vec is vec)->toBeTrue();
+        /* HH_IGNORE_ERROR[4110] */
+        expect(C\count($vec))->toBePHPEqual(2);
         /* HH_IGNORE_ERROR[4063] */
         expect($vec[0])->toBeInstanceOf(Foo::class);
         /* HH_IGNORE_ERROR[4063] */

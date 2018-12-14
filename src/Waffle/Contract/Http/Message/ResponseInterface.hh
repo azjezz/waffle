@@ -86,9 +86,9 @@ interface ResponseInterface extends MessageInterface
      * cookies names are case-sensitive, getCookies() MUST preserve the
      * exact case in which cookies were originally specified.
      *
-     * @return Map<string, CookiesInterface> response cookies.
+     * @return dict<string, CookiesInterface> response cookies.
      */
-    public function getCookies(): Map<string, CookieInterface>;
+    public function getCookies(): dict<string, CookieInterface>;
 
     /**
      * Retrieve a single request cookie.

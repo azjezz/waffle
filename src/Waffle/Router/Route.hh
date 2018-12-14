@@ -3,6 +3,8 @@
 namespace Waffle\Router;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Vec;
+use namespace HH\Lib\C;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
@@ -30,7 +32,7 @@ class Route implements MiddlewareInterface
 
     private dict<string, mixed> $options = dict[];
 
-    private ?Set<string> $methods = null;
+    private ?vec<string> $methods = null;
 
     private string $name;
 
@@ -43,7 +45,7 @@ class Route implements MiddlewareInterface
     public function __construct(
         private string $path,
         private MiddlewareInterface $middleware,
-        ?Set<string> $methods = null,
+        ?vec<string> $methods = null,
         ?string $name = null
     ) {
         if (null !== $methods) {
@@ -93,7 +95,7 @@ class Route implements MiddlewareInterface
     /**
      * @return null|Set<string> Returns null or set of allowed methods.
      */
-    public function getAllowedMethods(): ?Set<string>
+    public function getAllowedMethods(): ?vec<string>
     {
         return $this->methods;
     }
@@ -107,7 +109,7 @@ class Route implements MiddlewareInterface
     {
         $method = Str\uppercase($method);
 
-        if (null === $this->methods || $this->methods->contains($method)) {
+        if (null === $this->methods || C\contains($this->methods, $method)) {
             return true;
         }
 
@@ -133,9 +135,9 @@ class Route implements MiddlewareInterface
      * @return string[]
      * @throws Exception\InvalidArgumentException for any invalid method names.
      */
-    private function validateHttpMethods(Set<string> $methods): Set<string>
+    private function validateHttpMethods(vec<string> $methods): vec<string>
     {
-        if (0 === $methods->count()) {
+        if (0 === C\count($methods)) {
             throw new Exception\InvalidArgumentException(
                 'HTTP methods argument was empty; must contain at least one method'
             );
@@ -152,6 +154,6 @@ class Route implements MiddlewareInterface
            throw new Exception\InvalidArgumentException('One or more HTTP methods were invalid');
         }
 
-        return $methods->map(($m) ==> Str\uppercase($m));
+        return Vec\map($methods, ($method) ==> Str\uppercase($method));
     }
 }

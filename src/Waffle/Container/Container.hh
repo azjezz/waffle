@@ -3,6 +3,7 @@
 namespace Waffle\Container;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Vec;
 use type Waffle\Container\Definition\DefinitionAggregate;
 use type Waffle\Container\Definition\DefinitionInterface;
 use type Waffle\Container\Definition\DefinitionAggregateInterface;
@@ -22,7 +23,7 @@ class Container implements ContainerInterface
         protected DefinitionAggregateInterface      $definitions = new DefinitionAggregate(),
         protected ServiceProviderAggregateInterface $providers = new ServiceProviderAggregate(),
         protected InflectorAggregateInterface       $inflectors = new InflectorAggregate(),
-        protected Vector<ContainerInterface>        $delegates = Vector {}
+        protected vec<ContainerInterface>           $delegates = vec[]
     ) {
         if ($this->definitions instanceof ContainerAwareInterface) {
             $this->definitions->setContainer($this);
@@ -110,9 +111,7 @@ class Container implements ContainerInterface
         if ($this->definitions->hasTag($id)) {
             $set = $this->definitions->resolveTagged($id);
 
-            return $set->map(
-                ($resolved) ==> $this->inflectors->inflect($resolved)
-            );
+            return Vec\map($set, ($resolved) ==> $this->inflectors->inflect($resolved));
         }
 
         if ($this->providers->provides($id)) {

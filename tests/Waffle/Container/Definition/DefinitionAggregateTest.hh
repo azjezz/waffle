@@ -17,7 +17,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate can add a definition.
      */
-    public function testAggregateAddsDefinition()
+    public function testAggregateAddsDefinition(): void
     {
         $container = new Container();
         $foo = new Foo(null);
@@ -33,7 +33,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate can create a definition.
      */
-    public function testAggregateCreatesDefinition()
+    public function testAggregateCreatesDefinition(): void
     {
         $container  = new Container();
         $aggregate  = (new DefinitionAggregate())->setContainer($container);
@@ -46,7 +46,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate has a definition.
      */
-    public function testAggregateHasDefiniton()
+    public function testAggregateHasDefiniton(): void
     {
         $container  = new Container();
         $aggregate  = (new DefinitionAggregate())->setContainer($container);
@@ -60,7 +60,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate adds and iterates multiple definitions.
      */
-    public function testAggregateAddsAndIteratesMultipleDefinitions()
+    public function testAggregateAddsAndIteratesMultipleDefinitions(): void
     {
         $container  = new Container();
         $aggregate = (new DefinitionAggregate())->setContainer($container);
@@ -79,7 +79,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate iterates and resolves a definition.
      */
-    public function testAggregateIteratesAndResolvesDefinition()
+    public function testAggregateIteratesAndResolvesDefinition(): void
     {
         $aggregate   = new DefinitionAggregate();
         $container = new Container();
@@ -104,7 +104,7 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate can resolved array of tagged definitions.
      */
-    public function testAggregateCanResolveArrayOfTaggedDefinitions()
+    public function testAggregateCanResolveArrayOfTaggedDefinitions(): void
     {
         $container = new Container();
         
@@ -114,9 +114,9 @@ class DefinitionAggregateTest extends HackTest
         $definition1->addTag('tag');
         $definition2->addTag('tag');
 
-        $aggregate = new DefinitionAggregate(Vector {
+        $aggregate = new DefinitionAggregate(vec[
             $definition1, $definition2
-        });
+        ]);
 
         $aggregate->setContainer($container);
 
@@ -124,7 +124,7 @@ class DefinitionAggregateTest extends HackTest
 
         $resolved = $aggregate->resolveTagged('tag');
 
-        expect($resolved->toArray())->toBeSame([
+        expect($resolved)->toBeSame(vec[
             'definition1', 'definition2'
         ]);
     }
@@ -132,11 +132,11 @@ class DefinitionAggregateTest extends HackTest
     /**
      * Asserts that the aggregate throws an exception when a definition cannot be resolved.
      */
-    public function testAggregateThrowsExceptionWhenCannotResolve()
+    public function testAggregateThrowsExceptionWhenCannotResolve(): void
     {
         expect(() ==> {
             $container = new Container();
-            
+
             $definition1 = $container->add('bar', (): string ==> 'definition1');
             $definition2 = $container->add('foo', (): string ==> 'definition2');
 
@@ -144,7 +144,7 @@ class DefinitionAggregateTest extends HackTest
             $definition2->addTag('tag');
 
             $aggregate = new DefinitionAggregate();
-            
+
             $aggregate->setContainer($container);
             $aggregate->add('alias1', $definition1);
             $aggregate->add('alias2', $definition2, true);

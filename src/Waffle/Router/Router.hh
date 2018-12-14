@@ -13,12 +13,12 @@ use function preg_match;
 class Router implements RouterInterface
 {
     public function __construct(
-        private Map<string, Route> $routes = Map {}
+        private dict<string, Route> $routes = dict[]
     ) {}
 
     public function addRoute(Route $route): void
     {
-        $this->routes->set($route->getName(), $route);
+        $this->routes[$route->getName()] = $route;
     }
 
     public function match(RequestInterface $request): RouteResult
@@ -27,12 +27,12 @@ class Router implements RouterInterface
         $path = $request->getUri()->getPath();
         $routes = $this->marshalMethodRoutes($method);
 
-        if (0 === $routes->count()) {
+        if (0 === C\count($routes)) {
             goto failure;
         }
 
         try {
-            $prefixMap = $this->createPrefixMap($routes);
+            $prefixMap = PrefixMap::fromFlatMap($routes);
             list($route, $params) = $this->resolveWithMap($path, $prefixMap);
 
             return RouteResult::fromRoute($route, $params);
@@ -58,16 +58,16 @@ class Router implements RouterInterface
         );
     }
 
-    protected function marshalMethodRoutes(string $method): Map<string, Route>
+    protected function marshalMethodRoutes(string $method): dict<string, Route>
     {
-        $routes = Map {};
+        $routes = dict[];
         $method = Str\uppercase($method);
 
         foreach ($this->routes as $name => $route) {
             $allowedMethods = $route->getAllowedMethods();
 
-            if (null === $allowedMethods || $allowedMethods->contains($method)) {
-                $routes->set($name, $route);
+            if (null === $allowedMethods || C\contains($allowedMethods, $method)) {
+                $routes[$route->getPath()] = $route;
             }
         }
 
@@ -128,16 +128,5 @@ class Router implements RouterInterface
         }
 
         throw new NotFoundException();
-    }
-
-    private function createPrefixMap(Map<string, Route> $routes): PrefixMap<Route>
-    {
-        $flatMap = dict[];
-
-        foreach ($routes as $route) {
-            $flatMap[$route->getPath()] = $route;
-        }
-
-        return PrefixMap::fromFlatMap($flatMap);
     }
 }

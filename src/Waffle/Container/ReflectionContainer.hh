@@ -3,6 +3,7 @@
 namespace Waffle\Container;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\C;
 use type Waffle\Container\Argument\ArgumentResolverInterface;
 use type Waffle\Container\Argument\ArgumentResolverTrait;
 use type Waffle\Container\Exception\NotFoundException;
@@ -22,20 +23,20 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
     /**
     * Cache of reslutions.
     */
-    protected Map<string, mixed> $cache;
+    protected dict<string, mixed> $cache;
 
     public function __construct(protected bool $cacheResolutions = false)
     {
-        $this->cache = Map {};
+        $this->cache = dict[];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $id, Map<string, mixed> $args = Map {}): mixed
+    public function get(string $id, dict<string, mixed> $args = dict[]): mixed
     {
-        if ($this->cacheResolutions === true && $this->cache->contains($id)) {
-            return $this->cache->get($id);
+        if ($this->cacheResolutions === true && C\contains_key($this->cache, $id)) {
+            return $this->cache[$id];
         }
 
         if (! $this->has($id)) {
@@ -54,8 +55,8 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
               )
         ;
 
-        if ($this->cacheResolutions === true) {
-            $this->cache->set($id, $resolution);
+        if ($this->cacheResolutions) {
+            $this->cache[$id] = $resolution;
         }
 
         return $resolution;
@@ -73,11 +74,11 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
      * Invoke a callable via the container.
      *
      * @param callable $callable
-     * @param Map<string, mixed>   $args
+     * @param dict<string, mixed>   $args
      *
      * @return mixed
      */
-    public function call(mixed $callable, Map<string, mixed> $args = Map {}): mixed
+    public function call(mixed $callable, dict<string, mixed> $args = dict[]): mixed
     {
         if (($callable is string) && Str\search($callable, '::') !== null) {
             $callable = explode('::', $callable);
@@ -99,36 +100,42 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
                 $callable[0] = null;
             }
 
+
+            $arguments = varray[];
+            foreach ($this->reflectArguments($reflection, $args) as $arg) {
+                $arguments[] = $arg;
+            }
+
+
             return $reflection->invokeArgs(
                 /* HH_IGNORE_ERROR[4110] */
                 $callable[0],
-                $this->reflectArguments(
-                    $reflection,
-                    $args
-                )->toVArray()
+                $arguments
             );
         }
 
         if (is_object($callable)) {
             $reflection = new ReflectionMethod($callable, '__invoke');
 
+            $arguments = varray[];
+            foreach ($this->reflectArguments($reflection, $args) as $arg) {
+                $arguments[] = $arg;
+            }
+
             return $reflection->invokeArgs(
                 $callable,
-                $this->reflectArguments(
-                    $reflection,
-                    $args
-                )->toVArray()
+                $arguments
             );
         }
 
         $reflection = new ReflectionFunction($callable);
 
-        return $reflection->invokeArgs(
-            $this->reflectArguments(
-                $reflection,
-                $args
-            )->toVArray()
-        );
+        $arguments = varray[];
+        foreach ($this->reflectArguments($reflection, $args) as $arg) {
+            $arguments[] = $arg;
+        }
+
+        return $reflection->invokeArgs($arguments);
     }
 
     /**

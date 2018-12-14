@@ -25,7 +25,7 @@ type file_spec = shape(
 
 class UploadsFolderMarshaler
 {
-    public function marshal(array<string, mixed> $files): UploadsFolderInterface
+    public function marshal(KeyedContainer<string, mixed> $files): UploadsFolderInterface
     {
         $uploads = new UploadsFolder();
 

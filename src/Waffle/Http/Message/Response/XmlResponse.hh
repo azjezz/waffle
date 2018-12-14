@@ -19,7 +19,7 @@ class XmlResponse extends Response
      * Produces an XML response with a Content-Type of application/xml and a default
      * status of 200.
      */
-    public function __construct(string $xml, int $status = 200, Map<string, Set<string>> $headers = Map {})
+    public function __construct(string $xml, int $status = 200, dict<string, vec<string>> $headers = dict[])
     {
         parent::__construct(
             $status,

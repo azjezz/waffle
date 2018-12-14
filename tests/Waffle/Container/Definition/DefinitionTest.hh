@@ -23,7 +23,7 @@ class DefinitionTest extends HackTest
     {
         $definition = new Definition('callable', (...$args) ==> Str\join($args, ' '));
 
-        $definition->addArguments(Vector { 'hello', 'world' });
+        $definition->addArguments(vec[ 'hello', 'world' ]);
 
         $actual = $definition->resolve();
 
@@ -88,9 +88,9 @@ class DefinitionTest extends HackTest
 
             $definition->setContainer($container);
             $definition->addArgument(null);
-            $definition->addMethodCalls(Map {
-                'setBar' => Vector { Bar::class }
-            });
+            $definition->addMethodCalls(dict[
+                'setBar' => vec[ Bar::class ]
+            ]);
 
             $actual = $definition->resolve();
 

@@ -16,11 +16,13 @@ class RawArgumentTest extends HackTest
         $arguments = [
             'string',
             Vector {},
+            vec[],
             Map {},
             Set {},
             dict[],
             [],
             varray[],
+            darray[],
             function (): void {},
             (): int ==> 1,
             true,

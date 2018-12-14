@@ -20,7 +20,7 @@ class RequestTest extends HackTest
 
     public function testNullBody()
     {
-        $r = new Request('GET', new Uri('/'), Map {}, null);
+        $r = new Request('GET', new Uri('/'), dict[], null);
         expect($r->getBody())->toBeInstanceOf(StreamInterface::class);
         expect((string) $r->getBody())->toBeSame('');
     }
@@ -86,32 +86,32 @@ class RequestTest extends HackTest
 
     public function testHostIsAddedFirst()
     {
-        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), Map { 
-            'Foo' => Set { 'Bar' } 
-        });
-        expect($r->getHeaders())->toBePHPEqual(Map {
-            'Host' => Set { 'foo.com' },
-            'Foo' => Set { 'Bar' },
-        });
+        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), dict[
+            'Foo' => vec[ 'Bar' ] 
+        ]);
+        expect($r->getHeaders())->toBeSame(dict[
+            'Host' => vec[ 'foo.com' ],
+            'Foo' => vec[ 'Bar' ],
+        ]);
     }
 
     public function testCanGetHeaderAsCsv()
     {
-        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), Map {
-            'Foo' => Set { 'a', 'b', 'c' },
-        });
+        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), dict[
+            'Foo' => vec[ 'a', 'b', 'c' ],
+        ]);
         expect($r->getHeaderLine('Foo'))->toBeSame('a, b, c');
         expect($r->getHeaderLine('Bar'))->toBeSame('');
     }
 
     public function testHostIsNotOverwrittenWhenPreservingHost()
     {
-        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), Map { 
-            'Host' => Set { 
+        $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), dict[
+            'Host' => vec[ 
                 'facebook.com' 
-            }
-        });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Host' => Set { 'facebook.com' }});
+            ]
+        ]);
+        expect($r->getHeaders())->toBeSame(dict['Host' => vec[ 'facebook.com' ]]);
         $r2 = $r->withUri(new Uri('http://www.messenger.com/t/azjezz'), true);
         expect($r2->getHeaderLine('Host'))->toBeSame('facebook.com');
     }
@@ -119,18 +119,18 @@ class RequestTest extends HackTest
     public function testOverridesHostWithUri()
     {
         $r = new Request('GET', new Uri('https://docs.hhvm.com/hack?bar=bam'));
-        expect($r->getHeaders())->toBePHPEqual(Map { 'Host' => Set { 'docs.hhvm.com' }});
+        expect($r->getHeaders())->toBeSame(dict[ 'Host' => vec[ 'docs.hhvm.com' ]]);
         $r2 = $r->withUri(new Uri('https://hacklang.org/tutorial.html'));
         expect($r2->getHeaderLine('Host'))->toBeSame('hacklang.org');
     }
 
     public function testUniqueAggregatesHeaders()
     {
-        $r = new Request('GET', new Uri(''), Map {
-            'ZOO' => Set { 'zoobar' },
-            'zoo' => Set { 'foobar', 'zoobar' },
-        });
-        expect($r->getHeaders())->toBePHPEqual(Map { 'ZOO' => Set { 'zoobar', 'foobar' }});
+        $r = new Request('GET', new Uri(''), dict[
+            'ZOO' => vec[ 'zoobar' ],
+            'zoo' => vec[ 'foobar', 'zoobar' ],
+        ]);
+        expect($r->getHeaders())->toBeSame(dict[ 'ZOO' => vec[ 'zoobar', 'foobar' ]]);
         expect($r->getHeaderLine('zoo'))->toBeSame('zoobar, foobar');
     }
 
@@ -151,7 +151,7 @@ class RequestTest extends HackTest
     {
         expect(() ==> {
             $r = new Request('GET', new Uri('https://example.com/'));
-            $r = $r->withHeader('', Set { 'Bar' });
+            $r = $r->withHeader('', vec[ 'Bar' ]);
         })->toThrow(
             Exception\InvalidArgumentException::class,
             'Header name must be an RFC 7230 compatible string.'
@@ -161,7 +161,7 @@ class RequestTest extends HackTest
     public function testCanHaveHeaderWithEmptyValue()
     {
         $r = new Request('GET', new Uri('https://example.com/'));
-        $r = $r->withHeader('Foo', Set { '' });
-        expect($r->getHeader('Foo'))->toBePHPEqual(Set { '' });
+        $r = $r->withHeader('Foo', vec[ '' ]);
+        expect($r->getHeader('Foo'))->toBeSame(vec[ '' ]);
     }
 }

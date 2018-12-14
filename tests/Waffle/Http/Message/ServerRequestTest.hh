@@ -35,9 +35,9 @@ class ServerRequestTest extends HackTest
 
     public function testServerParams()
     {
-        $params = Map { 'name' => 'value' };
+        $params = dict[ 'name' => 'value' ];
 
-        $request = new ServerRequest('GET', new Uri('/'), Map {}, null, '1.1', $params);
+        $request = new ServerRequest('GET', new Uri('/'), dict[], null, '1.1', $params);
         expect($request->getServerParams())->toBeSame($params);
     }
 
@@ -45,7 +45,7 @@ class ServerRequestTest extends HackTest
     {
         $request1 = new ServerRequest('GET', new Uri ('/') );
 
-        $params = Map { 'name' => 'value' };
+        $params = dict['name' => 'value'];
 
         $request2 = $request1->withCookieParams($params);
 
@@ -58,7 +58,7 @@ class ServerRequestTest extends HackTest
     {
         $request1 = new ServerRequest('GET', new Uri ('/') );
 
-        $params = Map { 'name' => 'value' };
+        $params = dict[ 'name' => 'value' ];
 
         $request2 = $request1->withQueryParams($params);
 
@@ -71,7 +71,7 @@ class ServerRequestTest extends HackTest
     {
         $request1 = new ServerRequest('GET', new Uri('/'));
 
-        $params = Map { 'name' => 'value' };
+        $params = dict[ 'name' => 'value' ];
 
         $request2 = $request1->withParsedBody($params);
 
@@ -95,28 +95,28 @@ class ServerRequestTest extends HackTest
         expect($request4)->toNotBeSame($request5);
 
         expect($request1->getAttributes())->toBeEmpty();
-        expect($request1->getAttribute('name'))->toBeEmpty();
-        expect(            $request1->getAttribute('name', 'something'))->toBePHPEqual(
+        expect($request1->getAttribute('name'))->toBeNull();
+        expect($request1->getAttribute('name', 'something'))->toBeSame(
             'something',
             'Should return the default value'
         );
 
-        expect($request2->getAttribute('name'))->toBePHPEqual('value');
-        expect($request2->getAttributes())->toBePHPEqual(Map { 'name' => 'value' });
-        expect($request3->getAttributes())->toBePHPEqual(Map { 'name' => 'value', 'other' => 'otherValue'});
-        expect($request4->getAttributes())->toBePHPEqual(Map { 'name' => 'value' });
+        expect($request2->getAttribute('name'))->toBeSame('value');
+        expect($request2->getAttributes())->toBeSame(dict[ 'name' => 'value' ]);
+        expect($request3->getAttributes())->toBeSame(dict[ 'name' => 'value', 'other' => 'otherValue']);
+        expect($request4->getAttributes())->toBeSame(dict[ 'name' => 'value' ]);
     }
 
     public function testNullAttribute()
     {
         $request = (new ServerRequest('GET', new Uri('/')))->withAttribute('name', null);
 
-        expect($request->getAttributes())->toBePHPEqual(Map { 'name' => null });
+        expect($request->getAttributes())->toBeSame(dict['name' => null]);
         expect($request->getAttribute('name', 'different-default'))->toBeNull();
 
         $requestWithoutAttribute = $request->withoutAttribute('name');
 
-        expect($requestWithoutAttribute->getAttributes())->toBePHPEqual(Map {});
+        expect($requestWithoutAttribute->getAttributes())->toBeSame(dict[]);
         expect($requestWithoutAttribute->getAttribute('name', 'different-default'))->toBeSame('different-default');
     }
 }

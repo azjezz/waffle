@@ -78,10 +78,10 @@ class Stream implements StreamInterface
             return null;
         }
 
-        $stats = new Map<string, mixed>(fstat($this->stream));
+        $stats = fstat($this->stream);
 
-        if ($stats->contains('size')) {
-            $this->size = (int) $stats->get('size');
+        if (C\contains_key($stats, 'size')) {
+            $this->size = (int) $stats['size'];
             return $this->size;
         }
 
@@ -118,7 +118,7 @@ class Stream implements StreamInterface
         return $meta['seekable'];
     }
 
-    public function seek(int $offset,int $whence = \SEEK_SET): void
+    public function seek(int $offset,int $whence = SEEK_SET): void
     {
         if (null === $this->stream) {
             throw Exception\UnseekableStreamException::dueToMissingResource();

@@ -3,6 +3,7 @@
 namespace Waffle\Container\ServiceProvider;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\C;
 use type Waffle\Container\ContainerAwareInterface;
 use type Waffle\Container\ContainerAwareTrait;
 use type Waffle\Container\Exception\ContainerException;
@@ -13,15 +14,14 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
 {
     use ContainerAwareTrait;
 
-    protected Vector<ServiceProviderInterface> $providers;
+    protected vec<ServiceProviderInterface> $providers = vec[];
 
-    protected Set<string> $registered;
-
+    protected vec<string> $registered = vec[];
 
     public function __construct()
     {
-        $this->providers = Vector {};
-        $this->registered = Set {};
+        $this->providers = vec[];
+        $this->registered = vec[];
     }
 
     /**
@@ -61,7 +61,7 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
      */
     public function provides(string $service): bool
     {
-        foreach ($this->getIterator() as $provider) {
+        foreach ($this->providers as $provider) {
             if ($provider->provides($service)) {
                 return true;
             }
@@ -75,7 +75,7 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
      */
     public function getIterator(): Iterator<ServiceProviderInterface>
     {
-        return $this->providers->getIterator();
+        return (new Vector($this->providers))->getIterator();
     }
 
     /**
@@ -90,7 +90,7 @@ class ServiceProviderAggregate implements ServiceProviderAggregateInterface
         }
 
         foreach ($this->getIterator() as $provider) {
-            if ($this->registered->contains($provider->getIdentifier())) {
+            if (C\contains($this->registered,$provider->getIdentifier())) {
                 continue;
             }
 

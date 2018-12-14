@@ -29,12 +29,12 @@ class ArgumentResolverTest extends HackTest
 
         $resolver->setContainer($container);
 
-        $args = $resolver->resolveArguments(Vector {
+        $args = $resolver->resolveArguments(vec[
             'alias1', 'alias2'
-        });
+        ]);
 
-        expect($args->at(0))->toBeSame($resolver);
-        expect($args->at(1))->toBeSame('alias2');
+        expect($args[0])->toBeSame($resolver);
+        expect($args[1])->toBeSame('alias2');
     }
 
     /**
@@ -50,12 +50,12 @@ class ArgumentResolverTest extends HackTest
 
         $resolver->setContainer($container);
 
-        $args = $resolver->resolveArguments(Vector {
+        $args = $resolver->resolveArguments(vec[
             'alias1', new RawArgument('value2')
-        });
+        ]);
 
-        expect($args->at(0))->toBeSame('value1');
-        expect($args->at(1))->toBeSame('value2');
+        expect($args[0])->toBeSame('value1');
+        expect($args[1])->toBeSame('value2');
     }
 
     /**
@@ -77,24 +77,24 @@ class ArgumentResolverTest extends HackTest
 
         /*------------------------------------------------*/
 
-        $args = $resolver->reflectArguments($method, Map {
+        $args = $resolver->reflectArguments($method, dict[
             'param2' => 'llama',
             'foo' => $foo
-        });
+        ]);
 
-        expect($args->at(0))->toBeSame($foo);
-        expect($args->at(1))->toBeSame('llama');
-        expect($args->at(2))->toBeSame('default');
+        expect($args[0])->toBeSame($foo);
+        expect($args[1])->toBeSame('llama');
+        expect($args[2])->toBeSame('default');
 
         /*------------------------------------------------*/
 
-        $args = $resolver->reflectArguments($method, Map {
+        $args = $resolver->reflectArguments($method, dict[
             'param2' => 'llama'
-        });
+        ]);
 
-        expect($args->at(0))->toBeSame(Foo::class);
-        expect($args->at(1))->toBeSame('llama');
-        expect($args->at(2))->toBeSame('default');
+        expect($args[0])->toBeSame(Foo::class);
+        expect($args[1])->toBeSame('llama');
+        expect($args[2])->toBeSame('default');
     }
 
     /**

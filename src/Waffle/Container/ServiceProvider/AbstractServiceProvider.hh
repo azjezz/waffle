@@ -2,6 +2,7 @@
 
 namespace Waffle\Container\ServiceProvider;
 
+use namespace HH\Lib\C;
 use type Waffle\Container\ContainerAwareTrait;
 use type Waffle\Container\Container;
 use type Waffle\Container\Exception\ContainerException;
@@ -13,7 +14,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
 {
     use ContainerAwareTrait;
 
-    protected ?Set<string> $provides;
+    protected vec<string> $provides = vec[];
 
     protected string $identifier;
 
@@ -27,10 +28,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
      */
     public function provides(string $alias): bool
     {
-        if (null === $this->provides) {
-            return false;
-        }
-        return $this->provides->contains($alias);
+        return C\contains($this->provides, $alias);
     }
 
     /**

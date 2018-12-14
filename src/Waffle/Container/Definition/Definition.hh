@@ -2,6 +2,8 @@
 
 namespace Waffle\Container\Definition;
 
+use namespace HH\Lib\C;
+use namespace HH\Lib\Vec;
 use type Waffle\Container\Argument\ArgumentResolverInterface;
 use type Waffle\Container\Argument\ArgumentResolverTrait;
 use type Waffle\Container\Argument\ClassNameArgumentInterface;
@@ -11,11 +13,6 @@ use type ReflectionClass;
 use function is_null;
 use function is_callable;
 use function class_exists;
-
-type MethodDefinition = Pair<
-    string,
-    Vector<mixed>
->;
 
 class Definition implements ArgumentResolverInterface, DefinitionInterface
 {
@@ -28,11 +25,11 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
 
     protected bool $shared = false;
 
-    protected Set<string> $tags;
+    protected vec<string> $tags = vec[];
 
-    protected Vector<mixed> $arguments;
+    protected vec<mixed> $arguments = vec[];
 
-    protected Vector<MethodDefinition> $methods;
+    protected dict<string, vec<mixed>> $methods = dict[];
 
     protected mixed $resolved;
 
@@ -41,21 +38,18 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         $concrete = $concrete ?? $id;
         $this->alias    = $id;
         $this->concrete = $concrete;
-        $this->tags = Set {};
-        $this->arguments = Vector {};
-        $this->methods = Vector {};
     }
 
     public function addTag(string $tag): DefinitionInterface
     {
-        $this->tags->add($tag);
+        $this->tags[] = $tag;
 
         return $this;
     }
 
     public function hasTag(string $tag): bool
     {
-        return $this->tags->contains($tag);
+        return C\contains($this->tags, $tag);
     }
 
     public function setAlias(string $id): DefinitionInterface
@@ -99,14 +93,14 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
      */
     public function addArgument(mixed $arg): DefinitionInterface
     {
-        $this->arguments->add($arg);
+        $this->arguments[] = $arg;
 
         return $this;
     }
 
-    public function addArguments(Vector<mixed> $args): DefinitionInterface
+    public function addArguments(vec<mixed> $args): DefinitionInterface
     {
-        $this->arguments->addAll($args);
+        $this->arguments = Vec\concat($this->arguments, $args);
 
         return $this;
     }
@@ -114,12 +108,9 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
     /**
      * {@inheritdoc}
      */
-    public function addMethodCall(string $method, Vector<mixed> $args): DefinitionInterface
+    public function addMethodCall(string $method, vec<mixed> $args): DefinitionInterface
     {
-        $this->methods->add(Pair {
-            $method,
-            $args
-        });
+        $this->methods[$method] = $args;
 
         return $this;
     }
@@ -127,7 +118,7 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
     /**
      * {@inheritdoc}
      */
-    public function addMethodCalls(Map<string, Vector<mixed>> $methods = Map {}): DefinitionInterface
+    public function addMethodCalls(dict<string, vec<mixed>> $methods = dict[]): DefinitionInterface
     {
         foreach ($methods as $method => $args) {
             $this->addMethodCall($method, $args);
@@ -186,9 +177,9 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         $constructor = $reflection->getConstructor();
 
         if (null !== $constructor) {
-            while($resolved->count() < $constructor->getNumberOfRequiredParameters())
+            while(C\count($resolved) < $constructor->getNumberOfRequiredParameters())
             {
-                $resolved->add(null);
+                $resolved[] = null;
             }
         }
 
@@ -197,14 +188,12 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
 
     protected function invokeMethods(mixed $instance): mixed
     {
-        foreach ($this->methods as $method) {
-            $args = $this->resolveArguments(
-                $method->lastValue()
-            );
+        foreach ($this->methods as $method => $args) {
+            $args = $this->resolveArguments($args);
 
             /* HH_IGNORE_ERROR[2025]
              * there's no way to tell the type-checker that $instance is an object */
-            $callable = inst_meth($instance, $method->at(0));
+            $callable = inst_meth($instance, $method);
 
             $callable(...$args);
         }

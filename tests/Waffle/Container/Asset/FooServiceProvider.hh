@@ -6,9 +6,9 @@ use Waffle\Container\ServiceProvider\AbstractServiceProvider;
 
 class FooServiceProvider extends AbstractServiceProvider
 {
-    protected ?Set<string> $provides = Set {
+    protected vec<string> $provides = vec[
         Foo::class
-    };
+    ];
 
     public function register(): void
     {

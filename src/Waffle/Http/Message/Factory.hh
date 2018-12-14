@@ -26,9 +26,9 @@ class Factory implements
         return new Request($method, $uri);
     }
 
-    public function createServerRequest(string $method, Message\UriInterface $uri, Map<string, mixed> $serverParams = Map {}): Message\ServerRequestInterface
+    public function createServerRequest(string $method, Message\UriInterface $uri, dict<string, mixed> $serverParams = dict[]): Message\ServerRequestInterface
     {
-        return new ServerRequest($method, $uri, Map {}, null, '1.1', $serverParams);
+        return new ServerRequest($method, $uri, dict[], null, '1.1', $serverParams);
     }
 
     public function createServerRequestFromGlobals(): Message\ServerRequestInterface
@@ -37,15 +37,21 @@ class Factory implements
         $server = (new __Private\ServerParametersMarshaler())->marshale($_SERVER);
         $headers = (new __Private\HeadersMarshaler())->marshal($server);
         /* HH_IGNORE_ERROR[2050] */
-        $cookies = (new __Private\CookiesMarshaler())->marshal($headers->get('cookie') ?? Set {}, $_COOKIE);
+        $cookies = (new __Private\CookiesMarshaler())->marshal($headers['cookie'] ?? vec[], $_COOKIE);
         $uri = (new __Private\UriMarshaler())->marshal($server, $headers);
         /* HH_IGNORE_ERROR[2050] */
         $uploads = (new __Private\UploadsFolderMarshaler())->marshal($_FILES);
         $method = (new __Private\MethodMarshaler())->marshal($server);
+        $body = dict[];
         /* HH_IGNORE_ERROR[2050] */
-        $body = new Map<string, mixed>($_POST);
+        foreach ($_POST as $key => $value) {
+            $body[$key as string] = $value;
+        }
+        $query = dict[];
         /* HH_IGNORE_ERROR[2050] */
-        $query = new Map<string, mixed>($_GET);
+        foreach ($_GET as $key => $value) {
+            $query[$key as string] = $value;
+        }
         $protocolVersion = (new __Private\ProtocolVersionMarshaler())->marshal($server);
 
         $stream = new Stream(fopen('php://input', 'rb'));

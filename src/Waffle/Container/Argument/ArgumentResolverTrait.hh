@@ -3,6 +3,8 @@
 namespace Waffle\Container\Argument;
 
 use namespace HH\Lib\Str;
+use namespace HH\Lib\Vec;
+use namespace HH\Lib\C;
 use type Waffle\Container\Exception\ContainerException;
 use type Waffle\Container\Exception\NotFoundException;
 use type Waffle\Container\ReflectionContainer;
@@ -12,13 +14,13 @@ use type ReflectionParameter;
 
 trait ArgumentResolverTrait
 {
-    public function resolveArguments(Vector<mixed> $arguments): Vector<mixed>
+    public function resolveArguments(vec<mixed> $arguments): vec<mixed>
     {
-        $resolved = Vector {};
+        $resolved = vec[];
 
         foreach ($arguments as $arg) {
             if ($arg instanceof RawArgumentInterface) {
-                $resolved->add($arg->getValue());
+                $resolved[] = $arg->getValue();
                 continue;
             }
 
@@ -27,7 +29,7 @@ trait ArgumentResolverTrait
             }
 
             if (! ($arg is string)) {
-                $resolved->add($arg);
+                $resolved[] = $arg;
                 continue;
             }
 
@@ -49,26 +51,26 @@ trait ArgumentResolverTrait
                     $arg = $arg->getValue();
                 }
 
-                $resolved->add($arg);
+                $resolved[] = $arg;
                 continue;
             }
 
-            $resolved->add($arg);
+            $resolved[] = $arg;
         }
 
         return $resolved;
     }
 
-    public function reflectArguments(ReflectionFunctionAbstract $method, Map<string, mixed> $args = Map {}): Vector<mixed>
+    public function reflectArguments(ReflectionFunctionAbstract $method, dict<string, mixed> $args = dict[]): vec<mixed>
     {
-        $parameters = new Vector<ReflectionParameter>($method->getParameters());
-        $arguments = $parameters->map<mixed>(function (ReflectionParameter $param) use ($method, $args) {
+        $parameters = $method->getParameters();
+        $arguments = Vec\map($parameters, (ReflectionParameter $param) ==> {
 
             $name   = $param->getName();
             $class  = $param->getClass();
 
-            if ($args->contains($name)) {
-                return $args->get($name);
+            if (C\contains_key($args, $name)) {
+                return $args[$name];
             }
 
             if (null !== $class) {

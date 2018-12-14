@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Message;
 
+use namespace HH\Lib\C;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Contract\Http\Message\UriInterface;
@@ -9,23 +10,23 @@ use type Waffle\Contract\Http\Message\UploadsFolderInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
 {
-    protected Map<string, mixed> $attributes = Map {};
+    protected dict<string, mixed> $attributes = dict[];
 
-    protected Map<string, string> $cookieParams = Map {};
+    protected dict<string, string> $cookieParams = dict[];
 
-    protected ?Map<string, mixed> $parsedBody = null;
+    protected ?dict<string, mixed> $parsedBody = null;
 
-    protected Map<string, mixed> $queryParams = Map {};
+    protected dict<string, mixed> $queryParams = dict[];
 
     protected ?UploadsFolderInterface $uploadsFolder;
 
     public function __construct(
         string $method,
         UriInterface $uri,
-        Map<string, Set<string>> $headers = Map {},
+        dict<string, vec<string>> $headers = dict[],
         ?StreamInterface $body = null,
         string $version = '1.1',
-        protected Map<string, mixed> $serverParams = Map {}
+        protected dict<string, mixed> $serverParams = dict[]
     ) {
         $this->method = $method;
         $this->uri = $uri;
@@ -36,11 +37,6 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function __clone(): void
     {
         parent::__clone();
-        $this->attributes = clone $this->attributes;
-        $this->cookieParams = clone $this->cookieParams;
-        $this->parsedBody = null === $this->parsedBody ? null : clone $this->parsedBody;
-        $this->queryParams = clone $this->queryParams;
-        $this->serverParams = clone $this->serverParams;
         $this->uploadsFolder = null === $this->uploadsFolder ? null : clone $this->uploadsFolder;
     }
 
@@ -54,7 +50,7 @@ class ServerRequest extends Request implements ServerRequestInterface
         return (new Factory())->createServerRequestFromGlobals();
     }
 
-    public function getServerParams(): Map<string, mixed>
+    public function getServerParams(): dict<string, mixed>
     {
         return $this->serverParams;
     }
@@ -72,12 +68,12 @@ class ServerRequest extends Request implements ServerRequestInterface
         return $new;
     }
 
-    public function getCookieParams(): Map<string, string>
+    public function getCookieParams(): dict<string, string>
     {
         return $this->cookieParams;
     }
 
-    public function withCookieParams(Map<string, string> $cookies): this
+    public function withCookieParams(dict<string, string> $cookies): this
     {
         $new = clone $this;
         $new->cookieParams = $cookies;
@@ -85,12 +81,12 @@ class ServerRequest extends Request implements ServerRequestInterface
         return $new;
     }
 
-    public function getQueryParams(): Map<string, mixed>
+    public function getQueryParams(): dict<string, mixed>
     {
         return $this->queryParams;
     }
 
-    public function withQueryParams(Map<string, mixed> $query): this
+    public function withQueryParams(dict<string, mixed> $query): this
     {
         $new = clone $this;
         $new->queryParams = $query;
@@ -98,12 +94,12 @@ class ServerRequest extends Request implements ServerRequestInterface
         return $new;
     }
 
-    public function getParsedBody(): ?Map<string, mixed>
+    public function getParsedBody(): ?dict<string, mixed>
     {
         return $this->parsedBody;
     }
 
-    public function withParsedBody(?Map<string, mixed> $parsedBody): this
+    public function withParsedBody(?dict<string, mixed> $parsedBody): this
     {
         $new = clone $this;
         $new->parsedBody = $parsedBody;
@@ -111,15 +107,15 @@ class ServerRequest extends Request implements ServerRequestInterface
         return $new;
     }
 
-    public function getAttributes(): Map<string, mixed>
+    public function getAttributes(): dict<string, mixed>
     {
         return $this->attributes;
     }
 
     public function getAttribute(string $attribute, mixed $default = null): mixed
     {
-        if ($this->attributes->contains($attribute)) {
-            return $this->attributes->at($attribute);
+        if (C\contains_key($this->attributes, $attribute)) {
+            return $this->attributes[$attribute];
         }
         return $default;
     }
@@ -127,18 +123,18 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function withAttribute(string $attribute, mixed $value): this
     {
         $new = clone $this;
-        $new->attributes->set($attribute, $value);
+        $new->attributes[$attribute] = $value;
         return $new;
     }
 
     public function withoutAttribute(string $attribute): this
     {
-        if (!$this->attributes->contains($attribute)) {
+        if (!C\contains_key($this->attributes,$attribute)) {
             return $this;
         }
 
         $new = clone $this;
-        $new->attributes->remove($attribute);
+        unset($new->attributes[$attribute]);
 
         return $new;
     }

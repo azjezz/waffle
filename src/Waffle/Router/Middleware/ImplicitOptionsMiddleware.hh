@@ -65,6 +65,6 @@ class ImplicitOptionsMiddleware implements MiddlewareInterface
         $allowedMethods = $result->getAllowedMethods();
 
         return $this->responseFactory->createResponse()
-            ->withHeader('Allow', $allowedMethods ?? Set {});
+            ->withHeader('Allow', $allowedMethods ?? vec[]);
     }
 }
