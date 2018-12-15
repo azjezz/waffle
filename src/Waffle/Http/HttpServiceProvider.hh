@@ -32,6 +32,7 @@ class HttpServiceProvider extends AbstractServiceProvider
         Server\MiddlewareFactory::class
     ];
 
+    <<__Override>>
     public function register(): void
     {
         $this->share(EmitterInterface::class, Emitter\Emitter::class);

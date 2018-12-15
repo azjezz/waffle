@@ -16,6 +16,7 @@ class RoutererviceProvider extends AbstractServiceProvider
         Middleware\RouteMiddleware::class,
     ];
 
+    <<__Override>>
     public function register(): void
     {
         $this->share(RouteCollector::class);
