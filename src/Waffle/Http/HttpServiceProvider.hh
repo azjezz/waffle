@@ -50,8 +50,9 @@ class HttpServiceProvider extends AbstractServiceProvider
         $this->share(MiddlewarePipeInterface::class, Server\MiddlewarePipe::class);
 
         $this->share(Server\MiddlewareFactory::class, () ==> {
-            $container = $this->getContainer();
-            return new Server\MiddlewareFactory($container);
+            return new Server\MiddlewareFactory(
+                $this->getContainer()
+            );
         });
     }
 }
