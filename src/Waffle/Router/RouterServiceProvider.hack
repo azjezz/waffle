@@ -20,7 +20,7 @@ class RoutererviceProvider extends AbstractServiceProvider
     {
         $this->share(RouteCollector::class);
         $this->share(RouterInterface::class, Router::class);
-    
+
         $this->share(Middleware\DispatchMiddleware::class);
         $this->share(Middleware\ImplicitHeadMiddleware::class);
         $this->share(Middleware\ImplicitOptionsMiddleware::class);
