@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "hhvm": "^3.28",
+        "hhvm": "^3.29",
         "hhvm/hsl": "^1.0.0|^3.26.0",
         "facebook/xhp-lib": "^2.8",
         "facebook/hack-router": "^0.16.0"
