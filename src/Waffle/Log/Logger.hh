@@ -39,4 +39,21 @@ class Logger extends AbstractLogger implements LoggerInterface
             }
         }
     }
+
+    /**
+     * Ends a log cycle and frees all resources used by handlers.
+     *
+     * Closing a Handler means flushing all buffers and freeing any open resources/handles.
+     * Handlers that have been closed should be able to accept log records again and re-open
+     * themselves on demand, but this may not always be possible depending on implementation.
+     *
+     * This is useful at the end of a request and will be called automatically on every handler
+     * when they get destructed.
+     */
+    public function close(): void
+    {
+        foreach ($this->handlers as $handler) {
+            $handler->close();
+        }
+    }
 }

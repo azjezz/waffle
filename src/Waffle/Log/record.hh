@@ -3,13 +3,13 @@
 namespace Waffle\Log;
 
 use type Waffle\Contract\Log\LogLevel;
-use type DateTimeInterface;
+use type DateTime;
 
 type record = shape(
     'level' => LogLevel,
     'message' => string,
     'context' => dict<string, mixed>,
-    'time' => DateTimeInterface,
+    'time' => DateTime,
     'extra' => dict<string, mixed>,
     ?'formatted' => string,
     ...

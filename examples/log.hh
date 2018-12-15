@@ -15,7 +15,7 @@ require '../vendor/hh_autoload.php';
 <<__Entrypoint>>
 function main(): void
 {
-    $handler = new Handler\StreamHandler(__DIR__.'/log.txt', LogLevel::INFO);
+    $handler = new Handler\RotatingFileHandler(__DIR__.'/log.txt', 1, LogLevel::INFO);
     $handler->setFormatter(
         new Formatter\LineFormatter("[%time%][%level%] => %message% \n", 'Y-m-d H:i:s')
     );

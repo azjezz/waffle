@@ -53,7 +53,7 @@ class StreamHandler extends AbstractHandler
 
         $record = $this->getFormatter()->format($record);
 
-        $this->write($record['formatted'] ?? $record['message']);
+        $this->write($record);
 
         return false === $this->bubble;
     }
@@ -87,8 +87,10 @@ class StreamHandler extends AbstractHandler
     /**
      * {@inheritdoc}
      */
-    protected function write(string $message): void
+    protected function write(record $record): void
     {
+        $message = $record['formatted'] ?? $record['message'];
+
         if (null === $this->stream) {
             if (null === $this->url || '' === $this->url) {
                 throw new Exception\LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
