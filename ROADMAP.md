@@ -5,7 +5,7 @@
 - [x] Http Package
 - [x] Router Package
 - [x] Log Package
-- [ ] Configuration Package ( WIP )
+- [x] Configuration Package ( WIP )
 - [ ] Event Dispatcher Package
 - [ ] Cache Package ( WIP )
 - [ ] Simple Cache Package
