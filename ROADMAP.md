@@ -8,7 +8,7 @@
 - [x] Configuration Package
 - [x] Event Dispatcher Package
 - [ ] Cache Package ( WIP )
-- [ ] Simple Cache Package
+- [x] Simple Cache Package
 - [ ] Session Package
 - [ ] Base Application
 
