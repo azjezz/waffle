@@ -7,7 +7,7 @@ interface EventDispatcherInterface
     /**
      * Register an event listener with the dispatcher.
      */
-    public function on<TEvent super EventInterface>(classname<TEvent> $event, EventListener<TEvent> $listener, int $priority = 0): void;
+    public function on(classname<EventInterface> $event, EventListener $listener, int $priority = 0): void;
 
     /**
      * Register an event subscriber with the dispatcher.
@@ -17,10 +17,10 @@ interface EventDispatcherInterface
     /**
      * Dispatch an event and call the listeners.
      */
-    public function dispatch<TEvent super EventInterface>(TEvent $event, bool $halt = false): TEvent;
+    public function dispatch(EventInterface $event, bool $halt = false): EventInterface;
 
     /**
      * Remove a set of listeners from the dispatcher.
      */
-    public function forget<TEvent super EventInterface>(classname<TEvent> $event): void;
+    public function forget(classname<EventInterface> $event): void;
 }

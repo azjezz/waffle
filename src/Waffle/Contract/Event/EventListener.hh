@@ -2,4 +2,4 @@
 
 namespace Waffle\Contract\Event;
 
-type EventListener<TEvent super EventInterface> = (function(TEvent): mixed);
+type EventListener = (function(EventInterface): EventInterface);
