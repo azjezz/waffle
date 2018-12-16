@@ -2,7 +2,9 @@
 
 namespace Waffle\Contract\Event;
 
-interface EventDispatcherInterface
+use type Waffle\Contract\Service\ResetInterface;
+
+interface EventDispatcherInterface extends ResetInterface
 {
     /**
      * Register an event listener with the dispatcher.

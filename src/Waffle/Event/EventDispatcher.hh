@@ -7,12 +7,11 @@ use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventInterface;
 use type Waffle\Contract\Event\StoppableEventInterface;
 use type Waffle\Contract\Event\EventListener;
-use type Waffle\Contract\Service\ResetInterface;
 
 use type SplPriorityQueue;
 use function get_class;
 
-class EventDispatcher implements EventDispatcherInterface, ResetInterface
+class EventDispatcher implements EventDispatcherInterface
 {
     private dict<
         classname<EventInterface>,
