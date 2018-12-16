@@ -152,4 +152,9 @@ class ReflectionContainer implements ArgumentResolverInterface, ContainerInterfa
 
         return $this;
     }
+
+    public function reset(): void
+    {
+        $this->cache = dict[];
+    }
 }

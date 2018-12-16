@@ -82,7 +82,7 @@ class Router implements RouterInterface
         }
 
         $prefixes = $map->getPrefixes();
-        if (!C\is_empty($prefixes)) {
+        if (0 !== C\count($prefixes)) {
             $prefix_len = Str\length(C\first_keyx($prefixes));
             $prefix = Str\slice($path, 0, $prefix_len);
 

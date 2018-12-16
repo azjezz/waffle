@@ -4,8 +4,9 @@ namespace Waffle\Log\Handler;
 
 use type Waffle\Log\record;
 use type Waffle\Contract\Log\LogLevel;
+use type Waffle\Contract\Service\ResetInterface;
 
-abstract class AbstractHandler implements FormattableHandlerInterface
+abstract class AbstractHandler implements FormattableHandlerInterface, ResetInterface
 {
     use FormattableHandlerTrait;
 
@@ -39,5 +40,12 @@ abstract class AbstractHandler implements FormattableHandlerInterface
 
     public function close(): void
     {
+    }
+
+    public function reset(): void
+    {
+        if ($this->formatter is ResetInterface) {
+            $this->formatter->reset();
+        }
     }
 }

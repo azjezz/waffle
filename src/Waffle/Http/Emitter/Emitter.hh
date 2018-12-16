@@ -166,4 +166,9 @@ class Emitter implements EmitterInterface
 
         return Str\join($cookieStringParts, '; ');
     }
+
+    public function reset(): void
+    {
+       // noop
+    }
 }

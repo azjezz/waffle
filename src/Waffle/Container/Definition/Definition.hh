@@ -9,12 +9,12 @@ use type Waffle\Container\Argument\ArgumentResolverTrait;
 use type Waffle\Container\Argument\ClassNameArgumentInterface;
 use type Waffle\Container\Argument\RawArgumentInterface;
 use type Waffle\Container\ContainerAwareTrait;
+use type Waffle\Contract\Service\ResetInterface;
 use type ReflectionClass;
-use function is_null;
 use function is_callable;
 use function class_exists;
 
-class Definition implements ArgumentResolverInterface, DefinitionInterface
+class Definition implements ArgumentResolverInterface, DefinitionInterface, ResetInterface
 {
     use ArgumentResolverTrait;
     use ContainerAwareTrait;
@@ -131,7 +131,7 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
     {
         $concrete = $this->concrete;
 
-        if ($this->isShared() && ! is_null($this->resolved) && $new === false) {
+        if ($this->isShared() && $this->resolved is nonnull && $new === false) {
             return $this->resolved;
         }
 
@@ -199,5 +199,10 @@ class Definition implements ArgumentResolverInterface, DefinitionInterface
         }
 
         return $instance;
+    }
+
+    public function reset(): void
+    {
+        $this->resolved = null;
     }
 }

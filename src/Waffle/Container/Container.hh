@@ -14,6 +14,7 @@ use type Waffle\Container\Inflector\InflectorAggregateInterface;
 use type Waffle\Container\ServiceProvider\ServiceProviderAggregate;
 use type Waffle\Container\ServiceProvider\ServiceProviderAggregateInterface;
 use type Waffle\Contract\Container\ContainerInterface;
+use type Waffle\Contract\Service\ResetInterface;
 
 class Container implements ContainerInterface
 {
@@ -176,5 +177,26 @@ class Container implements ContainerInterface
         }
 
         return $this;
+    }
+
+    public function reset(): void
+    {
+        $this->defaultToShared(false);
+
+        foreach ($this->delegates as $delegate) {
+            $delegate->reset();
+        }
+
+        if ($this->definitions is ResetInterface) {
+            $this->definitions->reset();
+        }
+
+        if ($this->providers is ResetInterface) {
+            $this->providers->reset();
+        }
+
+        if ($this->inflectors is ResetInterface) {
+            $this->inflectors->reset();
+        }
     }
 }

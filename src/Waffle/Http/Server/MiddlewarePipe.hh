@@ -16,7 +16,7 @@ use type SplQueue;
  * This class implements a pipeline of middleware, which can be attached using
  * the `pipe()` method, and is itself middleware.
  *
- * It creates an instance of `PipeProcessor` internally, invoking it with the provided
+ * It creates an instance of `NextMiddlewareProcessor` internally, invoking it with the provided
  * request and response instances, passing the original request and the returned
  * response to the `$next` argument when complete.
  *
@@ -83,5 +83,10 @@ class MiddlewarePipe implements MiddlewarePipeInterface
     {
         $next = new __Private\NextMiddlewareProcessor($this->pipeline, $handler);
         return $next->handle($request);
+    }
+
+    public function reset(): void
+    {
+        $this->pipeline = new SplQueue<MiddlewareInterface>();
     }
 }

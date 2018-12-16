@@ -2,6 +2,8 @@
 
 namespace Waffle\Contract\Log;
 
+use type Waffle\Contract\Service\ResetInterface;
+
 /**
  * Describes a logger instance.
  *
@@ -17,7 +19,7 @@ namespace Waffle\Contract\Log;
  * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * for the full interface specification.
  */
-interface LoggerInterface
+interface LoggerInterface extends ResetInterface
 {
     /**
      * System is unusable.

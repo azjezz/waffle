@@ -3,8 +3,9 @@
 namespace Waffle\Contract\Http\Emitter;
 
 use type Waffle\Contract\Http\Message\ResponseInterface;
+use type Waffle\Contract\Service\ResetInterface;
 
-interface EmitterInterface
+interface EmitterInterface extends ResetInterface
 {
     /**
      * Emit a response.

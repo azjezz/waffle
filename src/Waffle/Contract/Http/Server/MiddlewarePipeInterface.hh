@@ -2,6 +2,8 @@
 
 namespace Waffle\Contract\Http\Server;
 
+use type Waffle\Contract\Service\ResetInterface;
+
 /**
  * Pipe middleware like unix pipes.
  *
@@ -12,7 +14,7 @@ namespace Waffle\Contract\Http\Server;
  *
  * @see https://github.com/senchalabs/connect
  */
-interface MiddlewarePipeInterface extends MiddlewareInterface, RequestHandlerInterface
+interface MiddlewarePipeInterface extends MiddlewareInterface, RequestHandlerInterface, ResetInterface
 {
     public function pipe(MiddlewareInterface $middleware): void;
 }

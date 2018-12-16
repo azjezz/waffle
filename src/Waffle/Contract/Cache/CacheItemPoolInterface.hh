@@ -2,6 +2,8 @@
 
 namespace Waffle\Contract\Cache;
 
+use type Waffle\Contract\Service\ResetInterface;
+
 /**
  * CacheItemPoolInterface generates CacheItemInterface objects.
  *
@@ -11,7 +13,7 @@ namespace Waffle\Contract\Cache;
  * All configuration and initialization of the Pool is left up to an
  * Implementing Library.
  */
-interface CacheItemPoolInterface
+interface CacheItemPoolInterface extends ResetInterface
 {
     /**
      * Returns a Cache Item representing the specified key.

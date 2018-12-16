@@ -59,6 +59,16 @@ class RotatingFileHandler extends StreamHandler
         }
     }
 
+    <<__Override>>
+    public function reset(): void
+    {
+        parent::reset();
+
+        if (true === $this->mustRotate) {
+            $this->rotate();
+        }
+    }
+
     public function setFilenameFormat(string $filenameFormat, string $dateFormat): this
     {
         if (!preg_match('{^Y(([/_.-]?m)([/_.-]?d)?)?$}', $dateFormat)) {
@@ -87,10 +97,7 @@ class RotatingFileHandler extends StreamHandler
     {
         // on the first record written, if the log is new, we should rotate (once per day)
         if (null === $this->mustRotate) {
-            $this->mustRotate = $close = !file_exists($this->url);
-            if ($close) {
-                $this->close();
-            }
+            $this->mustRotate = !file_exists($this->url);
         }
 
         if ($this->nextRotation <= $record['time']) {

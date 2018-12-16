@@ -61,4 +61,10 @@ class Kernel implements KernelInterface
         $request->getBody()->close();
         $response->getBody()->close();
     }
+
+    public function reset(): void
+    {
+        $this->emitter->reset();
+        $this->pipe->reset();
+    }
 }

@@ -5,9 +5,10 @@ namespace Waffle\Container\Definition;
 use namespace HH\Lib\Str;
 use type Iterator;
 use type Waffle\Container\ContainerAwareTrait;
+use type Waffle\Contract\Service\ResetInterface;
 use type Waffle\Container\Exception\NotFoundException;
 
-class DefinitionAggregate implements DefinitionAggregateInterface
+class DefinitionAggregate implements DefinitionAggregateInterface, ResetInterface
 {
     use ContainerAwareTrait;
 
@@ -100,5 +101,14 @@ class DefinitionAggregate implements DefinitionAggregateInterface
     public function getIterator(): Iterator<DefinitionInterface>
     {
         return (new Vector($this->definitions))->getIterator();
+    }
+
+    public function reset(): void
+    {
+        foreach ($this->definitions as $definition) {
+            if ($definition is ResetInterface) {
+                $definition->reset();
+            }
+        }
     }
 }

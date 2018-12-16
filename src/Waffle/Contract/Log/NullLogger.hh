@@ -20,4 +20,10 @@ class NullLogger extends AbstractLogger
     {
         // noop
     }
+
+    <<__Override>>
+    public function reset(): void
+    {
+        // noop
+    }
 }
