@@ -2,4 +2,4 @@
 
 namespace Waffle\Contract\Event;
 
-type EventListener = (function(EventInterface): EventInterface);
+type EventListener = (function(EventInterface): void);
