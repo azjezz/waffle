@@ -36,20 +36,20 @@ interface CacheItemPoolInterface extends ResetInterface
     /**
      * Returns a traversable set of cache items.
      *
-     * @param string[] $keys
+     * @param Container<string> $keys
      *   An indexed Container of keys of items to retrieve.
      *
      * @throws InvalidArgumentExceptionInterface
      *   If any of the keys in $keys are not a legal value a InvalidArgumentExceptionInterface
      *   MUST be thrown.
      *
-     * @return Traversable
+     * @return KeyedContainer<string, CacheItemInterface>
      *   A traversable collection of Cache Items keyed by the cache keys of
      *   each item. A Cache item will be returned for each key, even if that
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems(Container<string> $keys = []): Container<CacheItemInterface>;
+    public function getItems(Container<string> $keys = []): KeyedContainer<string, CacheItemInterface>;
 
     /**
      * Confirms if the cache contains specified cache item.
