@@ -49,7 +49,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
         return $this->identifier;
     }
 
-    public function getWaffleContainer(): Container
+    private function getWaffleContainer(): Container
     {
         $container = $this->getContainer();
 
