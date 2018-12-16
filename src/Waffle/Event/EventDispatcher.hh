@@ -15,7 +15,7 @@ use function get_class;
 class EventDispatcher implements EventDispatcherInterface, ResetInterface
 {
     private dict<
-        classname<EventInterface>, 
+        classname<EventInterface>,
         SplPriorityQueue<EventListener>
     > $listeners = dict[];
 

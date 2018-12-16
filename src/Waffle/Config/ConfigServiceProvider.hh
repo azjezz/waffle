@@ -17,6 +17,7 @@ class ConfigServiceProvider extends AbstractServiceProvider
         ConfigurationInterface::class,
     ];
 
+    <<__Override>>
     public function register(): void
     {
         $this->share(

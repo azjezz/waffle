@@ -8,7 +8,7 @@ class Configuration implements ConfigurationInterface
 {
     private ImmMap<string, mixed> $items;
 
-    public function __construct(?KeyedContainer<string, mixed> $items = [])
+    public function __construct(?KeyedContainer<string, mixed> $items)
     {
         $this->items = new ImmMap<string, mixed>($items);
     }
