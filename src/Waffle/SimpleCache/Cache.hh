@@ -2,9 +2,6 @@
 
 namespace Waffle\SimpleCache;
 
-use namespace HH\Lib\Vec;
-use namespace HH\Lib\Dict;
-use namespace HH\Lib\C;
 use type Waffle\Contract\SimpleCache\CacheInterface;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
 use type Waffle\Contract\Cache\CacheExceptionInterface as PoolException;
