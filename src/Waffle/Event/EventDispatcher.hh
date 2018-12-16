@@ -7,10 +7,12 @@ use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventInterface;
 use type Waffle\Contract\Event\StoppableEventInterface;
 use type Waffle\Contract\Event\EventListener;
+use type Waffle\Contract\Service\ResetInterface;
+
 use type SplPriorityQueue;
 use function get_class;
 
-class EventDispatcher implements EventDispatcherInterface
+class EventDispatcher implements EventDispatcherInterface, ResetInterface
 {
     private dict<
         classname<EventInterface>, 
@@ -59,5 +61,10 @@ class EventDispatcher implements EventDispatcherInterface
     public function forget(classname<EventInterface> $event): void
     {
         unset($this->listeners[$event]);
+    }
+
+    public function reset(): void
+    {
+        $this->listeners = dict[];
     }
 }
