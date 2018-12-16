@@ -17,7 +17,7 @@ interface EventDispatcherInterface
     /**
      * Dispatch an event and call the listeners.
      */
-    public function dispatch(EventInterface $event, bool $halt = false): EventInterface;
+    public function dispatch(EventInterface $event): EventInterface;
 
     /**
      * Remove a set of listeners from the dispatcher.
