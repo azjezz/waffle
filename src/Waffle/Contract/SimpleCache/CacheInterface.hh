@@ -101,4 +101,12 @@ interface CacheInterface
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function has(string $key): bool;
+
+    /**
+     * Prune all expired items.
+     *
+     * @return bool True if the expired items were successfully remove. False if there was an error
+     *              or the implmentation is not pruneable
+     */
+    public function prune(): bool;
 }

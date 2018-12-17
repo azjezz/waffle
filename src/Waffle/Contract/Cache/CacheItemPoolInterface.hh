@@ -137,4 +137,12 @@ interface CacheItemPoolInterface extends ResetInterface
      *   True if all not-yet-saved items were successfully saved or there were none. False otherwise.
      */
     public function commit(): bool;
+
+    /**
+     * Prune all expired items.
+     *
+     * @return bool True if the expired items were successfully remove. False if there was an error
+     *              or the implmentation is not pruneable
+     */
+    public function prune(): bool;
 }
