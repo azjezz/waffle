@@ -2,6 +2,8 @@
 
 namespace Waffle\Contract\Cache;
 
+use type InvalidArgumentException;
+
 /**
  * Exception interface for invalid cache arguments.
  *
@@ -10,4 +12,5 @@ namespace Waffle\Contract\Cache;
  */
 interface InvalidArgumentExceptionInterface extends CacheExceptionInterface
 {
+    require extends InvalidArgumentException;
 }
