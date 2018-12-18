@@ -32,11 +32,9 @@ class Cache implements CacheInterface, ResetInterface
      */
     public function set(string $key, mixed $value, ?DateInterval $ttl = null): bool
     {
-        return $this->box((): bool ==> {
-            $item = $this->pool->getItem($key)->set($value)->expiresAfter($ttl);
-
-            return $this->pool->save($item);
-        });
+        return $this->box((): bool ==> $this->pool->save(
+            $this->pool->getItem($key)->set($value)->expiresAfter($ttl)
+        ));
     }
 
     /**
@@ -60,7 +58,7 @@ class Cache implements CacheInterface, ResetInterface
      */
     public function getMultiple(Container<string> $keys,mixed $default = null): KeyedContainer<string, mixed>
     {
-        return $this->box(():KeyedContainer<string, mixed> ==> {
+        return $this->box((): KeyedContainer<string, mixed> ==> {
             $items = $this->pool->getItems($keys);
 
             $values = dict[];
@@ -119,24 +117,18 @@ class Cache implements CacheInterface, ResetInterface
     public function reset(): void
     {
         $this->box((): void ==> {
-            if ($this->pool is ResetInterface) {
-                $this->pool->reset();
-            }
+            $this->pool->reset();
         });
     }
 
-    private function box<T>((function(): T) $call): T
+    protected function box<T>((function(): T) $call): T
     {
         try {
             return $call();
         } catch(Throwable $e) {
             if ($e is InvalidArgumentPoolException) {
-                /* HH_IGNORE_ERROR[4053] */
-                /* HH_IGNORE_ERROR[4110] */
                 $e = new Exception\InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
             } elseif ($e is PoolException) {
-                /* HH_IGNORE_ERROR[4053] */
-                /* HH_IGNORE_ERROR[4110] */
                 $e = new Exception\CacheException($e->getMessage(), $e->getCode(), $e);
             }
 
