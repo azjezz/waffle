@@ -18,8 +18,8 @@ function main(): void
     $redis = new Redis();
     $redis->connect('localhost');
     $serializer = new Cache\Serializer\DefaultSerializer();
-    $store = new Cache\Store\RedisStore($redis, 3600, $serializer);
-    $pool = new Cache\CacheItemPool($store);
+    $store = new Cache\Store\RedisStore($redis, $serializer);
+    $pool = new Cache\CacheItemPool($store, 3600);
 
     $item = $pool->getItem($key);
     $item2 = $pool->getItem($key . '2');

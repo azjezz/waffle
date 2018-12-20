@@ -10,7 +10,6 @@ class RedisStore implements StoreInterface
 {
     public function __construct(
         protected Redis $redis,
-        protected ?int $defaultLifetime = 0,
         protected SerializerInterface $serializer = new DefaultSerializer()
     ) {
         $redis->ping();
