@@ -108,34 +108,5 @@ interface CacheItemInterface
     /**
      * The timestamp when the object expires.
      */
-    public function getExpirationTimestamp(): ?num;
-
-    /**
-     * Get the current tags. These are not the same tags as getPrevious tags. This
-     * is the tags that has been added to the item after the item was fetched from
-     * the cache storage.
-     *
-     * WARNING: This is generally not the function you want to use. Please see
-     * `getPreviousTags`.
-     *
-     * @return vec<string>
-     */
-    public function getTags(): vec<string>;
-
-    /**
-     * Get all existing tags. These are the tags the item has when the item is
-     * returned from the pool.
-     *
-     * @return vec<string>
-     */
-    public function getPreviousTags(): vec<string>;
-
-    /**
-     * Overwrite all tags with a new set of tags.
-     *
-     * @param string[] $tags An array of tags
-     *
-     * @throws InvalidArgumentException When a tag is not valid.
-     */
-    public function setTags(vec<string> $tags): this;
+    public function getExpirationTimestamp(): ?int;
 }
