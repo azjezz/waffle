@@ -42,6 +42,7 @@ class MiddlewareFactory
         }
 
         if ($this->container is nonnull && $middleware is string && $this->container->has($middleware)) {
+            /* HH_IGNORE_ERROR[4110] Container is nonnull */
             return new Middleware\LazyMiddlewareDecorator($this->container, $this, $middleware);
         }
 
