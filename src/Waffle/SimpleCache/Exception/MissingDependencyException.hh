@@ -3,7 +3,6 @@
 namespace Waffle\SimpleCache\Exception;
 
 use namespace Waffle\SimpleCache;
-use namespace Waffle\Contract\Cache;
 use namespace HH\Lib\Str;
 use type RuntimeException;
 
