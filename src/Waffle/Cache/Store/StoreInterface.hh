@@ -2,7 +2,6 @@
 
 namespace Waffle\Cache\Store;
 
-use type Waffle\Contract\Cache\CacheItemPoolInterface;
 use type Waffle\Contract\Service\ResetInterface;
 
 interface StoreInterface extends ResetInterface

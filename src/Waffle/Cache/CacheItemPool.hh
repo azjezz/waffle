@@ -3,14 +3,12 @@
 namespace Waffle\Cache;
 
 use namespace HH\Lib\C;
-use namespace HH\Lib\Dict;
 use type Waffle\Contract\Cache\CacheExceptionInterface;
 use type Waffle\Contract\Cache\InvalidArgumentExceptionInterface;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
 use type Waffle\Contract\Cache\CacheItemInterface;
 use type Waffle\Contract\Log\LoggerInterface;
 use type Waffle\Contract\Log\LoggerAwareInterface;
-use type Waffle\Contract\Log\LoggerAwareTrait;
 use type Waffle\Contract\Log\LogLevel;
 use type Waffle\Contract\Log\NullLogger;
 use type Exception;

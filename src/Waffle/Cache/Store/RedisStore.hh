@@ -4,8 +4,6 @@ namespace Waffle\Cache\Store;
 
 use type Waffle\Cache\Serializer\SerializerInterface;
 use type Waffle\Cache\Serializer\DefaultSerializer;
-use type Waffle\Contract\Cache\CacheItemInterface;
-use type Waffle\Cache\CacheItem;
 use type Redis;
 
 class RedisStore implements StoreInterface

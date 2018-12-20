@@ -2,7 +2,7 @@
 
 namespace Waffle\Cache\Serializer;
 
-/** 
+/**
  * Serializes/Unserializes Hack values.
  *
  * Implementations of this interface MUST deal with errors carefully. They MUST

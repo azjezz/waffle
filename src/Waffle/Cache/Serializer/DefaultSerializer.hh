@@ -2,7 +2,6 @@
 
 namespace Waffle\Cache\Serializer;
 
-use namespace HH\Lib\Str;
 use type Throwable;
 use type Error;
 use type ErrorException;

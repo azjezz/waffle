@@ -2,7 +2,7 @@
 
 namespace Waffle\Cache;
 
-use namespace HH\Lib\{C, Str};use type Waffle\Contract\Cache\CacheItemInterface;
+use namespace HH\Lib\Str;use type Waffle\Contract\Cache\CacheItemInterface;
 use type DateTimeInterface;
 use type DateInterval;
 use type DateTime;
