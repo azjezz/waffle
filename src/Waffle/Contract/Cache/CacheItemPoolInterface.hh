@@ -49,7 +49,7 @@ interface CacheItemPoolInterface extends ResetInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems(Container<string> $keys = []): KeyedContainer<string, CacheItemInterface>;
+    public function getItems(Container<string> $keys = vec[]): KeyedContainer<string, CacheItemInterface>;
 
     /**
      * Confirms if the cache contains specified cache item.
