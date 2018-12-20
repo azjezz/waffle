@@ -108,5 +108,5 @@ interface CacheItemInterface
     /**
      * The timestamp when the object expires.
      */
-    public function getExpirationTimestamp(): ?int;
+    public function getExpirationTimestamp(): ?num;
 }

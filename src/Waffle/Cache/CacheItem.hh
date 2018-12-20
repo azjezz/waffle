@@ -6,6 +6,7 @@ use namespace HH\Lib\{C, Str};use type Waffle\Contract\Cache\CacheItemInterface;
 use type DateTimeInterface;
 use type DateInterval;
 use type DateTime;
+use function microtime;
 
 class CacheItem implements CacheItemInterface
 {
@@ -13,7 +14,7 @@ class CacheItem implements CacheItemInterface
         protected string $key,
         protected mixed $value = null,
         protected bool $isHit = false,
-        protected ?int $expirationTimestamp = null,
+        protected ?num $expirationTimestamp = null,
     ) {}
 
     /**
@@ -51,7 +52,7 @@ class CacheItem implements CacheItemInterface
 
     public function expiresAt(?DateTimeInterface $expiration): this
     {
-        $this->expirationTimestamp = $expiration is nonnull ? $expiration->getTimestamp() : null;
+        $this->expirationTimestamp = $expiration is nonnull ? ((float) $expiration->format('U.u')) : null;
 
         return $this;
     }
@@ -61,9 +62,8 @@ class CacheItem implements CacheItemInterface
         if (null === $time) {
             $this->expirationTimestamp = null;
         } else {
-            $date = new DateTime('now');
-            $date->add($time);
-            $this->expirationTimestamp = $date->getTimestamp();
+            $date = (float) DateTime::createFromFormat('U', 0)->add($time)->format('U.u');
+            $this->expirationTimestamp = microtime(true) + $date;
         }
 
         return $this;
@@ -72,7 +72,7 @@ class CacheItem implements CacheItemInterface
     /**
      * The timestamp when the object expires.
      */
-    public function getExpirationTimestamp(): ?int
+    public function getExpirationTimestamp(): ?num
     {
         return $this->expirationTimestamp;
     }
