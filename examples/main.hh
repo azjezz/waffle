@@ -40,7 +40,7 @@ class HelloWorldHandler implements RequestHandlerInterface
     }
 }
 
-<<__Entrypoint>>
+<<__EntryPoint>>
 function main(): noreturn
 {
     // example handler ~

@@ -23,7 +23,7 @@ class DummyMiddleware implements Server\MiddlewareInterface
     }
 }
 
-<<__Entrypoint>>
+<<__EntryPoint>>
 function main(): void
 {
     $factory = new Http\Message\Factory();
