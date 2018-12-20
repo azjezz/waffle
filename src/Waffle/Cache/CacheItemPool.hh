@@ -68,7 +68,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
      */
     public function getItems(Container<string> $keys = []): KeyedContainer<string, CacheItemInterface>
     {
-        return $this->box((): KeyedContainer<string, CacheItemInterface> ==> $this->getItems($keys));
+        return $this->box((): KeyedContainer<string, CacheItemInterface> ==> $this->store->getItems($keys));
     }
 
     /**
