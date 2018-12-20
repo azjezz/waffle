@@ -12,7 +12,7 @@ use type Exception;
 
 require '../vendor/hh_autoload.php';
 
-<<__Entrypoint>>
+<<__EntryPoint>>
 function main(): void
 {
     $handler = new Handler\RotatingFileHandler(__DIR__.'/log.txt', 1, LogLevel::INFO);
