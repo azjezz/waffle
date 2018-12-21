@@ -11,6 +11,7 @@ use type Waffle\Contract\Log\LoggerInterface;
 use type Waffle\Contract\Log\LoggerAwareInterface;
 use type Waffle\Contract\Log\LogLevel;
 use type Waffle\Contract\Log\NullLogger;
+use type Waffle\Contract\Service\ResetInterface;
 use type Exception;
 use function hash;
 use function microtime;
@@ -18,13 +19,9 @@ use function microtime;
 class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
 {
     protected LoggerInterface $logger;
-    protected dict<string, CacheItemInterface> $deferred = dict[];
-    protected dict<string, string> $ids = dict[];
 
     public function __construct(
         protected Store\StoreInterface $store,
-        protected num $defaultLifeTime = 0,
-        protected string $namespace = '',
         ?LoggerInterface $logger = null
     ) {
         $this->logger = $logger ?? new NullLogger();
@@ -54,13 +51,8 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     public function getItem(string $key): CacheItemInterface
     {
         return $this->box((): CacheItemInterface ==> {
-            if (0 > C\count($this->deferred)) {
-                $this->commit();
-            }
-
-            $id = $this->getId($key);
-            if ($this->store->contains($id)) {
-                $value = $this->store->get($id);
+            if ($this->store->contains($key)) {
+                $value = $this->store->get($key);
                 return new CacheItem($key, $value, true);
             }
 
@@ -116,12 +108,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     public function hasItem(string $key): bool
     {
         return $this->box((): bool ==> {
-            if (0 > C\count($this->deferred)) {
-                $this->commit();
-            }
-
-            $id = $this->getId($key);
-            return $this->store->contains($id);
+            return $this->store->contains($key);
         });
     }
 
@@ -133,8 +120,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
      */
     public function clear(): bool
     {
-        $this->deferred = dict[];
-        return $this->box((): bool ==> $this->store->clear($this->namespace));
+        return $this->box((): bool ==> $this->store->clear());
     }
 
     /**
@@ -153,12 +139,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     public function deleteItem(string $key): bool
     {
         return $this->box((): bool ==> {
-            if (0 > C\count($this->deferred)) {
-                $this->commit();
-            }
-
-            $id = $this->getId($key);
-            return $this->store->delete($id);
+            return $this->store->delete($key);
         });
     }
 
@@ -199,16 +180,13 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     public function save(CacheItemInterface $item): bool
     {
         return $this->box((): bool ==> {
-            $id = $this->getId($item->getKey());
-            $value = $item->get();
             $expirationTime = $item->getExpirationTimestamp();
             if ($expirationTime is nonnull) {
                 $ttl = $expirationTime - microtime(true);
             } else {
-                $ttl = $this->defaultLifeTime;
+                $ttl = $expirationTime;
             }
-
-            return $this->store->store($id, $value, $ttl);
+            return $this->store->store($item->getKey(), $item->get(), $ttl);
         });
     }
 
@@ -223,9 +201,16 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
      */
     public function saveDeferred(CacheItemInterface $item): bool
     {
-        $this->deferred[$item->getKey()] = $item;
+        return $this->box((): bool ==> {
+            $expirationTime = $item->getExpirationTimestamp();
+            if ($expirationTime is nonnull) {
+                $ttl = $expirationTime - microtime(true);
+            } else {
+                $ttl = $expirationTime;
+            }
 
-        return true;
+            return $this->store->defer($item->getKey(), $item->get(), $ttl);
+        });
     }
 
     /**
@@ -236,11 +221,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
      */
     public function commit(): bool
     {
-        $ok = true;
-        foreach ($this->deferred as $key => $value) {
-            $ok = $this->save($value) && $ok;
-        }
-        return $ok;
+        return $this->box((): bool ==> $this->store->commit());
     }
 
     /**
@@ -249,23 +230,10 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     public function reset(): void
     {
         $this->box((): void ==> {
-            if (0 > C\count($this->deferred)) {
-                $this->commit();
+            if ($this->store is ResetInterface) {
+                $this->store->reset();
             }
-
-            $this->deferred = dict[];
         });
-    }
-
-    protected function getId(string $key): string
-    {
-        if (C\contains_key($this->ids, $key)) {
-            return $this->namespace.'.'.$this->ids[$key];
-        }
-
-        CacheItem::validateKey($key);
-        $this->ids[$key] = hash('md5', $key, true);
-        return $this->namespace.'.'.$this->ids[$key];
     }
 
     protected function box<T>((function(): T) $fun): T

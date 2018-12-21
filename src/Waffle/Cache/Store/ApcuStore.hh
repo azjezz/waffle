@@ -15,34 +15,34 @@ use function preg_quote;
 use const APC_ITER_KEY;
 use const PHP_SAPI;
 
-class ApcuStore implements StoreInterface
+class ApcuStore extends Store
 {
     public function __construct(
-        protected SerializerInterface $serializer = new DefaultSerializer()
-    ) {}
+        protected SerializerInterface $serializer = new DefaultSerializer(),
+        string $namespace = '',
+        num $defaultTtl = 0
+    ) {
+        parent::__construct($namespace, $defaultTtl);
+    }
 
-    public function store(string $id, mixed $value, num $ttl = 0): bool
+    public function set(string $id, mixed $value, num $ttl = 0): bool
     {
         return apc_store($id, $this->serializer->serialize($value), $ttl);
     }
 
-    public function contains(string $id): bool
+    public function has(string $id): bool
     {
         return apc_exists($id);
     }
 
-    public function delete(string $id): bool
+    public function remove(string $id): bool
     {
-        if (!$this->contains($id)) {
-            return false;
-        }
-
         return apc_delete($id);
     }
 
-    public function get(string $id): mixed
+    public function retrieve(string $id): mixed
     {
-        if (!$this->contains($id)) {
+        if (!$this->has($id)) {
             return null;
         }
 
@@ -51,7 +51,7 @@ class ApcuStore implements StoreInterface
         );
     }
 
-    public function clear(string $namespace): bool
+    public function wipe(string $namespace): bool
     {
         if (Str\is_empty($namespace)) {
             return apc_clear_cache();

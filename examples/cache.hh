@@ -15,18 +15,18 @@ function main(): void
 {
     $key = bin2hex(random_bytes(16));
 
-    // $serializer = new Cache\Serializer\DefaultSerializer();
+    $serializer = new Cache\Serializer\DefaultSerializer();
     
     // $store = new Cache\Store\ApcuStore($serializer);
     
-    // $redis = new Redis();
-    // $redis->connect('localhost');
-    // $store = new Cache\Store\RedisStore($redis, $serializer);
+    $redis = new Redis();
+    $redis->connect('localhost');
+    
+    $namespacedStore = new Cache\Store\RedisStore($redis, 'example', 3600, $serializer);
+    $store = new Cache\Store\RedisStore($redis, '', 3600, $serializer);
 
-    $store = new Cache\Store\ArrayStore();
-
-    $namespacedPool = new Cache\CacheItemPool($store, 3600, 'example');
-    $pool = new Cache\CacheItemPool($store, 3600);
+    $namespacedPool = new Cache\CacheItemPool($namespacedStore);
+    $pool = new Cache\CacheItemPool($store);
 
     $item = $pool->getItem($key);
 
@@ -44,4 +44,11 @@ function main(): void
 
     assert( $pool->hasItem($key) );
     assert( $namespacedPool->hasItem($key) === false);
+    
+    assert( $pool->getItem($key)->get() === 'Hack Lang');
+
+    assert( $pool->clear() );
+
+    assert( $pool->hasItem($key) === false);
+
 }

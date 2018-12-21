@@ -11,15 +11,17 @@ type Item = shape(
     'expiry' => float
 );
 
-class ArrayStore implements StoreInterface
+class ArrayStore extends Store
 {
     public function __construct(
+        num $defaultTtl = 0,
         protected dict<string, Item> $cache = dict[]
-    ) {}
+    ) {
+        parent::__construct('', $defaultTtl);
+    }
 
-    public function store(string $id, mixed $value, num $ttl = 0): bool
+    public function set(string $id, mixed $value, num $ttl = 0): bool
     {
-        $expire =
         $this->cache[$id] = shape(
             'value' => $value,
             'expiry' => 0 === $ttl ? 0.0 : microtime(true) + $ttl
@@ -28,7 +30,7 @@ class ArrayStore implements StoreInterface
         return true;
     }
 
-    public function contains(string $id): bool
+    public function has(string $id): bool
     {
         if (!C\contains_key($this->cache, $id)) {
             return false;
@@ -49,30 +51,22 @@ class ArrayStore implements StoreInterface
         return !$expired;
     }
 
-    public function delete(string $id): bool
+    public function remove(string $id): bool
     {
-        if (!$this->contains($id)) {
-            return false;
-        }
-
         unset($this->cache[$id]);
         return true;
     }
 
-    public function get(string $id): mixed
+    public function retrieve(string $id): mixed
     {
-        if (!$this->contains($id)) {
-            return null;
-        }
-
-        return $this->cache[$id]['value'];
+        return $this->cache[$id]['value'] ?? null;
     }
 
-    public function clear(string $namespace): bool
+    public function wipe(string $namespace): bool
     {
         $ok = true;
         foreach ($this->cache as $key => $item) {
-            if (Str\is_empty($namespace) || Str\starts_with($key, $namespace.'.')) {
+            if (Str\is_empty($namespace) || Str\starts_with($key, $namespace)) {
                 $ok = $this->delete($key) && $ok;
             }
         }

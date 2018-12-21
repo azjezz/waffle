@@ -6,21 +6,30 @@ use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
 use type Waffle\Cache\Serializer\SerializerInterface;
 use type Waffle\Cache\Serializer\DefaultSerializer;
+use type Waffle\Cache\Exception\InvalidArgumentException;
 use type Redis;
 use function version_compare;
+use function preg_match;
+use function sprintf;
 
-class RedisStore implements StoreInterface
+class RedisStore extends Store
 {
     public function __construct(
         protected Redis $redis,
+        string $namespace = '',
+        num $defaultTtl = 0,
         protected SerializerInterface $serializer = new DefaultSerializer()
     ) {
         $redis->ping();
+        if (preg_match('#[^-+_.A-Za-z0-9]#', $namespace)) {
+            throw new InvalidArgumentException('RedisStore namespace cannot contain any characters other than [-+_.A-Za-z0-9].');
+        }
+        parent::__construct($namespace, $defaultTtl);
     }
 
-    public function get(string $id): mixed
+    public function retrieve(string $id): mixed
     {
-        if (!$this->contains($id)) {
+        if (!$this->has($id)) {
             return null;
         }
 
@@ -29,21 +38,17 @@ class RedisStore implements StoreInterface
         );
     }
 
-    public function delete(string $id): bool
+    public function remove(string $id): bool
     {
-        if (!$this->contains($id)) {
-            return false;
-        }
-
         return (bool) $this->redis->del($id);
     }
 
-    public function contains(string $id): bool
+    public function has(string $id): bool
     {
         return (bool) $this->redis->exists($id);
     }
 
-    public function store(string $id, mixed $value, num $ttl = 0): bool
+    public function set(string $id, mixed $value, num $ttl = 0): bool
     {
         $value = $this->serializer->serialize($value);
 
@@ -54,7 +59,7 @@ class RedisStore implements StoreInterface
         }
     }
 
-    public function clear(string $namespace): bool
+    public function wipe(string $namespace): bool
     {
         if (Str\is_empty($namespace)) {
             return $this->redis->flushDB();
@@ -73,7 +78,7 @@ class RedisStore implements StoreInterface
         $cleared = true;
         $cursor = null;
         do {
-            $keys = $this->redis->scan(&$cursor, $namespace.'.*', 1000);
+            $keys = $this->redis->scan(&$cursor, $namespace.'*', 1000);
             if (C\contains_key($keys, 1) && $keys[1] is Container<_>) {
                 $cursor = $keys[0];
                 $keys = $keys[1];
@@ -81,16 +86,11 @@ class RedisStore implements StoreInterface
 
             if (!C\is_empty($keys)) {
                 foreach ($keys as $key) {
-                    $cleared = $this->delete((string) $key) && $cleared;
+                    $cleared = $this->remove((string) $key) && $cleared;
                 }
             }
         } while ($cursor = (int) $cursor);
 
         return $cleared;
-    }
-
-    public function reset(): void
-    {
-        // noop
     }
 }
