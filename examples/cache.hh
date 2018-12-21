@@ -15,34 +15,30 @@ function main(): void
 {
     $key = bin2hex(random_bytes(16));
 
+    $serializer = new Cache\Serializer\DefaultSerializer();
+    // $store = new Cache\Store\ApcuStore($serializer);
+
     $redis = new Redis();
     $redis->connect('localhost');
-    $serializer = new Cache\Serializer\DefaultSerializer();
     $store = new Cache\Store\RedisStore($redis, $serializer);
+
+    $namespacedPool = new Cache\CacheItemPool($store, 3600, 'example');
     $pool = new Cache\CacheItemPool($store, 3600);
 
     $item = $pool->getItem($key);
-    $item2 = $pool->getItem($key . '2');
 
     assert( $item->isHit() === false );
 
     $item->set('Hack Lang');
-    $item2->set('PHP');
-    $item2->expiresAfter(new \DateInterval('PT5S'));
 
     assert( $pool->save($item) );
-    assert( $pool->save($item2) );
-
-
-    assert( $pool->hasItem($key) );
-    assert( $pool->hasItem($key.'2') );
-
-    sleep(6);
-    // delete expired items ~
-    assert( $pool->prune() );
+    assert( $namespacedPool->save($item) );
 
     assert( $pool->hasItem($key) );
-    assert( $pool->hasItem($key.'2') === false);
+    assert( $namespacedPool->hasItem($key) );
 
-    assert( $pool->getItem($key)->get() === 'Hack Lang');
+    assert( $namespacedPool->clear() );
+
+    assert( $pool->hasItem($key) );
+    assert( $namespacedPool->hasItem($key) === false);
 }
