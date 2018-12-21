@@ -2,7 +2,6 @@
 
 namespace Waffle\Cache\Store;
 
-use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
 use type Waffle\Cache\Serializer\SerializerInterface;
 use type Waffle\Cache\Serializer\DefaultSerializer;

@@ -3,7 +3,6 @@
 namespace Waffle\Cache;
 
 use namespace HH\Lib\C;
-use namespace HH\Lib\Str;
 use type Waffle\Contract\Cache\CacheExceptionInterface;
 use type Waffle\Contract\Cache\InvalidArgumentExceptionInterface;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
@@ -58,7 +57,7 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
             if (0 > C\count($this->deferred)) {
                 $this->commit();
             }
-            
+
             $id = $this->getId($key);
             if ($this->store->contains($id)) {
                 $value = $this->store->get($id);
