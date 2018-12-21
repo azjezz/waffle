@@ -2,9 +2,7 @@
 
 namespace Waffle\Cache\Store;
 
-use type Waffle\Contract\Service\ResetInterface;
-
-interface StoreInterface extends ResetInterface
+interface StoreInterface
 {
     public function store(string $id, mixed $value, num $ttl = 0): bool;
 
@@ -14,5 +12,5 @@ interface StoreInterface extends ResetInterface
 
     public function get(string $id): mixed;
 
-    public function prune(): bool;
+    public function clear(string $namespace): bool;
 }
