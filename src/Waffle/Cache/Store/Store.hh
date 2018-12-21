@@ -178,7 +178,7 @@ abstract class Store implements StoreInterface, ResetInterface
                 $this->namespaceVersion = $this->get('/'. $this->namespace) as string;
                 if ('1:' === $this->namespaceVersion) {
                     $this->namespaceVersion = Str\splice(base64_encode(pack('V', time())), ':', 5);
-                    $this->store('@'.$this->namespace, $this->namespaceVersion, 0);
+                    $this->set('@'.$this->namespace, $this->namespaceVersion, 0);
                 }
             } catch (\Throwable $e) {
             }
