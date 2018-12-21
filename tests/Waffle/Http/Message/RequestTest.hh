@@ -2,12 +2,12 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Waffle\Http\Message\Request;
+use type Waffle\Http\Message\Request;
 use namespace Waffle\Http\Message\Exception;
 use function Facebook\FBExpect\expect;
-use Waffle\Http\Message\Uri;
-use Facebook\HackTest\HackTest;
-use Waffle\Contract\Http\Message\StreamInterface;
+use type Waffle\Http\Message\Uri;
+use type Facebook\HackTest\HackTest;
+use type Waffle\Contract\Http\Message\StreamInterface;
 
 class RequestTest extends HackTest
 {
@@ -87,7 +87,7 @@ class RequestTest extends HackTest
     public function testHostIsAddedFirst()
     {
         $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), dict[
-            'Foo' => vec[ 'Bar' ] 
+            'Foo' => vec[ 'Bar' ]
         ]);
         expect($r->getHeaders())->toBeSame(dict[
             'Host' => vec[ 'foo.com' ],
@@ -107,8 +107,8 @@ class RequestTest extends HackTest
     public function testHostIsNotOverwrittenWhenPreservingHost()
     {
         $r = new Request('GET', new Uri('http://foo.com/baz?bar=bam'), dict[
-            'Host' => vec[ 
-                'facebook.com' 
+            'Host' => vec[
+                'facebook.com'
             ]
         ]);
         expect($r->getHeaders())->toBeSame(dict['Host' => vec[ 'facebook.com' ]]);

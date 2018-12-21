@@ -2,12 +2,12 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Facebook\HackTest\HackTest;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 use namespace Waffle\Http\Message;
-use Waffle\Http\Message\Uri;
+use type Waffle\Http\Message\Uri;
 
-class UriTest extends HackTest 
+class UriTest extends HackTest
 {
     const RFC3986_BASE = 'http://a/b/c/d;p?q';
 

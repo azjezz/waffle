@@ -208,12 +208,12 @@ class ResponseTest extends HackTest
         $response = new Response();
         $cookie = new Cookie('value');
         $response2 = $response->withCookie('name', $cookie);
-        
+
         expect($response2)->toNotBeSame($response);
 
         expect($response->getCookie('name'))->toBeNull();
         expect($response2->getCookie('name'))->toBeSame($cookie);
-    
+
         $response3 = $response2->withoutCookie('name');
 
         expect($response3)->toNotBeSame($response2);
@@ -227,7 +227,7 @@ class ResponseTest extends HackTest
         $cookie2 = new Cookie('value2');
         $cookie3 = new Cookie('value3');
         $response2 = $response->withCookie('name1', $cookie1);
-        
+
         expect($response2)->toNotBeSame($response);
         expect(C\count($response2->getCookies()))->toBeSame(1);
         expect($response2->getCookies()['name1'])->toBeSame($cookie1);

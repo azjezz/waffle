@@ -2,11 +2,11 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Waffle\Http\Message\Stream;
-use Waffle\Http\Message\Exception;
-use Waffle\Http\Message\UploadedFile;
-use Waffle\Contract\Http\Message\UploadedFileError;
-use Facebook\HackTest\HackTest;
+use type Waffle\Http\Message\Stream;
+use namespace Waffle\Http\Message\Exception;
+use type Waffle\Http\Message\UploadedFile;
+use type Waffle\Contract\Http\Message\UploadedFileError;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 use function Waffle\Http\Message\__Private\create_stream_from_string;
 use function is_scalar;
@@ -22,11 +22,13 @@ class UploadedFileTest extends HackTest
 {
     protected array $cleanup = [];
 
+    <<__Override>>
     public async function beforeEachTestAsync(): Awaitable<void>
     {
         $this->cleanup = [];
     }
 
+    <<__Override>>
     public async function afterEachTestAsync(): Awaitable<void>
     {
         foreach ($this->cleanup as $file) {

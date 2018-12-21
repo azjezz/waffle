@@ -2,7 +2,7 @@
 
 namespace Waffle\Tests\Container\Asset;
 
-use Waffle\Container\ServiceProvider\AbstractServiceProvider;
+use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
 
 class FooServiceProvider extends AbstractServiceProvider
 {
@@ -10,6 +10,7 @@ class FooServiceProvider extends AbstractServiceProvider
         Foo::class
     ];
 
+    <<__Override>>
     public function register(): void
     {
         $this->add(Foo::class);

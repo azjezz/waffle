@@ -2,8 +2,8 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Waffle\Http\Message\Stream;
-use Facebook\HackTest\HackTest;
+use type Waffle\Http\Message\Stream;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 use function fopen;
 use function fwrite;

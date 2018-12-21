@@ -9,7 +9,7 @@ class Foo
 
     public static $staticHello;
 
-    public function __construct(?Bar $bar) 
+    public function __construct(?Bar $bar)
     {
         $this->bar = $bar;
     }

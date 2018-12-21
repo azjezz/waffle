@@ -2,13 +2,12 @@
 
 namespace Waffle\Tests\Container;
 
-use Waffle\Container\Exception\NotFoundException;
+use type Waffle\Container\Exception\NotFoundException;
 use function Facebook\FBExpect\expect;
-use Waffle\Container\ReflectionContainer;
-use Waffle\Container\Container;
-use Waffle\Tests\Container\Asset\{Foo, FooCallable, Bar};
-use Facebook\HackTest\HackTest;
-use Waffle\Contract\Container\ContainerInterface;
+use type Waffle\Container\ReflectionContainer;
+use type Waffle\Container\Container;
+use type Waffle\Tests\Container\Asset\{Foo, FooCallable, Bar};
+use type Facebook\HackTest\HackTest;
 
 class ReflectionContainerTest extends HackTest
 {
@@ -143,10 +142,10 @@ class ReflectionContainerTest extends HackTest
 
         $dependency = new Bar();
         $container  = new ReflectionContainer();
-        
+
         $innerContainer = new Container();
         $innerContainer->add($dependencyClass, () ==> $dependency);
-        
+
         $container->setContainer($innerContainer);
 
         $item = $container->get($classWithConstructor);
@@ -174,8 +173,8 @@ class ReflectionContainerTest extends HackTest
     {
         $container = new ReflectionContainer();
 
-        $foo = $container->call(function (Foo $foo) { 
-            return $foo; 
+        $foo = $container->call(function (Foo $foo) {
+            return $foo;
         });
 
         expect($foo)->toBeInstanceOf(Foo::class);

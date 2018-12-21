@@ -3,15 +3,14 @@
 namespace Waffle\Tests\Container\Definition;
 
 use namespace HH\Lib\Str;
-use Waffle\Contract\Container\ContainerInterface;
-use Waffle\Container\Argument\ClassNameArgument;
-use Waffle\Container\Definition\Definition;
-use Waffle\Container\Argument\RawArgument;
-use Waffle\Container\Container;
-use Waffle\Tests\Container\Asset\Foo;
-use Waffle\Tests\Container\Asset\FooCallable;
-use Waffle\Tests\Container\Asset\Bar;
-use Facebook\HackTest\HackTest;
+use type Waffle\Container\Argument\ClassNameArgument;
+use type Waffle\Container\Definition\Definition;
+use type Waffle\Container\Argument\RawArgument;
+use type Waffle\Container\Container;
+use type Waffle\Tests\Container\Asset\Foo;
+use type Waffle\Tests\Container\Asset\FooCallable;
+use type Waffle\Tests\Container\Asset\Bar;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 
 class DefinitionTest extends HackTest

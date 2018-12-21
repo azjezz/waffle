@@ -2,14 +2,14 @@
 
 namespace Waffle\Tests\Container\Definition;
 
-use Facebook\HackTest\HackTest;
-use Waffle\Container\Container;
-use Waffle\Tests\Container\Asset\Foo;
-use Waffle\Tests\Container\Asset\Bar;
-use Waffle\Container\Definition\Definition;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Container\Definition\DefinitionInterface;
-use Waffle\Container\Definition\DefinitionAggregate;
+use type Facebook\HackTest\HackTest;
+use type Waffle\Container\Container;
+use type Waffle\Tests\Container\Asset\Foo;
+use type Waffle\Tests\Container\Asset\Bar;
+use type Waffle\Container\Definition\Definition;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Container\Definition\DefinitionInterface;
+use type Waffle\Container\Definition\DefinitionAggregate;
 use function Facebook\FBExpect\expect;
 
 class DefinitionAggregateTest extends HackTest
@@ -83,7 +83,7 @@ class DefinitionAggregateTest extends HackTest
     {
         $aggregate   = new DefinitionAggregate();
         $container = new Container();
-        
+
         $bar = new Bar();
         $foo = new Foo($bar);
 
@@ -107,7 +107,7 @@ class DefinitionAggregateTest extends HackTest
     public function testAggregateCanResolveArrayOfTaggedDefinitions(): void
     {
         $container = new Container();
-        
+
         $definition1 = $container->add('bar', (): string ==> 'definition1');
         $definition2 = $container->add('foo', (): string ==> 'definition2');
 

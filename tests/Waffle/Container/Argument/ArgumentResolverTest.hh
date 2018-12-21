@@ -2,16 +2,12 @@
 
 namespace Waffle\Tests\Container\Argument;
 
-use Facebook\HackTest\HackTest;
-use Waffle\Container\Argument\RawArgument;
-use Waffle\Container\Exception\NotFoundException;
-use Waffle\Container\Container;
-use Waffle\Contract\Container\ContainerInterface;
-use Waffle\Tests\Container\Asset\QuxArgumentResolver;
-use Waffle\Tests\Container\Asset\Foo;
-use ReflectionClass;
-use ReflectionFunctionAbstract;
-use ReflectionParameter;
+use type Facebook\HackTest\HackTest;
+use type Waffle\Container\Argument\RawArgument;
+use type Waffle\Container\Exception\NotFoundException;
+use type Waffle\Container\Container;
+use type Waffle\Tests\Container\Asset\QuxArgumentResolver;
+use type Waffle\Tests\Container\Asset\Foo;
 use function Facebook\FBExpect\expect;
 
 class ArgumentResolverTest extends HackTest
@@ -63,7 +59,7 @@ class ArgumentResolverTest extends HackTest
      */
     public function testResolverResolvesArgumentsViaReflection()
     {
-        $llama = (Foo $foo, string $param2, string $param3 = 'default'): string 
+        $llama = (Foo $foo, string $param2, string $param3 = 'default'): string
                   ==> 'i am a ' . $param2;
 
         $method = new \ReflectionFunction($llama);

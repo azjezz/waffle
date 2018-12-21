@@ -2,14 +2,14 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use Waffle\Http\Message\ServerRequest;
-use Waffle\Http\Message\Uri;
+use type Waffle\Http\Message\ServerRequest;
+use type Waffle\Http\Message\Uri;
 use function Facebook\FBExpect\expect;
-use Waffle\Http\Message\UploadedFile;
-use Waffle\Http\Message\UploadsFolder;
-use Waffle\Http\Message\__Private;
-use Waffle\Contract\Http\Message\UploadedFileError;
-use Facebook\HackTest\HackTest;
+use type Waffle\Http\Message\UploadedFile;
+use type Waffle\Http\Message\UploadsFolder;
+use namespace Waffle\Http\Message\__Private;
+use type Waffle\Contract\Http\Message\UploadedFileError;
+use type Facebook\HackTest\HackTest;
 
 class ServerRequestTest extends HackTest
 {

@@ -2,11 +2,10 @@
 
 namespace Waffle\Tests\Http\Message;
 
-use namespace Waffle\Http\Message;
-use Waffle\Http\Message\Cookie;
-use Waffle\Contract\Http\Message\CookieSameSite;
-use DateTime;
-use Facebook\HackTest\HackTest;
+use type Waffle\Http\Message\Cookie;
+use type Waffle\Contract\Http\Message\CookieSameSite;
+use type DateTime;
+use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 
 class CookieTest extends HackTest
@@ -22,7 +21,7 @@ class CookieTest extends HackTest
             true,
             $s = CookieSameSite::STRICT
         );
-        
+
         expect($cookie->getValue())->toBeSame('hello');
         expect($cookie->getExpires())->toBeSame($e);
         expect($cookie->getPath())->toBeSame('/');
@@ -51,7 +50,7 @@ class CookieTest extends HackTest
 
         expect($cookie2)->toNotBeSame($cookie);
         expect($cookie3)->toNotBeSame($cookie2);
-    
+
         expect($cookie2->getExpires())->toBeNull();
         expect($cookie3->getExpires())->toBeInstanceOf(DateTime::class);
     }
@@ -60,7 +59,7 @@ class CookieTest extends HackTest
     {
         $cookie = new Cookie('waffle', new DateTime(), '/auth');
         $cookie2 = $cookie->withPath('/');
-        
+
         expect($cookie2)->toNotBeSame($cookie);
         expect($cookie2->getPath())->toBeSame('/');
     }
@@ -69,7 +68,7 @@ class CookieTest extends HackTest
     {
         $cookie = new Cookie('waffle', new DateTime(), '/', 'thefacebook.com');
         $cookie2 = $cookie->withDomain('facebook.com');
-        
+
         expect($cookie2)->toNotBeSame($cookie);
         expect($cookie2->getDomain())->toBeSame('facebook.com');
     }

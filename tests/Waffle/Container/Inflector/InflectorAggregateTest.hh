@@ -2,14 +2,13 @@
 
 namespace Waffle\Tests\Container\Inflector;
 
-use Waffle\Container\ContainerAwareInterface;
-use Waffle\Container\Container;
+use type Waffle\Container\ContainerAwareInterface;
+use type Waffle\Container\Container;
 use function Facebook\FBExpect\expect;
-use Waffle\Container\Inflector\InflectorAggregate;
-use Waffle\Container\Inflector\Inflector;
-use Facebook\HackTest\HackTest;
-use Waffle\Contract\Container\ContainerInterface;
-use Waffle\Tests\Container\Asset\BarContainerAware;
+use type Waffle\Container\Inflector\InflectorAggregate;
+use type Waffle\Container\Inflector\Inflector;
+use type Facebook\HackTest\HackTest;
+use type Waffle\Tests\Container\Asset\BarContainerAware;
 
 class InflectorAggregateTest extends HackTest
 {

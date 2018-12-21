@@ -1,9 +1,8 @@
-<?hh 
+<?hh
 
 namespace Waffle\Tests\Container\ServiceProvider;
 
 use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
-use type Waffle\Container\Container;
 use type Waffle\Tests\Container\Asset\FakeServiceProvider;
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;

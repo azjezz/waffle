@@ -2,9 +2,9 @@
 
 namespace Waffle\Tests\Container\Asset;
 
-use Waffle\Container\Argument\ArgumentResolverInterface;
-use Waffle\Container\Argument\ArgumentResolverTrait;
-use Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\Argument\ArgumentResolverInterface;
+use type Waffle\Container\Argument\ArgumentResolverTrait;
+use type Waffle\Container\ContainerAwareTrait;
 
 class QuxArgumentResolver implements ArgumentResolverInterface
 {

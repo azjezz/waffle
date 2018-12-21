@@ -2,9 +2,9 @@
 
 namespace Waffle\Tests\Container\Argument;
 
-use Waffle\Container\Argument\ClassNameArgument;
+use type Waffle\Container\Argument\ClassNameArgument;
 use function Facebook\FBExpect\expect;
-use Facebook\HackTest\HackTest;
+use type Facebook\HackTest\HackTest;
 
 class ClassNameArgumentTest extends HackTest
 {

@@ -1,9 +1,9 @@
-<?hh 
+<?hh
 
 namespace Waffle\Tests\Container\Asset;
 
 use type Waffle\Container\ServiceProvider\{
-    AbstractServiceProvider, 
+    AbstractServiceProvider,
     BootableServiceProviderInterface
 };
 
@@ -21,6 +21,7 @@ class FakeServiceProvider extends AbstractServiceProvider implements BootableSer
         // noop
     }
 
+    <<__Override>>
     public function register(): void
     {
         $this->registered++;

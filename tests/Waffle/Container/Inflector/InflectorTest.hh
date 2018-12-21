@@ -6,7 +6,6 @@ use namespace HH\Lib\C;
 use type Waffle\Container\Inflector\Inflector;
 use type Waffle\Container\Container;
 use type Facebook\HackTest\HackTest;
-use type Waffle\Contract\Container\ContainerInterface;
 use type Waffle\Tests\Container\Asset\Bar;
 use type Waffle\Tests\Container\Asset\Baz;
 use type Waffle\Tests\Container\Asset\Foo;
@@ -33,7 +32,7 @@ class InflectorTest extends HackTest
         $methods->setAccessible(true);
 
         $methods = $methods->getValue($inflector);
-        
+
         expect(C\contains_key($methods, 'method1'))->toBeTrue();
         expect(C\contains_key($methods, 'method2'))->toBeTrue();
         expect(C\contains_key($methods, 'method3'))->toBeTrue();

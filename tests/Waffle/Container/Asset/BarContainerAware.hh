@@ -2,10 +2,10 @@
 
 namespace Waffle\Tests\Container\Asset;
 
-use Waffle\Container\ContainerAwareInterface;
-use Waffle\Container\ContainerAwareTrait;
+use type Waffle\Container\ContainerAwareInterface;
+use type Waffle\Container\ContainerAwareTrait;
 
-class BarContainerAware implements ContainerAwareInterface 
+class BarContainerAware implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
