@@ -10,7 +10,6 @@ use type Waffle\Cache\Exception\InvalidArgumentException;
 use type Redis;
 use function version_compare;
 use function preg_match;
-use function sprintf;
 
 class RedisStore extends Store
 {
@@ -27,6 +26,7 @@ class RedisStore extends Store
         parent::__construct($namespace, $defaultTtl);
     }
 
+    <<__Override>>
     public function retrieve(string $id): mixed
     {
         if (!$this->has($id)) {
@@ -38,16 +38,19 @@ class RedisStore extends Store
         );
     }
 
+    <<__Override>>
     public function remove(string $id): bool
     {
         return (bool) $this->redis->del($id);
     }
 
+    <<__Override>>
     public function has(string $id): bool
     {
         return (bool) $this->redis->exists($id);
     }
 
+    <<__Override>>
     public function set(string $id, mixed $value, num $ttl = 0): bool
     {
         $value = $this->serializer->serialize($value);
@@ -59,6 +62,7 @@ class RedisStore extends Store
         }
     }
 
+    <<__Override>>
     public function wipe(string $namespace): bool
     {
         if (Str\is_empty($namespace)) {

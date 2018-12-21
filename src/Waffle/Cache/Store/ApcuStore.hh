@@ -25,21 +25,25 @@ class ApcuStore extends Store
         parent::__construct($namespace, $defaultTtl);
     }
 
+    <<__Override>>
     public function set(string $id, mixed $value, num $ttl = 0): bool
     {
         return apc_store($id, $this->serializer->serialize($value), $ttl);
     }
 
+    <<__Override>>
     public function has(string $id): bool
     {
         return apc_exists($id);
     }
 
+    <<__Override>>
     public function remove(string $id): bool
     {
         return apc_delete($id);
     }
 
+    <<__Override>>
     public function retrieve(string $id): mixed
     {
         if (!$this->has($id)) {
@@ -51,6 +55,7 @@ class ApcuStore extends Store
         );
     }
 
+    <<__Override>>
     public function wipe(string $namespace): bool
     {
         if (Str\is_empty($namespace)) {

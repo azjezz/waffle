@@ -6,12 +6,10 @@ use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
 use type Waffle\Cache\CacheItem;
 use type Waffle\Contract\Service\ResetInterface;
-use function substr_replace;
 use function pack;
 use function mt_rand;
 use function base64_encode;
 use function time;
-use function microtime;
 use function hash;
 
 abstract class Store implements StoreInterface, ResetInterface

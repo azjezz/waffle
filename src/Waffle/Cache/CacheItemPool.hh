@@ -2,7 +2,6 @@
 
 namespace Waffle\Cache;
 
-use namespace HH\Lib\C;
 use type Waffle\Contract\Cache\CacheExceptionInterface;
 use type Waffle\Contract\Cache\InvalidArgumentExceptionInterface;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
@@ -13,7 +12,6 @@ use type Waffle\Contract\Log\LogLevel;
 use type Waffle\Contract\Log\NullLogger;
 use type Waffle\Contract\Service\ResetInterface;
 use type Exception;
-use function hash;
 use function microtime;
 
 class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface

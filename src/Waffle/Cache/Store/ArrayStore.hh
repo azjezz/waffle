@@ -21,6 +21,7 @@ class ArrayStore extends Store
         parent::__construct('', $defaultTtl);
     }
 
+    <<__Override>>
     public function set(string $id, mixed $value, num $ttl = 0): bool
     {
         $this->cache[$id] = shape(
@@ -31,6 +32,7 @@ class ArrayStore extends Store
         return true;
     }
 
+    <<__Override>>
     public function has(string $id): bool
     {
         if (!C\contains_key($this->cache, $id)) {
@@ -52,17 +54,20 @@ class ArrayStore extends Store
         return !$expired;
     }
 
+    <<__Override>>
     public function remove(string $id): bool
     {
         unset($this->cache[$id]);
         return true;
     }
 
+    <<__Override>>
     public function retrieve(string $id): mixed
     {
         return $this->cache[$id]['value'] ?? null;
     }
 
+    <<__Override>>
     public function wipe(string $namespace): bool
     {
         $ok = true;
