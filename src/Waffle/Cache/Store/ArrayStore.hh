@@ -8,7 +8,8 @@ use function microtime;
 
 type Item = shape(
     'value' => mixed,
-    'expiry' => float
+    'expiry' => float,
+    ...
 );
 
 class ArrayStore extends Store

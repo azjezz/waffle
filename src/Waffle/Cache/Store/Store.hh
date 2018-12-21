@@ -17,7 +17,7 @@ use function hash;
 abstract class Store implements StoreInterface, ResetInterface
 {
     protected dict<string, string> $ids = dict[];
-    protected dict<string, shape('value' => mixed, 'ttl' => ?num)> $deferred = dict[];
+    protected dict<string, shape('value' => mixed, 'ttl' => ?num, ...)> $deferred = dict[];
 
     protected string $namespace = '';
     protected string $namespaceVersion = '';
@@ -107,7 +107,7 @@ abstract class Store implements StoreInterface, ResetInterface
     {
         $this->deferred = dict[];
         if ($cleared = $this->versioningIsEnabled) {
-            $namespaceVersion = substr_replace(base64_encode(pack('V', mt_rand())), ':', 5);
+            $namespaceVersion = Str\splice(base64_encode(pack('V', mt_rand())), ':', 5);
             try {
                 $cleared = $this->store('/'.$this->namespace, $namespaceVersion, 0);
             } catch(\Exception $e) {
@@ -179,7 +179,7 @@ abstract class Store implements StoreInterface, ResetInterface
             try {
                 $this->namespaceVersion = $this->get('/'. $this->namespace) as string;
                 if ('1:' === $this->namespaceVersion) {
-                    $this->namespaceVersion = substr_replace(base64_encode(pack('V', time())), ':', 5);
+                    $this->namespaceVersion = Str\splice(base64_encode(pack('V', time())), ':', 5);
                     $this->store('@'.$this->namespace, $this->namespaceVersion, 0);
                 }
             } catch (\Throwable $e) {
@@ -198,9 +198,9 @@ abstract class Store implements StoreInterface, ResetInterface
         }
         $id = $this->namespace.$this->namespaceVersion.$key;
         $max = $this->maxIdLength as int;
-        if (\strlen($id) > $max) {
+        if (Str\length($id) > $max) {
             // Use MD5 to favor speed over security, which is not an issue here
-            $this->ids[$key] = $id = substr_replace(base64_encode(hash('md5', $key, true)), ':', -(\strlen($this->namespaceVersion) + 2));
+            $this->ids[$key] = $id = Str\splice(base64_encode(hash('md5', $key, true)), ':', -(Str\length($this->namespaceVersion) + 2));
             $id = $this->namespace.$this->namespaceVersion.$id;
         }
 
