@@ -106,14 +106,6 @@ class Cache implements CacheInterface, ResetInterface
         return $this->box((): bool ==> $this->pool->hasItem($key));
     }
 
-    /*
-     * Prune all expired items.
-     */
-    public function prune(): bool
-    {
-        return $this->box((): bool ==> $this->pool->prune());
-    }
-
     public function reset(): void
     {
         $this->box((): void ==> {

@@ -238,17 +238,6 @@ class CacheItemPool implements CacheItemPoolInterface, LoggerAwareInterface
     }
 
     /**
-     * Prune all expired items.
-     *
-     * @return bool True if the expired items were successfully remove. False if there was an error
-     *              or the implmentation is not pruneable
-     */
-    public function prune(): bool
-    {
-        return $this->box((): bool ==> $this->store->prune());
-    }
-
-    /**
      * Reset the store to its intial status.
      */
     public function reset(): void
