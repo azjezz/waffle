@@ -19,7 +19,7 @@ class ArrayStore implements StoreInterface
 
     public function store(string $id, mixed $value, num $ttl = 0): bool
     {
-        $expire = 
+        $expire =
         $this->cache[$id] = shape(
             'value' => $value,
             'expiry' => 0 === $ttl ? 0.0 : microtime(true) + $ttl
@@ -35,13 +35,13 @@ class ArrayStore implements StoreInterface
         }
 
         $expiry = $this->cache[$id]['expiry'];
-        
+
         if (0.0 === $expiry) {
             return true;
         }
 
         $expired = $expiry <= microtime(true);
-    
+
         if ($expired) {
             unset($this->cache[$id]);
         }
