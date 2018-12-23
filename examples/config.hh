@@ -11,7 +11,7 @@ require __DIR__.'/../vendor/hh_autoload.hh';
 function main(): noreturn
 {
     $container = new Config\Provider\ContainerProvider([
-        Config\ConfigAggregator::ENABLE_CACHE => true,
+        Config\Configuration::ENABLE_CACHE => true,
     ]);
     $ini  = new Config\Provider\IniFileProvider(realpath(__DIR__) . '/autoload/*.ini');
     $hack = new Config\Provider\HackFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.hh');
