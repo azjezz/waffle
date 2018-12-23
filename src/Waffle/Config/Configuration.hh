@@ -6,11 +6,11 @@ use type Waffle\Contract\Config\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    private ImmMap<string, mixed> $items;
+    private ImmMap<arraykey, mixed> $items;
 
-    public function __construct(?KeyedContainer<string, mixed> $items)
+    public function __construct(?KeyedContainer<arraykey, mixed> $items)
     {
-        $this->items = new ImmMap<string, mixed>($items);
+        $this->items = new ImmMap<arraykey, mixed>($items);
     }
 
     /**
@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
     * @return - an ImmVector containing, as values, the keys of the current
     *           `Configuration`.
     */
-    public function keys(): ImmVector<string>
+    public function keys(): ImmVector<arraykey>
     {
         return $this->items->keys();
     }
@@ -57,7 +57,7 @@ class Configuration implements ConfigurationInterface
     * @return - The value at the specified key; or an exception if the key does
     *           not exist.
     */
-    public function at(string $k): mixed
+    public function at(arraykey $k): mixed
     {
         return $this->items->at($k);
     }
@@ -73,7 +73,7 @@ class Configuration implements ConfigurationInterface
     * @return - The value at the specified key; or `null` if the key does not
     *           exist.
     */
-    public function get(string $k): mixed
+    public function get(arraykey $k): mixed
     {
         return $this->items->get($k);
     }
@@ -86,20 +86,9 @@ class Configuration implements ConfigurationInterface
     * @return - `true` if the specified key is present in the current `Configuration`;
     *           `false` otherwise.
     */
-    public function contains(string $k): bool
+    public function contains(arraykey $k): bool
     {
         return $this->items->contains($k);
-    }
-
-    /**
-    * Returns an iterator that points to beginning of the current `Configuration`.
-    *
-    * @return - A `KeyedIterator` that allows you to traverse the current
-    *           `Configuration`.
-    */
-    public function getIterator(): KeyedIterator<string, mixed>
-    {
-        return $this->items->getIterator();
     }
 
     /**
@@ -110,7 +99,7 @@ class Configuration implements ConfigurationInterface
     *
     * @return - The `Iterable` view of the current `Configuration`.
     */
-    public function items(): Iterable<Pair<string, mixed>>
+    public function items(): Iterable<Pair<arraykey, mixed>>
     {
         return $this->items->items();
     }
