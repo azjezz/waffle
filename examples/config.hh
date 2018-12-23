@@ -17,11 +17,9 @@ function main(): noreturn
     $hack = new Config\Provider\HackFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.hh');
     $json = new Config\Provider\JsonFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.json');
 
-    $aggregator = new Config\ConfigAggregator(vec[
+    $config = new Config\Configuration(vec[
         $container, $ini, $hack, $json
     ], __DIR__ . '/cache/cache.hh');
-
-    $config = new Config\Configuration($aggregator->get());
 
     \var_dump($config->items());
 
