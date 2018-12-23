@@ -67,9 +67,6 @@ TEMPLATE;
 
     /**
      * Attempt to cache discovered configuration.
-     *
-     * @param array $config
-     * @param null|string $cachedConfigFile
      */
     private function cacheConfig(dict<arraykey, mixed> $config, ?string $cachedConfigFile): void
     {
