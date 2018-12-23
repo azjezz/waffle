@@ -16,6 +16,7 @@ class IniFileProvider extends MultipleResourcesProvider
         protected int $scannerMode = INI_SCANNER_NORMAL
     ) {}
 
+    <<__Override>>
     protected function loadMany(): Generator<string, KeyedContainer<arraykey, mixed>, void>
     {
         foreach ($this->glob($this->pattern) as $file) {
