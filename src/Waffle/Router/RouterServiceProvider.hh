@@ -4,7 +4,7 @@ namespace Waffle\Router;
 
 use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
 
-class RoutererviceProvider extends AbstractServiceProvider
+class RouterServiceProvider extends AbstractServiceProvider
 {
     protected vec<string> $provides = vec[
         RouteCollector::class,
