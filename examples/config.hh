@@ -11,22 +11,19 @@ require __DIR__.'/../vendor/hh_autoload.hh';
 function main(): noreturn
 {
     $container = new Config\Provider\ContainerProvider([
-        Config\ConfigAggregator::ENABLE_CACHE => false,
+        Config\ConfigAggregator::ENABLE_CACHE => true,
     ]);
+    $ini  = new Config\Provider\IniFileProvider(realpath(__DIR__) . '/autoload/*.ini');
     $hack = new Config\Provider\HackFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.hh');
     $json = new Config\Provider\JsonFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.json');
 
     $aggregator = new Config\ConfigAggregator(vec[
-        $container, $hack, $json
+        $container, $ini, $hack, $json
     ], __DIR__ . '/cache/cache.hh');
 
     $config = new Config\Configuration($aggregator->get());
 
-    \var_dump(
-        $config->items()->firstValue()?->lastValue(), 
-        // same as this
-        $config->get('a')
-    );
-    // "a" is the first pair in the items, the last value in `a pair` is the value of "a" where the first value is "a" ( the key )
+    \var_dump($config->items());
+
     exit(0);
 }
