@@ -4,19 +4,10 @@ namespace Waffle\Config;
 
 use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
-use function array_key_exists;
-use function class_exists;
 use function date;
 use function file_exists;
 use function file_put_contents;
 use function get_class;
-use function gettype;
-use function is_array;
-use function is_callable;
-use function is_int;
-use function is_object;
-use function is_string;
-use function sprintf;
 use function var_export;
 
 class ConfigAggregator

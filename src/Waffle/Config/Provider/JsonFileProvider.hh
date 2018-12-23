@@ -2,7 +2,6 @@
 
 namespace Waffle\Config\Provider;
 
-use namespace Waffle\Config\Exception;
 use type Waffle\Json\Json;
 use type Generator;
 use function file_get_contents;
@@ -15,6 +14,7 @@ class JsonFileProvider extends MultipleResourcesProvider
         private string $pattern
     ) {}
 
+    <<__Override>>
     protected function loadMany(): Generator<string, KeyedContainer<arraykey, mixed>, void>
     {
         foreach ($this->glob($this->pattern) as $file) {

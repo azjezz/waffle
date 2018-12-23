@@ -7,7 +7,7 @@ class NullStore implements StoreInterface
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      */
-    public function store(string $id, mixed $value, ?num $ttl = null): bool
+    public function store(string $_id, mixed $_value, ?num $_ttl = null): bool
     {
         return false;
     }
@@ -15,7 +15,7 @@ class NullStore implements StoreInterface
     /**
      * Sets a cache item to be persisted later.
      */
-    public function defer(string $id, mixed $value, ?num $ttl = null): bool
+    public function defer(string $_id, mixed $_value, ?num $_ttl = null): bool
     {
         return false;
     }
@@ -23,7 +23,7 @@ class NullStore implements StoreInterface
     /**
      * Determines whether an item is present in the cache.
      */
-    public function contains(string $id): bool
+    public function contains(string $_id): bool
     {
         return false;
     }
@@ -31,7 +31,7 @@ class NullStore implements StoreInterface
     /**
      * Delete an item from the cache by its unique key.
      */
-    public function delete(string $id): bool
+    public function delete(string $_id): bool
     {
         return false;
     }
@@ -39,7 +39,7 @@ class NullStore implements StoreInterface
     /**
      * Fetches a value from the cache.
      */
-    public function get(string $id): mixed
+    public function get(string $_id): mixed
     {
         return null;
     }

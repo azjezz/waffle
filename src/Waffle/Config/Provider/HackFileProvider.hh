@@ -2,9 +2,7 @@
 
 namespace Waffle\Config\Provider;
 
-use namespace Waffle\Config\Exception;
 use type Generator;
-use function file_exists;
 
 class HackFileProvider extends MultipleResourcesProvider
 {
@@ -14,6 +12,7 @@ class HackFileProvider extends MultipleResourcesProvider
         private string $pattern
     ) {}
 
+    <<__Override>>
     public function loadMany(): Generator<string, KeyedContainer<arraykey, mixed>, void>
     {
         foreach ($this->glob($this->pattern) as $file) {
