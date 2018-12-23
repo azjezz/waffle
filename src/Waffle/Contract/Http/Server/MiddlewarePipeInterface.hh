@@ -16,5 +16,5 @@ use type Waffle\Contract\Service\ResetInterface;
  */
 interface MiddlewarePipeInterface extends MiddlewareInterface, RequestHandlerInterface, ResetInterface
 {
-    public function pipe(MiddlewareInterface $middleware): void;
+    public function pipe(MiddlewareInterface $middleware, int $priority = 0): void;
 }

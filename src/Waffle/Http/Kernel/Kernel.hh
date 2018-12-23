@@ -20,9 +20,9 @@ class Kernel implements KernelInterface
     /*
      * Pipe middleware like unix pipes.
      */
-    public function pipe(MiddlewareInterface $middleware): void
+    public function pipe(MiddlewareInterface $middleware, int $priority = 0): void
     {
-        $this->pipe->pipe($middleware);
+        $this->pipe->pipe($middleware, $priority);
     }
 
     /**

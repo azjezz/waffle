@@ -8,7 +8,7 @@ use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
 use type Waffle\Contract\Http\Server\RequestHandlerInterface;
 use type Waffle\Contract\Http\Server\MiddlewarePipeInterface;
-use type SplQueue;
+use type SplPriorityQueue;
 
 /**
  * Pipe middleware like unix pipes.
@@ -26,11 +26,11 @@ use type SplQueue;
  */
 class MiddlewarePipe implements MiddlewarePipeInterface
 {
-    private SplQueue<MiddlewareInterface> $pipeline;
+    private SplPriorityQueue<MiddlewareInterface> $pipeline;
 
     public function __construct()
     {
-        $this->pipeline = new SplQueue<MiddlewareInterface>();
+        $this->pipeline = new SplPriorityQueue<MiddlewareInterface>();
     }
 
     public function __clone(): void
@@ -41,9 +41,9 @@ class MiddlewarePipe implements MiddlewarePipeInterface
     /**
      * Attach middleware to the pipeline.
      */
-    public function pipe(MiddlewareInterface $middleware): void
+    public function pipe(MiddlewareInterface $middleware, int $priority = 0): void
     {
-        $this->pipeline->enqueue($middleware);
+        $this->pipeline->insert($middleware, $priority);
     }
 
 
@@ -69,7 +69,7 @@ class MiddlewarePipe implements MiddlewarePipeInterface
         }
 
         $next = clone $this;
-        $middleware = $next->pipeline->dequeue();
+        $middleware = $next->pipeline->extract();
         return $middleware->process($request, $next);
     }
 
@@ -87,6 +87,6 @@ class MiddlewarePipe implements MiddlewarePipeInterface
 
     public function reset(): void
     {
-        $this->pipeline = new SplQueue<MiddlewareInterface>();
+        $this->pipeline = new SplPriorityQueue<MiddlewareInterface>();
     }
 }

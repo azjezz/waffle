@@ -6,13 +6,13 @@ use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Server\RequestHandlerInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
-use type SplQueue;
+use type SplPriorityQueue;
 
 class NextMiddlewareProcessor implements RequestHandlerInterface
 {
-    private SplQueue<MiddlewareInterface> $queue;
+    private SplPriorityQueue<MiddlewareInterface> $queue;
 
-    public function __construct(SplQueue<MiddlewareInterface> $queue, private RequestHandlerInterface $handler)
+    public function __construct(SplPriorityQueue<MiddlewareInterface> $queue, private RequestHandlerInterface $handler)
     {
         $this->queue = clone $queue;
     }
@@ -23,7 +23,7 @@ class NextMiddlewareProcessor implements RequestHandlerInterface
             return $this->handler->handle($request);
         }
 
-        $middleware = $this->queue->dequeue();
+        $middleware = $this->queue->extract();
 
         return $middleware->process($request, $this);
     }
