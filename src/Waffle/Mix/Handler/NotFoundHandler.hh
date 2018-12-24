@@ -12,7 +12,7 @@ class NotFoundHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new Message\Response\JsonResponse([
+        return new Message\Response\JsonResponse(dict[
             'status' => 'error',
             'message' => Str\format('Cannot %s %s', $request->getMethod(), $request->getRequestTarget())
         ], Message\StatusCode::STATUS_NOT_FOUND);
