@@ -29,8 +29,6 @@ use type Waffle\Contract\Http\Server\MiddlewareInterface;
  */
 class RouteCollector
 {
-    use RouteCollectorTrait;
-
     public function __construct(
         protected RouterInterface $router
     ) {}
