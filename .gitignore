@@ -1,4 +1,4 @@
-local/
 vendor/
 composer
 *.ignore.hh
+*.pid
