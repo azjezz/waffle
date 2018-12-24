@@ -52,6 +52,8 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
         $this->router       = $container->get(RouterInterface::class) as RouterInterface;
         $this->collector    = $container->get(RouteCollector::class) as RouteCollector;
         $this->events       = $container->get(EventDispatcherInterface::class) as EventDispatcherInterface;
+
+        $this->use(Recipe\BasicRecipe::class);
     }
 
     public function use<TRecipe super Recipe\Recipe>(classname<TRecipe> $recipe): void
