@@ -6,6 +6,7 @@ use namespace HH\Lib\Str;
 use namespace Waffle\Http\Message\Exception;
 use namespace Waffle\Http\Message\__Private;
 use type Waffle\Http\Message\Response;
+use type Waffle\Json\Json;
 use function is_object;
 use function json_encode;
 use function json_last_error;
@@ -21,20 +22,7 @@ use const JSON_ERROR_NONE;
  */
 class JsonResponse extends Response
 {
-    /**
-     * Default flags for json_encode; value of:
-     *
-     * <code>
-     * JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES
-     * </code>
-     *
-     * @const int
-     */
-    const DEFAULT_JSON_FLAGS = 79;
-
     private mixed $payload;
-
-    private int $encodingOptions;
 
     /**
      * Create a JSON response with the given data.
@@ -58,12 +46,9 @@ class JsonResponse extends Response
         mixed $data,
         int $status = 200,
         dict<string, vec<string>> $headers = dict[],
-        int $encodingOptions = self::DEFAULT_JSON_FLAGS
     ) {
         $this->setPayload($data);
-        $this->encodingOptions = $encodingOptions;
-
-        $json = $this->jsonEncode($data, $this->encodingOptions);
+        $json = Json::encode($data);
         $body = __Private\create_stream_from_string($json);
 
         $headers = __Private\inject_content_type_in_headers('application/json', $headers);
@@ -84,46 +69,6 @@ class JsonResponse extends Response
         $new = clone $this;
         $new->setPayload($data);
         return $this->updateBodyFor($new);
-    }
-
-    public function getEncodingOptions(): int
-    {
-        return $this->encodingOptions;
-    }
-
-    public function withEncodingOptions(int $encodingOptions): JsonResponse
-    {
-        $new = clone $this;
-        $new->encodingOptions = $encodingOptions;
-        return $this->updateBodyFor($new);
-    }
-
-    /**
-     * Encode the provided data to JSON.
-     *
-     * @param mixed $data
-     * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
-     */
-    private function jsonEncode(mixed $data, int $encodingOptions): string
-    {
-        if ($data is resource) {
-            throw new Exception\InvalidArgumentException('Cannot JSON encode resources');
-        }
-
-        // Clear json_last_error()
-        json_encode(null);
-
-        $json = json_encode($data, $encodingOptions);
-
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception\InvalidArgumentException(Str\format(
-                'Unable to encode data to JSON in %s: %s',
-                __CLASS__,
-                json_last_error_msg()
-            ));
-        }
-
-        return $json;
     }
 
     /**
@@ -147,9 +92,8 @@ class JsonResponse extends Response
      */
     private function updateBodyFor(JsonResponse $toUpdate): JsonResponse
     {
-        $json = $this->jsonEncode($toUpdate->payload, $toUpdate->encodingOptions);
+        $json = Json::encode($toUpdate->payload);
         $body = __Private\create_stream_from_string($json);
         return $toUpdate->withBody($body);
     }
-
 }
