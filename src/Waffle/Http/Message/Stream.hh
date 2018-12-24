@@ -13,6 +13,7 @@ use function feof;
 use function fread;
 use function stream_get_contents;
 use function stream_get_meta_data;
+use function stream_set_blocking;
 use function strstr;
 use const SEEK_SET;
 
@@ -27,6 +28,8 @@ class Stream implements StreamInterface
 
     public function __construct(resource $body)
     {
+        stream_set_blocking($body, false);
+
         $this->stream = $body;
         $this->uri = $this->getMetadata('uri');
     }
