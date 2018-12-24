@@ -29,6 +29,7 @@ use type Waffle\Contract\Http\Server\MiddlewareInterface;
  */
 class RouteCollector
 {
+
     public function __construct(
         protected RouterInterface $router
     ) {}
@@ -116,7 +117,6 @@ class RouteCollector
     {
         return $this->routes;
     }
-
 
     /**
      * Determine if the route is duplicated in the current list.
