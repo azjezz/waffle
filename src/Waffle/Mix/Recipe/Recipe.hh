@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Mix;
+namespace Waffle\Mix\Recipe;
 
 use namespace Waffle;
 use type Waffle\Mix\Application;
@@ -15,7 +15,7 @@ use type Waffle\Contract\Event\EventInterface;
 use type Waffle\Contract\Event\EventListener;
 use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
 
-abstract class Ingredient
+abstract class Recipe
 {
     final public function __construct(
         private Application $application,

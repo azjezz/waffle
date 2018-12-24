@@ -1,16 +1,15 @@
 <?hh // strict
 
-namespace Waffle\Mix\Ingredients;
+namespace Waffle\Mix\Recipe;
 
 use namespace Waffle\Mix\Middleware;
 use namespace Waffle\Router\Middleware as Router;
 use namespace Waffle\Mix\Handler;
 use type Waffle\Mix\Error\ErrorHandlerInterface;
 use type Waffle\Mix\Error\ErrorHandler;
-use type Waffle\Mix\Ingredient;
 use type Waffle\Mix\Environment;
 
-class Batter extends Ingredient
+class BasicRecipe extends Recipe
 {
     <<__Override>>
     public function mix(): void

@@ -2,9 +2,9 @@
 
 namespace Example\App;
 
-use Waffle\Mix\Ingredient;
+use Waffle\Mix\Recipe\Recipe;
 
-class ExampleIngredient extends Ingredient
+class ExampleRecipe extends Recipe
 {
     public function mix(): void
     {

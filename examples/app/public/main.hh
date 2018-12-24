@@ -11,12 +11,16 @@ require __DIR__ .'/../../../vendor/hh_autoload.hh';
 async function main(): Awaitable<void>
 {
     $configuration = new Config\Configuration(vec[]);
+
     $application = new Mix\Application(
         Mix\Environment::development(/* $debug = false  | default = true in dev-mode */),
         $configuration
     );
-    $application->use(ExampleIngredient::class);
+
+    $application->use(ExampleRecipe::class);
+
     $application->get('/', ExampleHandler::class);
     $application->get('/{something}', ExampleHandler::class);
+
     $application->run();
 }

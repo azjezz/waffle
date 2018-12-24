@@ -52,14 +52,12 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
         $this->router       = $container->get(RouterInterface::class) as RouterInterface;
         $this->collector    = $container->get(RouteCollector::class) as RouteCollector;
         $this->events       = $container->get(EventDispatcherInterface::class) as EventDispatcherInterface;
-
-        $this->use(Ingredients\Batter::class);
     }
 
-    public function use<TIngredient super Ingredient>(classname<TIngredient> $ingredient): void
+    public function use<TRecipe super Recipe\Recipe>(classname<TRecipe> $recipe): void
     {
-        $ingredient = new $ingredient($this, $this->container) as Ingredient;
-        $ingredient->mix();
+        $recipe = new $recipe($this, $this->container) as Recipe\Recipe;
+        $recipe->mix();
     }
 
     public function on(classname<EventInterface> $event, EventListener $listener, int $priority = 0): void
