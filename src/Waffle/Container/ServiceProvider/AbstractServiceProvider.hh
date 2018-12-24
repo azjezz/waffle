@@ -5,7 +5,6 @@ namespace Waffle\Container\ServiceProvider;
 use namespace HH\Lib\C;
 use type Waffle\Container\ContainerAwareTrait;
 use type Waffle\Container\Container;
-use type Waffle\Container\Exception\ContainerException;
 use type Waffle\Container\Inflector\InflectorInterface;
 use type Waffle\Container\Definition\DefinitionInterface;
 use function get_class;
@@ -51,13 +50,7 @@ abstract class AbstractServiceProvider implements ServiceProviderInterface
 
     private function getWaffleContainer(): Container
     {
-        $container = $this->getContainer();
-
-        if ($container is Container) {
-            return $container;
-        }
-
-        throw new ContainerException('The current container is not an instance of Waffel\Container\Container');
+        return $this->getContainer() as Container;
     }
 
     /**
