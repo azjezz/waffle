@@ -35,11 +35,12 @@ class HeadersMarshaler
                     $value = vec[(string) $value];
                 }
 
-                /* HH_IGNORE_ERROR[4110] */
-                $value = vec[
-                    $value as string
-                ];
-                $headers[$name] = $value;
+                $val = vec[];
+                foreach ($value as $v) {
+                    $val[] = (string) $v;
+                }
+
+                $headers[$name] = $val;
                 continue;
             }
 

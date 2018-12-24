@@ -14,9 +14,6 @@ class EventServiceProvider extends AbstractServiceProvider
     <<__Override>>
     public function register(): void
     {
-        $this->share(
-            EventDispatcherInterface::class,
-            () ==> new EventDispatcher()
-        );
+        $this->share(EventDispatcherInterface::class, EventDispatcher::class);
     }
 }

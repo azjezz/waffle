@@ -14,6 +14,7 @@ use type Waffle\Contract\Http\Message\CookieFactoryInterface;
 use type Waffle\Contract\Http\Message\UriFactoryInterface;
 use type Waffle\Contract\Http\Server\MiddlewarePipeInterface;
 use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
+use type Waffle\Container\Argument\RawArgument;
 
 class HttpServiceProvider extends AbstractServiceProvider
 {
@@ -36,9 +37,9 @@ class HttpServiceProvider extends AbstractServiceProvider
     public function register(): void
     {
         $this->share(EmitterInterface::class, Emitter\Emitter::class);
-
-        $this->share(KernelInterface::class, Kernel\Kernel::class);
-
+        $this->share(KernelInterface::class, Kernel\Kernel::class)
+            ->addArgument(MiddlewarePipeInterface::class)
+            ->addArgument(EmitterInterface::class);
         $this->share(ResponseFactoryInterface::class, Message\Factory::class);
         $this->share(RequestFactoryInterface::class, Message\Factory::class);
         $this->share(ServerRequestFactoryInterface::class, Message\Factory::class);
@@ -47,13 +48,8 @@ class HttpServiceProvider extends AbstractServiceProvider
         $this->share(UploadedFileFactoryInterface::class, Message\Factory::class);
         $this->share(CookieFactoryInterface::class, Message\Factory::class);
         $this->share(UriFactoryInterface::class, Message\Factory::class);
-
         $this->share(MiddlewarePipeInterface::class, Server\MiddlewarePipe::class);
-
-        $this->share(Server\MiddlewareFactory::class, () ==> {
-            return new Server\MiddlewareFactory(
-                $this->getContainer()
-            );
-        });
+        $this->share(Server\MiddlewareFactory::class)
+            ->addArgument(new RawArgument($this->getContainer()));
     }
 }

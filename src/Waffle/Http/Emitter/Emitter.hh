@@ -2,6 +2,7 @@
 
 namespace Waffle\Http\Emitter;
 
+use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
 use namespace Waffle\Http\Emitter\Exception;
 use type Waffle\Contract\Http\Emitter\EmitterInterface;
@@ -132,6 +133,9 @@ class Emitter implements EmitterInterface
             $cookies[] = $this->convertCookieIntoString($name, $cookie);
         }
 
+        if (0 === C\count($cookies)) {
+            return $response;
+        }
         return $response->withAddedHeader(static::SET_COOKIE_HEADER, $cookies);
     }
 

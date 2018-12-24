@@ -28,7 +28,7 @@ trait ArgumentResolverTrait
                 $arg = $arg->getValue();
             }
 
-            if (! ($arg is string)) {
+            if (!($arg is string)) {
                 $resolved[] = $arg;
                 continue;
             }
