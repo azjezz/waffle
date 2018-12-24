@@ -15,8 +15,8 @@ async function main(): Awaitable<void>
         Mix\Environment::development(/* $debug = false  | default = true in dev-mode */),
         $configuration
     );
-    $application->use(LocalIngredient::class);
-    $application->get('/', LocalHandler::class);
-    $application->get('/{something}', LocalHandler::class);
+    $application->use(ExampleIngredient::class);
+    $application->get('/', ExampleHandler::class);
+    $application->get('/{something}', ExampleHandler::class);
     $application->run();
 }
