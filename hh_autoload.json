@@ -3,7 +3,8 @@
     "src/Waffle"
   ],
   "devRoots": [
-    "tests/Waffle"
+    "tests/Waffle",
+    "local/src"
   ],
   "devFailureHandler": "Facebook\\AutoloadMap\\HHClientFallbackHandler"
 }
