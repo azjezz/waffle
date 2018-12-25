@@ -18,9 +18,9 @@ use const PHP_SAPI;
 class ApcStore extends Store
 {
     public function __construct(
-        protected SerializerInterface $serializer = new DefaultSerializer(),
         string $namespace = '',
-        num $defaultTtl = 0
+        num $defaultTtl = 0,
+        protected SerializerInterface $serializer = new DefaultSerializer(),
     ) {
         parent::__construct($namespace, $defaultTtl);
     }
