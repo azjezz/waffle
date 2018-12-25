@@ -38,4 +38,9 @@ class Environment
     {
         return $this->environment;
     }
+
+    public function dev(): bool
+    {
+        return $this->env() === static::ENV_DEV || $this->env() === static::ENV_TEST;
+    }
 }
