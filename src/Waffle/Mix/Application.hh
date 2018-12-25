@@ -2,6 +2,7 @@
 
 namespace Waffle\Mix;
 
+use namespace HH\Lib\C;
 use namespace Waffle;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
@@ -32,6 +33,7 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
     protected RouteCollector $collector;
     protected EventDispatcherInterface $events;
     protected MiddlewareFactory $middlewares;
+    private vec<classname<Recipe\Recipe>> $recipes = vec[];
 
     public function __construct(
         protected Environment $environment,
@@ -59,10 +61,16 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
         $this->use(Recipe\BasicRecipe::class);
     }
 
-    public function use<TRecipe super Recipe\Recipe>(classname<TRecipe> $recipe): void
+    public function use(classname<Recipe\Recipe> $recipe): void
     {
+        $this->recipes[] = $recipe;
         $recipe = new $recipe($this, $this->container) as Recipe\Recipe;
         $recipe->mix();
+    }
+
+    public function uses(classname<Recipe\Recipe> $recipe): bool
+    {
+        return C\contains($this->recipes, $recipe);
     }
 
     public function on(classname<EventInterface> $event, EventListener $listener, int $priority = 0): void

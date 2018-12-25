@@ -24,6 +24,13 @@ abstract class Recipe
 
     abstract public function mix(): void;
 
+    final protected function require(classname<Recipe> $recipe): void
+    {
+        if (!$this->application->uses($recipe)) {
+            $this->application->use($recipe);
+        }
+    }
+
     final protected function config(): Configuration
     {
         return $this->container->get(Configuration::class) as Configuration;
