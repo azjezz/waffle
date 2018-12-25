@@ -147,12 +147,16 @@ return %s;',
     * exception thrown when a key is not present, then use `at()`.
     *
     * @param $k - the key from which to retrieve the value.
+    * @param $default - the default value to return if the key does not exist.
     *
-    * @return - The value at the specified key; or `null` if the key does not
+    * @return - The value at the specified key; or $default if the key does not
     *           exist.
     */
-    public function get(arraykey $k): mixed
+    public function get(arraykey $k, mixed $default = null): mixed
     {
+        if (!$this->contains($k)) {
+            return $default;
+        }
         return $this->items->get($k);
     }
 
