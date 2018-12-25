@@ -5,7 +5,7 @@ namespace Waffle\Mix\Recipe;
 use namespace Waffle;
 use type Waffle\Mix\Application;
 use type Waffle\Router\Route;
-use type Waffle\Config\Configuration;
+use type Waffle\Contract\Config\ConfigurationInterface;
 use type Waffle\Container\Container;
 use type Waffle\Container\Inflector\InflectorInterface;
 use type Waffle\Container\Definition\DefinitionInterface;
@@ -31,9 +31,9 @@ abstract class Recipe
         }
     }
 
-    final protected function config(): Configuration
+    final protected function config(): ConfigurationInterface
     {
-        return $this->container->get(Configuration::class) as Configuration;
+        return $this->container->get('config') as ConfigurationInterface;
     }
 
     final protected function on(classname<EventInterface> $event, EventListener $listener, int $priority = 0): void

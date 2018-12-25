@@ -38,14 +38,13 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
 
     public function __construct(
         protected Environment $environment,
-        protected Configuration $configuration,
+        protected ConfigurationInterface $configuration,
         protected Container $container = new Container(),
     ) {
         $container->share('config', () ==> $configuration);
         $container->share('env', () ==> $environment);
         
         $container->share(ConfigurationInterface::class, () ==> $configuration);
-        $container->share(Configuration::class, () ==> $configuration);
         $container->share(Environment::class, () ==> $environment);
         $container->share(Error\ErrorHandlerInterface::class, Error\ErrorHandler::class)
             ->addArgument(Environment::class);
