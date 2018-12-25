@@ -5,7 +5,6 @@ namespace Waffle\Mix;
 use namespace Waffle;
 use type Waffle\Config\Configuration;
 use type Waffle\Container\Container;
-use type Waffle\Container\Argument\RawArgument;
 use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
@@ -40,8 +39,8 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
         protected Configuration $configuration,
         protected Container $container = new Container(),
     ) {
-        $container->add(Configuration::class, new RawArgument($configuration));
-        $container->add(Environment::class, new RawArgument($environment));
+        $container->add(Configuration::class, () ==> $configuration);
+        $container->add(Environment::class, () ==> $environment);
 
         $container->addServiceProvider(new Waffle\Http\HttpServiceProvider());
         $container->addServiceProvider(new Waffle\Router\RouterServiceProvider());
