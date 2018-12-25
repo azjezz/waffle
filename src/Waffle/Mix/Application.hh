@@ -4,6 +4,7 @@ namespace Waffle\Mix;
 
 use namespace HH\Lib\C;
 use namespace Waffle;
+use type Waffle\Contract\Config\ConfigurationInterface;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
 use type Waffle\Contract\Event\EventInterface;
@@ -40,6 +41,10 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
         protected Configuration $configuration,
         protected Container $container = new Container(),
     ) {
+        $container->share('config', () ==> $configuration);
+        $container->share('env', () ==> $environment);
+        
+        $container->share(ConfigurationInterface::class, () ==> $configuration);
         $container->share(Configuration::class, () ==> $configuration);
         $container->share(Environment::class, () ==> $environment);
         $container->share(Error\ErrorHandlerInterface::class, Error\ErrorHandler::class)
