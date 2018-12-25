@@ -1,16 +1,18 @@
 <?hh // strict
 
-namespace Example\App;
+namespace Example\App\Handler;
+
 
 use namespace Waffle\Http\Message;
 use type Waffle\Contract\Http\Server\RequestHandlerInterface;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 
-class ExampleHandler implements RequestHandlerInterface
+class DataHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $data = $request->getAttribute('data') as dict<_, _>;
         $data = dict([
             'status' => 'success',
             'data' => dict([

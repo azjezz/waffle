@@ -3,9 +3,6 @@
 namespace Waffle\Mix;
 
 use namespace Waffle;
-use type Waffle\Config\Configuration;
-use type Waffle\Container\Container;
-use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
 use type Waffle\Contract\Event\EventInterface;
@@ -18,6 +15,9 @@ use type Waffle\Contract\Http\Server\MiddlewareInterface;
 use type Waffle\Contract\Http\Server\RequestHandlerInterface;
 use type Waffle\Contract\Http\Server\MiddlewareInterface;
 use type Waffle\Contract\Service\ResetInterface;
+use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
+use type Waffle\Container\Container;
+use type Waffle\Config\Configuration;
 use type Waffle\Router\RouterInterface;
 use type Waffle\Router\RouteCollector;
 use type Waffle\Http\Message\ServerRequest;
@@ -32,15 +32,19 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
     protected RouteCollector $collector;
     protected EventDispatcherInterface $events;
     protected MiddlewareFactory $middlewares;
-    protected vec<Route> $routes = vec[];
 
     public function __construct(
         protected Environment $environment,
         protected Configuration $configuration,
         protected Container $container = new Container(),
     ) {
-        $container->add(Configuration::class, () ==> $configuration);
-        $container->add(Environment::class, () ==> $environment);
+        $container->share(Configuration::class, () ==> $configuration);
+        $container->share(Environment::class, () ==> $environment);
+        $container->share(Error\ErrorHandlerInterface::class, Error\ErrorHandler::class)
+            ->addArgument(Environment::class);
+        $container->share(Middleware\ErrorMiddleware::class)
+            ->addArgument(Error\ErrorHandlerInterface::class);
+        $container->share(Handler\NotFoundHandler::class);
 
         $container->addServiceProvider(new Waffle\Http\HttpServiceProvider());
         $container->addServiceProvider(new Waffle\Router\RouterServiceProvider());

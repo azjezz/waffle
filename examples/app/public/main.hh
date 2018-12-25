@@ -19,8 +19,5 @@ async function main(): Awaitable<void>
 
     $application->use(ExampleRecipe::class);
 
-    $application->get('/', ExampleHandler::class);
-    $application->get('/{something}', ExampleHandler::class);
-
     $application->run();
 }

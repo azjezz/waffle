@@ -93,38 +93,6 @@ abstract class Recipe
         return $this->route($path, $middleware, null, $name);
     }
 
-    /**
-     * Allows for manipulation of specific types on resolution.
-     */
-    final protected function inflector(string $type, ?(function(mixed): void) $callback = null): InflectorInterface
-    {
-        return $this->container->inflector($type, $callback);
-    }
-
-    /**
-     * Get a definition to extend.
-     */
-    final protected function extend(string $id): DefinitionInterface
-    {
-        return $this->container->extend($id);
-    }
-
-    /**
-     * Add an item to the container.
-     */
-    final protected function add(string $id, mixed $concrete = null, ?bool $shared = null): DefinitionInterface
-    {
-        return $this->container->add($id, $concrete, $shared);
-    }
-
-    /**
-     * Proxy to add with shared as true.
-     */
-    final protected function share(string $id, mixed $concrete = null): DefinitionInterface
-    {
-        return $this->add($id, $concrete, true);
-    }
-
     final protected function container(): ContainerInterface
     {
         return $this->container;

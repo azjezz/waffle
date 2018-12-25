@@ -14,12 +14,6 @@ class BasicRecipe extends Recipe
     <<__Override>>
     public function mix(): void
     {
-        $this->share(ErrorHandlerInterface::class, ErrorHandler::class)
-            ->addArgument(Environment::class);
-        $this->share(Middleware\ErrorMiddleware::class)
-            ->addArgument(ErrorHandlerInterface::class);
-        $this->share(Handler\NotFoundHandler::class);
-
         /*
          *  The error handler should be the first (most outer) middleware to catch
          *  all Exceptions.
