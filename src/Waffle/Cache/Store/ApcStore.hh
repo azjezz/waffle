@@ -15,7 +15,7 @@ use function preg_quote;
 use const APC_ITER_KEY;
 use const PHP_SAPI;
 
-class ApcuStore extends Store
+class ApcStore extends Store
 {
     public function __construct(
         protected SerializerInterface $serializer = new DefaultSerializer(),
