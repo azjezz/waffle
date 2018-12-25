@@ -2,9 +2,7 @@
 
 namespace Waffle\Contract\Http\Session;
 
-use type JsonSerializable;
-
-interface SessionInterface extends JsonSerializable
+interface SessionInterface
 {
     const string SESSION_LIFETIME_KEY = '__SESSION_TTL__';
 
@@ -104,4 +102,6 @@ interface SessionInterface extends JsonSerializable
      *   the SESSION_LIFETIME_KEY value of the session.
      */
     public function lifetime(): int;
+
+    public function getContainer(): KeyedContainer<string, mixed>;
 }
