@@ -7,6 +7,8 @@ use type Waffle\Contract\Http\Session\SessionInterface;
 
 class Session implements SessionInterface
 {
+    const string SESSION_AGE_KEY = '__SESSION_AGE__';
+
     /**
      * Current data within the session.
      */
@@ -19,16 +21,17 @@ class Session implements SessionInterface
     /**
      * Lifetime of the session cookie.
      */
-    private int $lifetime = 0;
+    private int $age = 0;
+
+    private bool $flushed = false;
 
     public function __construct(
         KeyedContainer<string, mixed> $data,
         private string $id = ''
     ) {
         $this->data = $this->originalData = dict($data);
-
-        if (C\contains_key($data, SessionInterface::SESSION_LIFETIME_KEY)) {
-            $this->lifetime = (int) $data[SessionInterface::SESSION_LIFETIME_KEY];
+        if (C\contains_key($data, Session::SESSION_AGE_KEY)) {
+            $this->age = (int) $data[Session::SESSION_AGE_KEY];
         }
     }
 
@@ -90,12 +93,29 @@ class Session implements SessionInterface
     }
 
     /**
+     * Deletes the current session data from the session and
+     * deletes the session cookie. This is used if you want to ensure
+     * that the previous session data can't be accessed again from the
+     * user's browser.
+     */
+    public function flush(): void
+    {
+        $this->clear();
+        $this->flushed = true;
+    }
+
+    public function flushed(): bool
+    {
+        return $this->flushed;
+    }
+
+    /**
      * Does the session contain changes? If not, the middleware handling
      * session persistence may not need to do more work.
      */
-    public function hasChanged(): bool
+    public function changed(): bool
     {
-        if ($this->isRegenerated()) {
+        if ($this->regenerated()) {
             return true;
         }
 
@@ -124,41 +144,33 @@ class Session implements SessionInterface
      * Method to determine if the session was regenerated; should return
      * true if the instance was produced via regenerate().
      */
-    public function isRegenerated(): bool
+    public function regenerated(): bool
     {
         return $this->isRegenerated;
     }
 
     /**
-     * Define how long the session cookie should live.
+     * Sets the expiration time for the session.
+     * 
+     * The session will expire after that many seconds
+     * of inactivity.
      *
-     * Use this value to detail to the session persistence engine how long the
-     * session cookie should live.
-     *
-     * This value could be passed as the $lifetime value of
-     * session_set_cookie_params(), or used to create an Expires or Max-Age
-     * parameter for a session cookie.
-     *
-     * Since cookie lifetime is communicated by the server to the client, and
-     * not vice versa, the value should likely be persisted in the session
-     * itself, to ensure that session regeneration uses the same value. We
-     * recommend using the SESSION_LIFETIME_KEY value to communicate this.
-     *
-     * @param int $duration Number of seconds the cookie should persist for.
+     * for example, calling 
+     * <code>
+     *     $session->exipre(300);
+     * </code>
+     * would make the session expire in 5 minutes of inactivity.
      */
-    public function persist(int $duration): void
+    public function expire(int $duration): void
     {
-        $this->lifetime = $duration;
-        $this->set(
-            SessionInterface::SESSION_LIFETIME_KEY,
-            $duration
-        );
+        $this->set(Session::SESSION_AGE_KEY, $duration);
+        $this->age = $duration;
     }
 
-    /**
+    /*
      * Determine how long the session cookie should live.
      *
-     * Generally, this will return the value provided to persistFor().
+     * Generally, this will return the value provided to exipre().
      *
      * If that method has not been called, the value can return one of the
      * following:
@@ -166,17 +178,16 @@ class Session implements SessionInterface
      * - 0 or a negative value, to indicate the cookie should be treated as a
      *   session cookie, and expire when the window is closed. This should be
      *   the default behavior.
-     * - If persist() was provided during session creation or anytime later,
+     * - If expire() was provided during session creation or anytime later,
      *   the persistence engine should pull the TTL value from the session itself
-     *   and return it here. Typically, this value should be communicated via
-     *   the SESSION_LIFETIME_KEY value of the session.
+     *   and return it here.
      */
-    public function lifetime(): int
+    public function age(): int
     {
-        return $this->lifetime;
+        return $this->age;
     }
 
-    public function getContainer(): KeyedContainer<string, mixed>
+    public function items(): KeyedContainer<string, mixed>
     {
         return $this->data;
     }
