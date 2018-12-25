@@ -2,10 +2,10 @@
 
 namespace Waffle\Contract\Http\Session;
 
+use type DateTime;
+
 interface SessionInterface
 {
-    const string SESSION_LIFETIME_KEY = '__SESSION_TTL__';
-
     /**
      * Retrieve the session identifier.
      */
@@ -37,15 +37,48 @@ interface SessionInterface
     public function remove(string $name): void;
 
     /**
+     * Sets the expiration time for the session.
+     * 
+     * The session will expire after that many seconds
+     * of inactivity.
+     *
+     * for example, calling 
+     * <code>
+     *     $session->exipre(300);
+     * </code>
+     * would make the session expire in 5 minutes of inactivity.
+     */
+    public function expire(int $duration): void;
+
+    /*
+     * Determine how long the session cookie should live.
+     *
+     * Generally, this will return the value provided to exipre().
+     *
+     * If that method has not been called, the value can return one of the
+     * following:
+     *
+     * - 0 or a negative value, to indicate the cookie should be treated as a
+     *   session cookie, and expire when the window is closed. This should be
+     *   the default behavior.
+     * - If expire() was provided during session creation or anytime later,
+     *   the persistence engine should pull the TTL value from the session itself
+     *   and return it here.
+     */
+    public function age(): int;
+
+    /**
      * Clear all values.
      */
     public function clear(): void;
 
     /**
-     * Does the session contain changes? If not, the middleware handling
-     * session persistence may not need to do more work.
+     * Deletes the current session data from the session and
+     * deletes the session cookie. This is used if you want to ensure
+     * that the previous session data can't be accessed again from the
+     * user's browser.
      */
-    public function hasChanged(): bool;
+    public function flush(): void;
 
     /**
      * Regenerate the session.
@@ -61,47 +94,26 @@ interface SessionInterface
     public function regenerate(): SessionInterface;
 
     /**
+     * Does the session contain changes? If not, the middleware handling
+     * session persistence may not need to do more work.
+     */
+    public function changed(): bool;
+
+    /**
      * Method to determine if the session was regenerated; should return
      * true if the instance was produced via regenerate().
      */
-    public function isRegenerated(): bool;
+    public function regenerated(): bool;
 
     /**
-     * Define how long the session cookie should live.
-     *
-     * Use this value to detail to the session persistence engine how long the
-     * session cookie should live.
-     *
-     * This value could be passed as the $lifetime value of
-     * session_set_cookie_params(), or used to create an Expires or Max-Age
-     * parameter for a session cookie.
-     *
-     * Since cookie lifetime is communicated by the server to the client, and
-     * not vice versa, the value should likely be persisted in the session
-     * itself, to ensure that session regeneration uses the same value. We
-     * recommend using the SESSION_LIFETIME_KEY value to communicate this.
-     *
-     * @param int $duration Number of seconds the cookie should persist for.
+     * Method to determine if the session was flushed; should return
+     * true if flush() was called.
      */
-    public function persist(int $duration): void;
+    public function flushed(): bool;
 
     /**
-     * Determine how long the session cookie should live.
-     *
-     * Generally, this will return the value provided to persistFor().
-     *
-     * If that method has not been called, the value can return one of the
-     * following:
-     *
-     * - 0 or a negative value, to indicate the cookie should be treated as a
-     *   session cookie, and expire when the window is closed. This should be
-     *   the default behavior.
-     * - If persist() was provided during session creation or anytime later,
-     *   the persistence engine should pull the TTL value from the session itself
-     *   and return it here. Typically, this value should be communicated via
-     *   the SESSION_LIFETIME_KEY value of the session.
+     * Get the session items; this method is used
+     * to get the session data for storage.
      */
-    public function lifetime(): int;
-
-    public function getContainer(): KeyedContainer<string, mixed>;
+    public function items(): KeyedContainer<string, mixed>;
 }
