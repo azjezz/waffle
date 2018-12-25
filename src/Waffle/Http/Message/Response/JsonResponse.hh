@@ -2,15 +2,10 @@
 
 namespace Waffle\Http\Message\Response;
 
-use namespace HH\Lib\Str;
-use namespace Waffle\Http\Message\Exception;
 use namespace Waffle\Http\Message\__Private;
 use type Waffle\Http\Message\Response;
 use type Waffle\Json\Json;
 use function is_object;
-use function json_encode;
-use function json_last_error;
-use function json_last_error_msg;
 use const JSON_ERROR_NONE;
 
 /**
