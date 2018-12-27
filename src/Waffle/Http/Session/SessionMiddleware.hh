@@ -17,8 +17,7 @@ class SessionMiddleware implements MiddlewareInterface
     {
         $session = $this->persistence->initialize($request);
 
-        return $handler->handle(
-                $request->withAttribute('session', $session)
-            ) |> $this->persistence->persist($session, $$);
+        return $handler->handle($request->withAttribute('session', $session))
+            |> $this->persistence->persist($session, $$);
     }
 }
