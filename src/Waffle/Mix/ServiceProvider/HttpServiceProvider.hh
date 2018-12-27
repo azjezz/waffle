@@ -3,6 +3,7 @@
 namespace Waffle\Mix\ServiceProvider;
 
 use namespace Waffle\Http;
+use namespace Waffle\Contract\Cache;
 use type Waffle\Contract\Http\Emitter\EmitterInterface;
 use type Waffle\Contract\Http\Kernel\KernelInterface;
 use type Waffle\Contract\Http\Message\ResponseFactoryInterface;
@@ -74,12 +75,22 @@ class HttpServiceProvider extends AbstractServiceProvider
 
         $this->share(Http\Session\Persistence\SessionPersistenceInterface::class, () ==> {
             $persistence = $this->sessionOptions['persistence'] ?? Http\Session\Persistence\NativeSessionPersistence::class;
-            return $this->getContainer()->get($persistence);
+            switch ($persistence) {
+                case 'cache':
+                    return $this->getContainer()->get(Http\Session\Persistence\CacheSessionPersistence::class);
+                case 'native':
+                    return $this->getContainer()->get(Http\Session\Persistence\NativeSessionPersistence::class);
+                default:
+                    return $this->getContainer()->get($persistence);
+                    break;
+            }
         });
 
         $this->share(Http\Session\Persistence\NativeSessionPersistence::class)
             ->addArgument(Http\Session\SessionOptions::class);
+
         $this->share(Http\Session\Persistence\CacheSessionPersistence::class)
+            ->addArgument(Cache\CacheItemPoolInterface::class)
             ->addArgument(Http\Session\SessionOptions::class);
     }
 }

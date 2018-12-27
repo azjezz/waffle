@@ -80,6 +80,8 @@ type SessionOptions = shape(
     /**
      * Specifies the session persistence implementation to use.
      * Defaults to the native session persistence.
+     *
+     * Built-in persistence : 'cache', 'native'.
      */
     ?'persistence' => string,
 
