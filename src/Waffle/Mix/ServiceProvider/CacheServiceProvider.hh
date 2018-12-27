@@ -63,7 +63,7 @@ class CacheServiceProvider extends AbstractServiceProvider
                 ->addArgument(SerializerInterface::class);
         
         $this->share(Store\NullStore::class);
-        
+
         switch ($store) {
             case 'apc':
             case Store\ApcStore::class:
@@ -77,7 +77,8 @@ class CacheServiceProvider extends AbstractServiceProvider
             case Store\RedisStore::class:
                 $store = Store\RedisStore::class;
                 break;
-            default:
+            case 'null':
+            case Store\NullStore::class:
                 $store = Store\NullStore::class;
                 break;
         }
