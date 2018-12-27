@@ -1,7 +1,8 @@
 <?hh // strict
 
-namespace Waffle\Event;
+namespace Waffle\Mix\ServiceProvider;
 
+use namespace Waffle\Event;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -14,6 +15,6 @@ class EventServiceProvider extends AbstractServiceProvider
     <<__Override>>
     public function register(): void
     {
-        $this->share(EventDispatcherInterface::class, EventDispatcher::class);
+        $this->share(EventDispatcherInterface::class, Event\EventDispatcher::class);
     }
 }
