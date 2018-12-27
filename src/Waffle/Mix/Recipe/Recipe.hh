@@ -7,8 +7,6 @@ use type Waffle\Mix\Application;
 use type Waffle\Router\Route;
 use type Waffle\Contract\Config\ConfigurationInterface;
 use type Waffle\Container\Container;
-use type Waffle\Container\Inflector\InflectorInterface;
-use type Waffle\Container\Definition\DefinitionInterface;
 use type Waffle\Contract\Container\ContainerInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
 use type Waffle\Contract\Event\EventInterface;

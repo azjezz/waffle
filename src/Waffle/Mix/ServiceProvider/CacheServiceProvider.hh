@@ -5,7 +5,6 @@ namespace Waffle\Mix\ServiceProvider;
 use namespace Waffle\Cache\Store;
 use namespace Waffle\Cache\Serializer;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
-use type Waffle\Contract\SimpleCache\CacheInterface;
 use type Waffle\Contract\Config\ConfigurationInterface;
 use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
 use type Waffle\Container\Argument\RawArgument;
@@ -13,7 +12,6 @@ use type Waffle\Cache\CacheItemPool;
 use type Waffle\Cache\Store\StoreInterface;
 use type Waffle\Cache\Serializer\SerializerInterface;
 use type Waffle\Mix\Environment;
-use type Waffle\SimpleCache\Cache;
 use type Redis;
 
 class CacheServiceProvider extends AbstractServiceProvider
@@ -47,21 +45,21 @@ class CacheServiceProvider extends AbstractServiceProvider
         $store = $config['store'] ?? ($env->debug() ? 'null' : ($env->dev() ? 'array' : 'apc'));
         $namespace = $config['namespace'] ?? '';
         $defaultTtl = $config['default_ttl'] ?? 0;
-    
+
         $this->share(Store\ApcStore::class)
                 ->addArgument(new RawArgument($namespace))
                 ->addArgument(new RawArgument($defaultTtl))
                 ->addArgument(SerializerInterface::class);
-        
+
         $this->share(Store\ArrayStore::class)
                 ->addArgument(new RawArgument($defaultTtl));
-                
+
         $this->share(Store\RedisStore::class)
                 ->addArgument(Redis::class)
                 ->addArgument(new RawArgument($namespace))
                 ->addArgument(new RawArgument($defaultTtl))
                 ->addArgument(SerializerInterface::class);
-        
+
         $this->share(Store\NullStore::class);
 
         switch ($store) {

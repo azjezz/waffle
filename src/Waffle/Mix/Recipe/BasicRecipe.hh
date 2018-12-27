@@ -5,9 +5,6 @@ namespace Waffle\Mix\Recipe;
 use namespace Waffle\Mix\Middleware;
 use namespace Waffle\Router\Middleware as Router;
 use namespace Waffle\Mix\Handler;
-use type Waffle\Mix\Error\ErrorHandlerInterface;
-use type Waffle\Mix\Error\ErrorHandler;
-use type Waffle\Mix\Environment;
 
 class BasicRecipe extends Recipe
 {

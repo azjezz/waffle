@@ -12,7 +12,7 @@ type SessionOptions = shape(
          * Defaults to "hh-session".
          */
         ?'name' => string,
-        
+
         /**
          * Specifies the lifetime of the cookie in seconds
          * which is sent to the browser.
@@ -26,7 +26,7 @@ type SessionOptions = shape(
          * Default to "/".
          */
         ?'path' => string,
-        
+
         /**
          * Specifies the domain to set in the session cookie.
          * Default is none at all meaning the host name of
@@ -34,14 +34,14 @@ type SessionOptions = shape(
          * cookies specification.
          */
         ?'domain' => string,
-        
+
         /**
          * Specifies whether the cookie should only be sent over
          * secure connections.
          * Defaults to false.
          */
         ?'secure' => bool,
-        
+
         /**
          * Marks the cookie as accessible only through the HTTP
          * Protocol. this means that cookie won't be accessible by
@@ -51,7 +51,7 @@ type SessionOptions = shape(
          * Defaults to false.
          */
         ?'http_only' => bool,
-        
+
         /**
          * Allows servers to assert that a cookie ought not
          * to be sent along with cross-site requests.

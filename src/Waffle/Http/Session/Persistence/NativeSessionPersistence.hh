@@ -9,20 +9,9 @@ use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Session\SessionInterface;
 use type Waffle\Http\Session\SessionOptions;
 use type Waffle\Http\Session\Session;
-use type SessionHandlerInterface;
-use type SessionHandler;
-use function bin2hex;
-use function filemtime;
-use function gmdate;
-use function ini_get;
-use function is_file;
-use function random_bytes;
 use function session_id;
-use function session_name;
 use function session_start;
 use function session_commit;
-use function sprintf;
-use function time;
 use function ini_set;
 
 class NativeSessionPersistence extends AbstractSessionPersistence
@@ -34,6 +23,7 @@ class NativeSessionPersistence extends AbstractSessionPersistence
     /**
      * Generate a session data instance based on the request.
      */
+    <<__Override>>
     public function initialize(ServerRequestInterface $request): SessionInterface
     {
 
@@ -52,6 +42,7 @@ class NativeSessionPersistence extends AbstractSessionPersistence
      * Persists the session data, returning a response instance with any
      * artifacts required to return to the client.
      */
+    <<__Override>>
     public function persist(SessionInterface $session, ResponseInterface $response): ResponseInterface
     {
         if ($session->flushed()) {
@@ -78,10 +69,10 @@ class NativeSessionPersistence extends AbstractSessionPersistence
 
         return $this->withCacheHeaders(
             $response->withCookie(
-                $this->options['cookie']['name'] ?? 'hh-session', 
+                $this->options['cookie']['name'] ?? 'hh-session',
                 $this->createCookie($id, $session->age())
             )
-        );        
+        );
     }
 
     private function startSession(string $id, dict<string, mixed> $options = dict[]): void
@@ -109,6 +100,6 @@ class NativeSessionPersistence extends AbstractSessionPersistence
         $this->startSession($id, dict[
             'use_strict_mode' => false
         ]);
-        return $id;    
+        return $id;
     }
 }

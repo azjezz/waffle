@@ -15,7 +15,6 @@ use type Waffle\Contract\Http\Message\UploadedFileFactoryInterface;
 use type Waffle\Contract\Http\Message\CookieFactoryInterface;
 use type Waffle\Contract\Http\Message\UriFactoryInterface;
 use type Waffle\Contract\Http\Server\MiddlewarePipeInterface;
-use type Waffle\Contract\Http\Session\SessionInterface;
 use type Waffle\Container\ServiceProvider\AbstractServiceProvider;
 use type Waffle\Container\Argument\RawArgument;
 

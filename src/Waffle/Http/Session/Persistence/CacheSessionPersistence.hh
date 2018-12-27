@@ -4,24 +4,13 @@ namespace Waffle\Http\Session\Persistence;
 
 use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
-use namespace Waffle\Http\Message;
-use namespace Waffle\Http\Session\Exception;
 use type Waffle\Contract\Http\Message\ServerRequestInterface;
 use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Session\SessionInterface;
 use type Waffle\Contract\Cache\CacheItemPoolInterface;
 use type Waffle\Http\Session\Session;
 use type Waffle\Http\Session\SessionOptions;
-use type DateTime;
 use type DateInterval;
-use type DateTimeImmutable;
-use function bin2hex;
-use function filemtime;
-use function file_exists;
-use function getcwd;
-use function gmdate;
-use function random_bytes;
-use function time;
 
 /**
  * Session persistence using a cache item pool.
@@ -37,6 +26,7 @@ class CacheSessionPersistence extends AbstractSessionPersistence
         protected SessionOptions $options
     ) {}
 
+    <<__Override>>
     public function initialize(ServerRequestInterface $request): SessionInterface
     {
         $this->pathTranslated = (string) $request->getServerParams()['PATH_TRANSLATED'] ?? '';
@@ -47,6 +37,7 @@ class CacheSessionPersistence extends AbstractSessionPersistence
         return $session;
     }
 
+    <<__Override>>
     public function persist(SessionInterface $session, ResponseInterface $response): ResponseInterface
     {
         $id = $session->getId();
@@ -76,7 +67,7 @@ class CacheSessionPersistence extends AbstractSessionPersistence
 
         return $this->withCacheHeaders(
             $response->withCookie(
-                $this->options['cookie']['name'] ?? 'hh-session', 
+                $this->options['cookie']['name'] ?? 'hh-session',
                 $this->createCookie($id, $session->age())
             )
         );

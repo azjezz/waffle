@@ -2,11 +2,9 @@
 
 namespace Waffle\Mix\Recipe;
 
-use type Waffle\Contract;
 use type Waffle\Http\Session\SessionOptions;
 use type Waffle\Http\Session\SessionMiddleware;
 use type Waffle\Http\Session\Persistence\CacheSessionPersistence;
-use type Waffle\Mix\Session\SessionPersistenceServiceProvider;
 
 class SessionRecipe extends Recipe
 {

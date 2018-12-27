@@ -151,11 +151,11 @@ class Session implements SessionInterface
 
     /**
      * Sets the expiration time for the session.
-     * 
+     *
      * The session will expire after that many seconds
      * of inactivity.
      *
-     * for example, calling 
+     * for example, calling
      * <code>
      *     $session->exipre(300);
      * </code>

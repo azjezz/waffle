@@ -41,10 +41,10 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
 
     protected string $pathTranslated = '';
 
-    protected function flush(SessionInterface $session, ResponseInterface $response): ResponseInterface
+    protected function flush(SessionInterface $_session, ResponseInterface $response): ResponseInterface
     {
         return $response->withCookie(
-            $this->options['cookie']['name'] ?? 'hh-session', 
+            $this->options['cookie']['name'] ?? 'hh-session',
             new Cookie('')
                 |> $$->withExpires(DateTime::createFromFormat('D, d M Y H:i:s T', static::CACHE_PAST_DATE))
         );
@@ -122,7 +122,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
                     'Expires'       => vec[self::CACHE_PAST_DATE],
                     'Cache-Control' => vec['no-store', 'no-cache', 'must-revalidate'],
                     'Pragma'        => vec['no-cache']
-                ];           
+                ];
             case CacheLimiter::PUBLIC:
                 $maxAge = 60 * ($this->options['cache_expire'] ?? 180);
                 return $this->withLastModifiedAndMaxAge(dict[
@@ -154,7 +154,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
         if (Str\is_empty($this->pathTranslated) || !file_exists($this->pathTranslated)) {
             return $headers;
         }
-        
+
         $lastModified = strftime(static::HTTP_DATE_FORMAT, filemtime($this->pathTranslated));
         $headers['Last-Modified'] = vec[$lastModified];
         return $headers;

@@ -19,7 +19,6 @@ use type Waffle\Contract\Http\Server\MiddlewareInterface;
 use type Waffle\Contract\Service\ResetInterface;
 use type Waffle\Container\ServiceProvider\ServiceProviderInterface;
 use type Waffle\Container\Container;
-use type Waffle\Config\Configuration;
 use type Waffle\Router\RouterInterface;
 use type Waffle\Router\RouteCollector;
 use type Waffle\Http\Message\ServerRequest;
@@ -43,7 +42,7 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
     ) {
         $container->share('config', () ==> $configuration);
         $container->share('env', () ==> $environment);
-        
+
         $container->share(ConfigurationInterface::class, () ==> $configuration);
         $container->share(Environment::class, () ==> $environment);
         $container->share(Error\ErrorHandlerInterface::class, Error\ErrorHandler::class)
