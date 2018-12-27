@@ -52,9 +52,11 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
             ->addArgument(Error\ErrorHandlerInterface::class);
         $container->share(Handler\NotFoundHandler::class);
 
-        $container->addServiceProvider(new Waffle\Http\HttpServiceProvider());
-        $container->addServiceProvider(new Waffle\Router\RouterServiceProvider());
-        $container->addServiceProvider(new Waffle\Event\EventServiceProvider());
+        $container->addServiceProvider(new ServiceProvider\HttpServiceProvider(
+            $configuration->get('session', shape()) as Waffle\Http\Session\SessionOptions
+        ));
+        $container->addServiceProvider(new ServiceProvider\RouterServiceProvider());
+        $container->addServiceProvider(new ServiceProvider\EventServiceProvider());
 
         $this->middlewares  = new MiddlewareFactory($container);
         $this->kernel       = $container->get(KernelInterface::class) as KernelInterface;
