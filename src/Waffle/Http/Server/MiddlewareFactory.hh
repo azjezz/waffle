@@ -32,7 +32,6 @@ class MiddlewareFactory
 
         if ($middleware is Container<_>) {
             $pipe = new MiddlewarePipe();
-            /* HH_IGNORE_ERROR[4110] */
             foreach ($middleware as $value) {
                 $pipe->pipe(
                     $this->prepare($value)
