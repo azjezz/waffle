@@ -10,7 +10,6 @@ use type Waffle\Contract\Http\Message\ResponseInterface;
 use type Waffle\Contract\Http\Session\SessionInterface;
 use type Waffle\Http\Message\Cookie;
 use type DateTime;
-use type DateTimeImmutable;
 use type DateInterval;
 use function strftime;
 use function file_exists;
