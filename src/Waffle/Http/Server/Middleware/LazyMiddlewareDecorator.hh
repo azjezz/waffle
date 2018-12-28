@@ -14,15 +14,16 @@ class LazyMiddlewareDecorator implements MiddlewareInterface
     public function __construct(
         private ContainerInterface $container,
         private MiddlewareFactory $factory,
-        private string $middleware
+        private mixed $middleware
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if ($this->middleware is string && $this->container->has($this->middleware)) {
+            $this->middleware = $this->container->get($this->middleware as string);
+        }
         return $this->factory->prepare(
-            $this->container->get(
-                $this->middleware
-            )
+            $this->middleware
         )->process($request, $handler);
     }
 }

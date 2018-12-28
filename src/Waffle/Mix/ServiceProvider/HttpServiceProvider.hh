@@ -86,10 +86,10 @@ class HttpServiceProvider extends AbstractServiceProvider
         });
 
         $this->share(Http\Session\Persistence\NativeSessionPersistence::class)
-            ->addArgument(Http\Session\SessionOptions::class);
+            ->addArgument(new RawArgument($this->sessionOptions));
 
         $this->share(Http\Session\Persistence\CacheSessionPersistence::class)
             ->addArgument(Cache\CacheItemPoolInterface::class)
-            ->addArgument(Http\Session\SessionOptions::class);
+            ->addArgument(new RawArgument($this->sessionOptions));
     }
 }

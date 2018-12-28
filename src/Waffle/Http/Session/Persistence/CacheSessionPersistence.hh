@@ -29,7 +29,7 @@ class CacheSessionPersistence extends AbstractSessionPersistence
     <<__Override>>
     public function initialize(ServerRequestInterface $request): SessionInterface
     {
-        $this->pathTranslated = (string) $request->getServerParams()['PATH_TRANSLATED'] ?? '';
+        $this->pathTranslated = (string) ( $request->getServerParams()['PATH_TRANSLATED'] ?? '' );
         $id = $this->getCookieFromRequest($request);
         $sessionData = $id ? $this->getSessionDataFromCache($id) : dict[];
         $session = new Session($sessionData, $id);

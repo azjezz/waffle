@@ -12,10 +12,9 @@ class SessionRecipe extends Recipe
     public function mix(): void
     {
         $options = $this->config()->get('session', shape()) as SessionOptions;
-
         $persistence = $options['persistence'] ?? null;
 
-        if ($persistence === CacheSessionPersistence::class) {
+        if (CacheSessionPersistence::class === $persistence || 'cache' === $persistence) {
             $this->require(CacheRecipe::class);
         }
 

@@ -26,8 +26,7 @@ class NativeSessionPersistence extends AbstractSessionPersistence
     <<__Override>>
     public function initialize(ServerRequestInterface $request): SessionInterface
     {
-
-        $this->pathTranslated = (string) $request->getServerParams()['PATH_TRANSLATED'] ?? '';
+        $this->pathTranslated = (string) ( $request->getServerParams()['PATH_TRANSLATED'] ?? '' );
         $sessionId = $this->getCookieFromRequest($request);
         $id = $sessionId === '' ? $this->generateSessionId() : $sessionId;
         $this->startSession($id);

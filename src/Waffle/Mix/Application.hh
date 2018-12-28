@@ -4,6 +4,7 @@ namespace Waffle\Mix;
 
 use namespace HH\Lib\C;
 use namespace Waffle;
+use namespace Waffle\Http;
 use type Waffle\Contract\Config\ConfigurationInterface;
 use type Waffle\Contract\Event\EventDispatcherInterface;
 use type Waffle\Contract\Event\EventSubscriberInterface;
@@ -123,7 +124,9 @@ class Application implements MiddlewareInterface, RequestHandlerInterface, Emitt
 
     public function route(string $path, mixed $middleware, ?vec<string> $methods, ?string $name = null): Route
     {
-        $middleware = $this->middlewares->prepare($middleware);
+        $middleware = new Http\Server\Middleware\LazyMiddlewareDecorator(
+            $this->container, $this->middlewares, $middleware
+        );
         return $this->collector->route($path, $middleware, $methods, $name);
     }
 

@@ -56,7 +56,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
 
         return new Cookie($id)
             |> $$->withExpires(
-                new DateTimeImmutable()
+                new DateTime()
                     |> $$->add(
                         new DateInterval(Str\format('PT%dS', $expires))
                     )
@@ -89,7 +89,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
 
     protected function withCacheHeaders(ResponseInterface $response): ResponseInterface
     {
-        $cacheLimiter = $this->options['cache_limiter'] ?? null;
+        $cacheLimiter = Shapes::idx($this->options, 'cache_limiter', null);
         if (null === $cacheLimiter || $this->responseAlreadyHasCacheHeaders($response)) {
             return $response;
         }
@@ -124,7 +124,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
                     'Pragma'        => vec['no-cache']
                 ];
             case CacheLimiter::PUBLIC:
-                $maxAge = 60 * ($this->options['cache_expire'] ?? 180);
+                $maxAge = 60 * Shapes::idx($this->options, 'cache_expire', 180);
                 return $this->withLastModifiedAndMaxAge(dict[
                     'Expires' => vec[strftime(static::HTTP_DATE_FORMAT, time() + $maxAge)],
                     'Cache-Control' => vec['public'],
@@ -148,7 +148,7 @@ abstract class AbstractSessionPersistence implements SessionPersistenceInterface
      */
     private function withLastModifiedAndMaxAge(dict<string, vec<string>> $headers): dict<string, vec<string>>
     {
-        $maxAge = 60 * ($this->options['cache_expire'] ?? 180);
+        $maxAge = 60 * Shapes::idx($this->options, 'cache_expire', 180);
         $headers['Cache-Control'][] = Str\format('max-age=%d', $maxAge);
 
         if (Str\is_empty($this->pathTranslated) || !file_exists($this->pathTranslated)) {
