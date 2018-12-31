@@ -27,8 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Waffle\\Tests\\": "tests/Waffle",
-            "Example\\App\\": "examples/src"
+            "Waffle\\Tests\\": "tests/Waffle"
         }
     },
     "scripts": {
@@ -38,8 +37,7 @@
         "check": [
             "@type-check",
             "@lint",
-            "@test",
-            "echo | cat test_passed.txt"
+            "@test"
         ]
     }
 }
