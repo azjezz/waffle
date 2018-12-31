@@ -2,7 +2,7 @@
 
 namespace Waffle\Config\Provider;
 
-use type Waffle\Json\Json;
+use type Waffle\Lib\Json;
 use type Generator;
 use function file_get_contents;
 

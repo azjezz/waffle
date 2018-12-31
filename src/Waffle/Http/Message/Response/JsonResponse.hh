@@ -4,7 +4,7 @@ namespace Waffle\Http\Message\Response;
 
 use namespace Waffle\Http\Message\__Private;
 use type Waffle\Http\Message\Response;
-use type Waffle\Json\Json;
+use type Waffle\Lib\Json;
 use function is_object;
 use const JSON_ERROR_NONE;
 

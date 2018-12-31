@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Json;
+namespace Waffle\Lib;
 
 use function json_encode;
 use function json_decode;
@@ -19,11 +19,8 @@ final abstract class Json
     public static function encode(mixed $value, bool $pretty = false): string
     {
         $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | ($pretty ? JSON_PRETTY_PRINT : 0) | JSON_PRESERVE_ZERO_FRACTION;
-
         $json = json_encode($value, $flags);
-
         $error = json_last_error();
-
         if (JSON_ERROR_NONE !== $error) {
             throw new Exception\JsonEncodeException(json_last_error_msg(), $error);
         }
@@ -34,9 +31,7 @@ final abstract class Json
     public static function decode(string $json, bool $assoc = false): mixed
     {
         $value = json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING | JSON_FB_HACK_ARRAYS);
-
         $error = json_last_error();
-
         if (JSON_ERROR_NONE !== $error) {
             throw new Exception\JsonDecodeException(json_last_error_msg(), $error);
         }

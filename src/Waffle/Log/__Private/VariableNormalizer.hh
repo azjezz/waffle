@@ -3,7 +3,7 @@
 namespace Waffle\Log\__Private;
 
 use namespace HH\Lib\Str;
-use type Waffle\Json\Json;
+use type Waffle\Lib\Json;
 use type DateTimeInterface;
 use type Throwable;
 use function is_object;
@@ -36,7 +36,7 @@ final class VariableNormalizer
             $value = 'null';
         } elseif (is_object($value) && !$value is Container<_>) {
             if ($value is Throwable) {
-                $value = ''.get_class($value).'['.
+                $value = get_class($value).'['.
                     'message=' . $this->normalize($value->getMessage()) .
                     ', code=' . $this->normalize($value->getCode()) .
                     ', file=' . $this->normalize($value->getFile()) .

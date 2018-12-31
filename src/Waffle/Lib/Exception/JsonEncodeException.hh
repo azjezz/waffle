@@ -1,6 +1,6 @@
 <?hh // strict
 
-namespace Waffle\Json\Exception;
+namespace Waffle\Lib\Exception;
 
 use type InvalidArgumentException;
 

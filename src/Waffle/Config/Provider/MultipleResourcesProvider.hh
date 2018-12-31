@@ -2,7 +2,7 @@
 
 namespace Waffle\Config\Provider;
 
-use namespace Waffle\Config\__Private;
+use type Waffle\Lib\Recursive;
 use type Generator;
 
 abstract class MultipleResourcesProvider implements ProviderInterface
@@ -14,7 +14,7 @@ abstract class MultipleResourcesProvider implements ProviderInterface
         $generator = $this->loadMany();
         $container = dict[];
         foreach ($this->loadMany() as $resource => $config) {
-            $container = __Private\merge_recursive($container, $config);
+            $container = Recursive::merge($container, $config);
         }
         return $container;
     }

@@ -3,7 +3,7 @@
 namespace Waffle\Http\Message;
 
 use namespace HH\Lib\C;
-use namespace Waffle\Http\Message\__Private;
+use type Waffle\Lib\Dict;
 use type Waffle\Contract\Http\Message\RequestInterface;
 use type Waffle\Contract\Http\Message\StreamInterface;
 use type Waffle\Contract\Http\Message\UriInterface;
@@ -53,7 +53,7 @@ class Request implements RequestInterface
             $this->headerNames['host'] = 'Host';
         }
 
-        $this->headers = __Private\dict_union(
+        $this->headers = Dict::union(
             dict[ $header => vec[$host]],
             $this->headers,
         );

@@ -4,6 +4,7 @@ namespace Waffle\Config;
 
 use namespace HH\Lib\C;
 use namespace HH\Lib\Str;
+use type Waffle\Lib\Recursive;
 use type Waffle\Contract\Config\ConfigurationInterface;
 use function date;
 use function file_exists;
@@ -18,7 +19,7 @@ class Configuration implements ConfigurationInterface
     const string ENABLE_CACHE = '__CONFIG_CACHE_ENABLED';
 
     public function __construct(
-        vec<Provider\ProviderInterface> $providers = vec[],
+        Container<Provider\ProviderInterface> $providers = vec[],
         ?string $cacheConfigFile = null
     ) {
         $config = $this->loadConfigFromCache($cacheConfigFile);
@@ -34,12 +35,12 @@ class Configuration implements ConfigurationInterface
    /**
      * Iterate providers, merging config from each with the previous.
      */
-    private function loadConfigFromProviders(vec<Provider\ProviderInterface> $providers): dict<arraykey, mixed>
+    private function loadConfigFromProviders(Container<Provider\ProviderInterface> $providers): dict<arraykey, mixed>
     {
         $mergedConfig = dict[];
         foreach ($providers as $provider) {
             $config = $provider->load();
-            $mergedConfig = __Private\merge_recursive($mergedConfig, $config);
+            $mergedConfig = Recursive::merge($mergedConfig, $config);
         }
         return $mergedConfig;
     }
