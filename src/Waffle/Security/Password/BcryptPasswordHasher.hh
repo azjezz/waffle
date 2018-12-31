@@ -10,11 +10,13 @@ class BcryptPasswordHasher extends NativePasswordHasher
         protected int $cost = 8
     ) {}
 
+    <<__Override>>
     protected function getAlgorithm(): int
     {
         return PASSWORD_BCRYPT;
     }
 
+    <<__Override>>
     protected function getOptions(): array<string, mixed>
     {
         return [

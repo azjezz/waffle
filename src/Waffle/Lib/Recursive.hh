@@ -4,7 +4,6 @@ namespace Waffle\Lib;
 
 use namespace HH\Lib\C;
 use namespace HH\Lib\Vec;
-use namespace HH\Lib\Dict;
 
 class Recursive
 {

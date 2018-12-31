@@ -1,6 +1,5 @@
 app/
 vendor/
-examples/*
 composer
 *.ignore.hh
 *.pid

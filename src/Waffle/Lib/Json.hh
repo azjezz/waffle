@@ -2,6 +2,7 @@
 
 namespace Waffle\Lib;
 
+use type Waffle\Contract\Lib\Jsonable;
 use function json_encode;
 use function json_decode;
 use function json_last_error;
@@ -18,6 +19,10 @@ final abstract class Json
 {
     public static function encode(mixed $value, bool $pretty = false): string
     {
+        if ($value is Jsonable) {
+            return $value->toJson($pretty);
+        }
+
         $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | ($pretty ? JSON_PRETTY_PRINT : 0) | JSON_PRESERVE_ZERO_FRACTION;
         $json = json_encode($value, $flags);
         $error = json_last_error();

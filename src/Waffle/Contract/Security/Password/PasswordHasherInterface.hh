@@ -10,7 +10,7 @@ interface PasswordHasherInterface
     public function hash(string $password): string;
 
     /**
-     * Check if the given hash matches the given password. 
+     * Check if the given hash matches the given password.
      */
     public function check(string $password, string $hash): bool;
 

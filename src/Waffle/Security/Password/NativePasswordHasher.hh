@@ -18,7 +18,7 @@ abstract class NativePasswordHasher implements PasswordHasherInterface
         return password_hash(
             $password,
             $this->getAlgorithm(),
-            $this->getOptions() 
+            $this->getOptions()
         ) as string;
     }
 
