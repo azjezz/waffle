@@ -4,7 +4,7 @@ namespace Waffle\Lib;
 
 class Shape
 {
-    public function create<Tk as string, Tv>(KeyedContainer<Tk, Tv> $container = dict[]): shape(...)
+    public static function create<Tk as string, Tv>(KeyedContainer<Tk, Tv> $container = dict[]): shape(...)
     {
         $shape = shape();
         foreach ($container as $key => $value) {
