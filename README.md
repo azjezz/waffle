@@ -1,1 +1,1 @@
-[ABANDONED] see [Nuxed](https://github.com/nuxed/framework)
+[ABANDONED] use [Nuxed](https://github.com/nuxed/framework) instead
